@@ -1,0 +1,167 @@
+"""
+Harness correctness test #1: the Lanczos degeneracy example.
+
+Charter v0.7 §4 Phase 0 pass criteria:
+  (a) the harness reproduces the two-exponential fit's agreement with the 24-point
+      data at the 0.001 level — applied, per the provenance flag, to the harness's
+      OWN best two-exponential fit on the grid, with the quoted coefficients
+      (2.202 e^{-4.45t} + 0.305 e^{-1.58t}) checked separately;
+  (b) the two- and three-component models are indistinguishable at any noise level
+      above that residual.
+
+Status: PROVISIONAL (charter §7 provenance discipline). The three-exponential
+constants and the NIST grid are locked (NIST StRD Lanczos1, certified to 1e-10).
+The two-exponential coefficients and Lanczos's own grid/precision are not yet
+checked against Applied Analysis (1956) ch. IV; see mexp/datasets/lanczos.py
+and docs/phase0-findings.md §1 for what the numerics say the primary must settle.
+
+Estimator note (charter G2): the harness package contains no estimator. The
+best two-exponential fit needed by criterion (a) is computed HERE, in the test,
+with scipy.optimize.least_squares driven by the kernel's forward model and
+analytic Jacobian, and is cross-checked against the frozen constant in
+mexp/datasets/lanczos.py. Nothing in mexp/ imports an optimiser.
+No noise is generated anywhere in this file.
+"""
+import numpy as np
+import pytest
+from scipy.optimize import least_squares
+from scipy.stats import chi2
+
+from mexp import crlb as CR
+from mexp.datasets import lanczos as L
+from mexp.design import scattered
+from mexp.kernels import get
+from mexp.params import Theta
+
+pytestmark = pytest.mark.provisional_pending_primary   # registered in conftest.py
+
+
+def _theta(pairs):
+    pairs = np.asarray(pairs, dtype=float)
+    return Theta(amplitudes=pairs[:, 0], nonlinear=(1.0 / pairs[:, 1])[:, None])
+
+
+@pytest.fixture(scope="module")
+def kernel():
+    return get("t2_cpmg")
+
+
+@pytest.fixture(scope="module")
+def design():
+    # NIST grid used as echo times: t = 0, 0.05, ..., 1.15 (dimensionless; T = 1/rate)
+    return scattered(L.X, coord="TE")
+
+
+@pytest.fixture(scope="module")
+def f3(kernel, design):
+    return kernel.forward(_theta(L.THREE_EXP), design)
+
+
+def _best_two_exp(kernel, design, target):
+    """Least-squares best two-exponential approximant of `target` on `design`,
+    multistart, through the kernel (amplitudes a, rates r = 1/T)."""
+    def resid(p):
+        th = Theta(p[[0, 2]], (1.0 / p[[1, 3]])[:, None])
+        return kernel.forward(th, design) - target
+
+    def jac(p):
+        th = Theta(p[[0, 2]], (1.0 / p[[1, 3]])[:, None])
+        J = kernel.jacobian(th, design)          # columns: a0 a1 T0 T1
+        # chain rule dT/dr = -1/r²
+        out = np.empty((design.N, 4))
+        out[:, 0], out[:, 2] = J[:, 0], J[:, 1]
+        out[:, 1] = J[:, 2] * (-1.0 / p[1] ** 2)
+        out[:, 3] = J[:, 3] * (-1.0 / p[3] ** 2)
+        return out
+
+    best = None
+    for start in [(2.2, 4.45, 0.3, 1.58), (1.5, 5.0, 1.0, 2.0), (2.0, 4.0, 0.5, 1.0), (2.5, 6.0, 0.1, 0.5)]:
+        sol = least_squares(resid, start, jac=jac, bounds=(1e-9, np.inf),   # a > 0, r > 0 (kernel positivity)
+                            xtol=1e-15, ftol=1e-15, gtol=1e-15, max_nfev=20000)
+        if best is None or sol.cost < best.cost:
+            best = sol
+    return best.x, best.fun
+
+
+# --- locked part: three-exponential constants and grid against NIST StRD ------------------
+
+def test_forward_model_reproduces_nist_lanczos1(kernel, design, f3):
+    assert np.max(np.abs(f3 - L.NIST_LANCZOS1_Y)) < 1e-12
+    assert np.max(np.abs(f3 - L.evaluate(L.THREE_EXP))) < 1e-15
+
+
+def test_nist_certified_values_are_the_generating_function():
+    assert np.max(np.abs(L.NIST_LANCZOS1_CERTIFIED - L.THREE_EXP.ravel())) < 1e-9
+
+
+# --- criterion (a): the harness's own best two-exponential fit ---------------------------------
+
+def test_a_best_two_exp_agrees_to_better_than_0p001(kernel, design, f3):
+    p, res = _best_two_exp(kernel, design, f3)
+    assert np.max(np.abs(res)) < 1e-3, "criterion (a): better than 0.001 over the 24 points"
+    assert np.max(np.abs(res)) == pytest.approx(8.8e-4, abs=0.1e-4)
+    # agrees with the frozen offline constant (provenance script)
+    frozen = L.BEST_TWO_EXP_LS.ravel()
+    assert np.allclose(p, frozen, rtol=1e-5, atol=1e-7)
+
+
+def test_a_frozen_constant_is_a_stationary_point(kernel, design, f3):
+    """Estimator-free restatement of (a) for the harness proper: J^T r = 0 at the constant."""
+    th2 = _theta(L.BEST_TWO_EXP_LS)
+    r = kernel.forward(th2, design) - f3
+    g = kernel.jacobian(th2, design).T @ r
+    th_off = Theta(th2.amplitudes * 1.01, th2.nonlinear * 1.01)
+    g_off = kernel.jacobian(th_off, design).T @ (kernel.forward(th_off, design) - f3)
+    assert np.linalg.norm(g) < 1e-4 * np.linalg.norm(g_off)
+
+
+# --- criterion (a), second half: the QUOTED coefficients, checked separately -----------------
+
+def test_a_quoted_coefficients_are_two_decimal_not_0p001(kernel, design, f3):
+    """The coefficients quoted by the secondaries deviate from f(t) by 0.0064 at t = 0,
+    on any grid containing t = 0. They are consistent with a two-decimal table
+    (23 of 24 NIST-grid points round identically), not with 'better than 0.001'.
+    This test pins the discrepancy the charter's provenance flag describes."""
+    f2q = kernel.forward(_theta(L.LANCZOS_TWO_EXP), design)
+    d = np.abs(f3 - f2q)
+    assert d.max() == pytest.approx(0.0064, abs=2e-4)
+    assert np.argmax(d) == 0
+    assert d.max() > 1e-3                                   # NOT better than 0.001
+    assert np.sum(np.round(f3, 2) != np.round(f2q, 2)) <= 1   # but within the two-decimal table
+
+
+# --- criterion (b): indistinguishable at any noise level above the residual --------------------
+
+def test_b_models_indistinguishable_above_residual_noise(kernel, design, f3):
+    f2 = kernel.forward(_theta(L.BEST_TWO_EXP_LS), design)
+    delta = f3 - f2
+    resid = np.max(np.abs(delta))
+    crit = chi2.ppf(0.95, df=2)                              # K=3 has two more parameters than K=2
+    for sigma in (resid, 1e-3, 2e-3, 5e-3):
+        # expected excess chi-square of the wrong (K=2) model = (d')² of the ideal detector
+        assert CR.lrt_noncentrality(delta, sigma) < crit
+        # and the K=3 decay constants are not estimable: CRLB relative SD > 100 % on two of them
+        r3 = CR.crlb(kernel, _theta(L.THREE_EXP), design, sigma, "gaussian_real")
+        rel = np.array(list(r3.relative_sd_of("T2").values()))
+        assert np.sum(rel > 1.0) >= 2 and rel.min() > 0.2
+    # whereas the two-exponential description is well determined at the residual level
+    r2 = CR.crlb(kernel, _theta(L.BEST_TWO_EXP_LS), design, resid, "gaussian_real")
+    assert max(r2.relative_sd_of("T2").values()) < 0.03
+
+
+def test_snr_needed_to_separate_the_models(kernel, design, f3):
+    """Record the operating point: d' = 3 needs SNR (peak / σ) ≈ 3.6e3 on this grid."""
+    f2 = kernel.forward(_theta(L.BEST_TWO_EXP_LS), design)
+    sep = np.linalg.norm(f3 - f2)
+    snr_needed = f3[0] / (sep / 3.0)
+    assert 3.3e3 < snr_needed < 4.0e3
+
+
+# --- NIST Lanczos3: five significant digits already move the slow component ------------------
+
+def test_five_digit_rounding_moves_the_certified_fit_off_the_truth(kernel, design, f3):
+    truth, cert = L.THREE_EXP.ravel(), L.NIST_LANCZOS3_CERTIFIED
+    assert abs(cert[0] - truth[0]) / truth[0] > 0.05
+    assert abs(cert[1] - truth[1]) / truth[1] > 0.03
+    rss_truth = np.sum((f3 - L.NIST_LANCZOS3_Y) ** 2)
+    assert L.NIST_LANCZOS3_RSS < rss_truth                  # the wrong parameters fit the rounded data better
