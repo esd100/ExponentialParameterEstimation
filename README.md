@@ -12,7 +12,7 @@ mexp-harness/        the Phase 0 benchmark harness (Python package `mexp`, tests
 ## Sync rule (charter §7)
 
 The same six documents live in two places: here under `docs/project/`, and in the Claude project
-"Exponential Parameter Estimation" (top-level `charter.md`, `gaps-register.md`, `bibliography.md`; `claude/changelog.md`,
+"Exponential Parameter Estimation" (top-level `charter.md`, `gaps-register.md`; `claude/bibliography.md`, `claude/changelog.md`,
 `claude/phase0-findings.md`, `claude/phase0-harness-status.md`). Every working session ends by committing this
 repository *and* writing the same files to the project. At session start the project copy is read first; if the two
 disagree, the higher version number wins and the other is brought up to date before any work is done.
