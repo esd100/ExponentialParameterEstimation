@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+title: "Exponential Parameter Estimation: benchmark harness and tissue dictionary for multi-exponential MR parameter estimation"
+message: "If you use this repository, please cite it as below. A license has not yet been chosen; see README."
+type: software
+authors:
+  - family-names: Diaz
+    given-names: Eric
+    email: eric.diaz@gmail.com
+date-released: "2026-09-07"
+version: "charter-v0.11"
+abstract: >
+  A Phase 0 benchmark harness (pluggable-kernel forward models, CRLB machinery, conditioning analysis, k-space-first
+  simulator interface) and a provenance-flagged tissue and organ dictionary of multi-component MR properties, developed
+  under a living project charter for the survey and advancement of multi-exponential parameter estimation from MR decay
+  signals.

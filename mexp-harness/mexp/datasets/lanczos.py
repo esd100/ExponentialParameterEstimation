@@ -16,16 +16,39 @@ NIST StRD variants (https://www.itl.nist.gov/div898/strd/nls/nls_main.shtml):
     Lanczos3 : data generated to  5 digits  -> certified fit b1 = 0.0868 (truth 0.0951), b2 = 0.955 (truth 1)
                with certified SDs 0.017 and 0.097: 5 significant digits already lose the slow component.
 
-Lanczos's own two-exponential representation of the *two-decimal* table
-(as recalled from the 1956 text, p. 276; the page could not be reached
-online during this session and this attribution must be checked against the
-book before it is quoted):
+Lanczos's own treatment (PRIMARY — read from the 1956 text, ch. IV §23
+"Separation of exponentials", pp. 272-279, via page images supplied by
+E. Diaz on 2026-09-07; Dover reprint ISBN 0-486-65656-X has the same pages):
 
-    f(x) ~ 2.202 e^{-4.45 x} + 0.305 e^{-1.58 x}
+  p. 276  "The following set of 24 decay observations were obtained in time
+          intervals of 3 minutes, i.e., 0.05 hour ... hence dx = 0.05, starting
+          with the time moment x = 0"  -> the grid IS the NIST grid.
+          Table y_k to two decimals: 2.51 2.04 1.67 1.37 1.12 0.93 0.77 0.64 0.53
+          0.45 0.38 0.32 0.27 0.23 0.20 0.17 0.15 0.13 0.11 0.10 0.09 0.08 0.07 0.06
+          "The observations are considered as accurate to 1/2 unit of the second decimal."
+          A three-exponential Prony separation is attempted first (groups of 4);
+          the resulting equations are "redundant within the errors of our
+          observations", so only TWO exponentials are determinable.
+  p. 277  Two-exponential Prony on groups of 6 (sums 964, 309, 115, 51):
+          xi^2 - 0.8839 xi + 0.1640 = 0, roots 0.619 and 0.265, h = 0.3,
+          lambda_1 = 4.45, lambda_2 = 1.58.
+  p. 278  Amplitudes by isolating each exponential and averaging: A_1 = 2.202,
+          A_2 = 0.305.  Eq. (4-23.16):  f(x) = 2.202 e^{-4.45x} + 0.305 e^{-1.58x}.
+          His hand-computed table of this fit to three decimals is LANCZOS_FIT_TABLE below.
+  p. 279  "the deviation is never larger than 0.005, except in the single instance
+          of k = 5, where the error reaches the magnitude 0.006 ... 'average
+          deviation' ... 0.0026, which is well within the error limits of our data."
+          Then the reveal, eq. (4-23.17): the data were constructed from
+          f(x) = 0.0951 e^{-x} + 0.8607 e^{-3x} + 1.5576 e^{-5x};  "the exponent 3
+          [reduced] to 1.58 and the exponent 5 to 4.45 ... the approximate ratio 1:2
+          of the amplitudes was distorted to 1:7 ... our solution is 'numerically
+          equivalent' to the true solution".
 
-Numerically (this module's tests): it agrees with the three-exponential
-function to 0.0064 max-abs on the grid, i.e. within the two-decimal
-tabulation, with a single rounding disagreement at x = 0.2 (1.12 vs 1.13).
+Harness cross-checks (tests/test_lanczos_degeneracy.py): the two-decimal
+rounding of the NIST function equals his table at all 24 points; his grouped
+sums reproduce; his fitted table agrees with exact evaluation of (4-23.16) to
+0.002 (hand arithmetic); his 0.006-at-k=5 and 0.0026 RMS claims reproduce from
+his table; exact evaluation gives a maximum deviation of 0.0066 at k = 5.
 
 The *best* two-exponential approximant in least squares on the same grid,
 computed once offline (scripts/provenance/lanczos_two_exp_approximant.py)
@@ -36,19 +59,18 @@ and frozen here as a constant so that the harness carries no estimator:
 
 So the honest statement of the degeneracy is: a two-exponential sum
 reproduces this three-exponential function to about three decimal places
-(8.8e-4 max) over 24 samples; Lanczos's own two-term fit reproduces a
-two-decimal table. ||f3 - f2_best||_2 = 2.07e-3, so an oracle detector that
-knows both candidate models needs peak-to-sigma SNR above ~3.6e3 for d' = 3,
-and for every sigma >= 8.8e-4 the expected excess chi-square of the wrong
-model (<= 5.5) stays below the chi-square(2) 95 % critical value 5.99
-(tests/test_lanczos_degeneracy.py, criterion (b)).
+(8.8e-4 max) over 24 samples; Lanczos's own two-term fit reproduces his
+two-decimal table to within its stated accuracy (0.006 max, 0.0026 RMS).
+||f3 - f2_best||_2 = 2.07e-3, so an oracle detector that knows both candidate
+models needs peak-to-sigma SNR above ~3.6e3 for d' = 3, and for every
+sigma >= 8.8e-4 the expected excess chi-square of the wrong model (<= 5.5)
+stays below the chi-square(2) 95 % critical value 5.99 (criterion (b)).
 
-Status (charter v0.7 §7 provenance discipline): the three-exponential
-constants and the NIST grid are LOCKED; the two-exponential coefficients,
-Lanczos's own grid (dt = 0.05 on [0, 1.15] per NIST, or dt = 0.1 on a longer
-window, which the quoted coefficients fit slightly better) and the
-two-decimal statement are PROVISIONAL pending the book check. The test's
-pass criteria do not depend on the provisional items.
+Status (charter §7 provenance discipline): everything in this module is
+LOCKED against a primary source as of 2026-09-07 — the three-exponential
+constants and grid against NIST StRD and against Lanczos p. 276/279, the
+two-exponential coefficients, table precision and Lanczos's stated
+agreement against pp. 276-279.
 """
 from __future__ import annotations
 
@@ -58,8 +80,19 @@ X = 0.05 * np.arange(24)
 
 # (amplitude, rate) pairs; T = 1 / rate
 THREE_EXP = np.array([[0.0951, 1.0], [0.8607, 3.0], [1.5576, 5.0]])
-LANCZOS_TWO_EXP = np.array([[2.202, 4.45], [0.305, 1.58]])              # recalled; see docstring
+LANCZOS_TWO_EXP = np.array([[2.202, 4.45], [0.305, 1.58]])              # Lanczos 1956 eq. (4-23.16), p. 278 (PRIMARY)
 BEST_TWO_EXP_LS = np.array([[2.06878068, 4.63964313], [0.44401299, 1.87246563]])  # frozen offline
+
+# Lanczos 1956, p. 276: the 24 "decay observations", two decimals, dx = 0.05 h from x = 0
+LANCZOS_DATA_TABLE = np.array([2.51, 2.04, 1.67, 1.37, 1.12, 0.93, 0.77, 0.64, 0.53, 0.45, 0.38, 0.32,
+                               0.27, 0.23, 0.20, 0.17, 0.15, 0.13, 0.11, 0.10, 0.09, 0.08, 0.07, 0.06])
+# Lanczos 1956, p. 278: his hand-computed values of 2.202 e^{-4.45x} + 0.305 e^{-1.58x} at the 24 points
+LANCZOS_FIT_TABLE = np.array([2.507, 2.044, 1.672, 1.370, 1.126, 0.929, 0.769, 0.639, 0.533, 0.447, 0.376, 0.318,
+                              0.270, 0.230, 0.197, 0.173, 0.148, 0.130, 0.114, 0.100, 0.088, 0.079, 0.070, 0.063])
+# Lanczos 1956, p. 279: his stated agreement between fit and data
+LANCZOS_STATED_MAX_DEVIATION = 0.006      # "in the single instance of k = 5"
+LANCZOS_STATED_RMS_DEVIATION = 0.0026     # "square root of ... sum of squares ... divided by 24"
+LANCZOS_STATED_ACCURACY = 0.005           # "accurate to 1/2 unit of the second decimal"
 
 # NIST StRD Lanczos1: generated to 14 digits
 NIST_LANCZOS1_Y = np.array([

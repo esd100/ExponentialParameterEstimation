@@ -105,6 +105,7 @@ class CRLBResult:
     sigma: float
     noise_model: str
     joint_sigma: bool
+    singular: bool = False          # a parameter direction carries no information (variance reported as inf)
 
     @property
     def sd(self) -> np.ndarray:
@@ -171,9 +172,36 @@ def fisher_information(kernel: Kernel, theta: Theta, design: Design, sigma: floa
 
     if joint_sigma:
         labels = labels + ["sigma"]
-    cov = np.linalg.pinv(F, rcond=1e-15, hermitian=True)
+    cov, singular = _invert_fim(F, np.concatenate([flat, [sigma]]) if joint_sigma else flat)
     return CRLBResult(fim=F, cov=cov, labels=labels, theta_flat=flat, sigma=sigma,
-                      noise_model=noise_model, joint_sigma=joint_sigma)
+                      noise_model=noise_model, joint_sigma=joint_sigma, singular=singular)
+
+
+def _invert_fim(F: np.ndarray, ref: np.ndarray, rcond: float = 1e-13) -> tuple[np.ndarray, bool]:
+    """Invert the FIM in *relative* coordinates (theta / |theta_ref|), which removes the
+    dynamic range between amplitudes (~0.1) and long time constants (~1e3) that
+    otherwise makes a raw pseudo-inverse truncate near-singular directions to ZERO
+    variance — the opposite of the truth. Directions that are still singular after
+    scaling are reported as infinite variance and `singular=True`."""
+    r = np.abs(np.asarray(ref, dtype=float))
+    d = np.where(r > 1e-9 * max(float(r.max()), 1e-300), r, 1.0)   # zero-valued parameters (e.g. Im a = 0) keep unit scale
+    D = np.diag(d)
+    F_rel = D @ F @ D
+    w, V = np.linalg.eigh(F_rel)
+    wmax = float(np.max(w)) if w.size else 0.0
+    keep = w > rcond * wmax
+    singular = not bool(np.all(keep))
+    inv_w = np.where(keep, 1.0 / np.where(keep, w, 1.0), np.inf)
+    cov_rel = (V * inv_w) @ V.T if not singular else None
+    if singular:
+        # finite part plus infinite variance on the singular directions' support
+        finite = (V[:, keep] / w[keep]) @ V[:, keep].T
+        support = np.any(np.abs(V[:, ~keep]) > 1e-8, axis=1)
+        cov_rel = finite.copy()
+        cov_rel[support, :] = np.inf
+        cov_rel[:, support] = np.inf
+        cov_rel[np.ix_(~support, ~support)] = finite[np.ix_(~support, ~support)]
+    return D @ cov_rel @ D, singular
 
 
 def crlb(kernel: Kernel, theta: Theta, design: Design, sigma: float,

@@ -11,6 +11,20 @@ enforced by `tests/test_kspace_first_rule.py`). SNR conventions: the §1.2 thres
 use **first-echo SNR** (σ = S(t₁)/SNR) as the charter does; the harness axis default is S_ref/σ with
 S_ref = Σ|a| (`mexp.crlb.sigma_from_*` convert).
 
+
+> **Revision 3 addendum (2026-09-07, evening).** Four things changed after this revision was written; the details are in
+> charter v0.11 (§1.2, §4, §8), `claude/changelog.md` and `docs/tissue-dictionary.md`, and are only summarised here so this
+> document stays the record of the Phase 0 measurements. (1) **Lanczos is closed against the primary**: pp. 272–279 (Eric's
+> page images) give Δx = 0.05 from x = 0, a two-decimal table accurate to ½ unit, the coefficients 2.202/4.45/0.305/1.58, and a
+> stated agreement of 0.006 max (k = 5) / 0.0026 RMS — all reproduced by the harness; the Δt = 0.1 hypothesis in §1 below is
+> dead and the `provisional` marker is gone. (2) **The SNR convention of the resolvable-ratio formula is amplitude SNR** by
+> derivation, the arccosh form exact and 2 ln SNR its limit; the secondary that restates Istratov & Vyvenko (Steinbeck & Chmelka
+> 2005: ratio ≥ 2 at SNR 10³) excludes the power reading. (3) **Tissue dictionary v2**: 18 entries with PD, T1/T2 at both
+> fields, ADC, components per modality, a physical-pool theory block and a status on every value; muscle's components changed
+> materially (Saab 1999: < 5/21/39/114 ms at 11/28/46/5 %). (4) **CRLB inversion in relative coordinates**: a pseudo-inverse
+> artefact that reported zero variance on an unpinned 2000 ms component was removed; §4's reference-configuration numbers
+> were unaffected (byte-identical output), and the dictionary numbers in charter §1.2 are the corrected ones.
+
 ## 0. What v0.7 changed for this work, and what was redone
 
 | v0.7 item | Consequence | Done |

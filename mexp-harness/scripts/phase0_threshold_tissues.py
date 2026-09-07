@@ -27,7 +27,7 @@ k = get("t2_cpmg")
 K_OK, F_OK = 0.25, 0.10   # "estimable": every visible T2 < 25 % rel SD; functional < 10 % rel SD
 
 
-def evaluate(e: TS.TissueEntry, n: int, dte: float, snr: float):
+def evaluate(e: TS.ComponentSet, n: int, dte: float, snr: float):
     d = uniform(n, dte)
     th = e.theta(min_value=dte)
     sigma = CR.sigma_from_first_echo_snr(k, th, d, snr)
@@ -48,16 +48,18 @@ def evaluate(e: TS.TissueEntry, n: int, dte: float, snr: float):
 lines = ["# §1.2 threshold over the tissue dictionary", "",
          "Rician CRLB with σ known, first-echo SNR as stated; components below the first echo dropped and fractions renormalised. "
          f"'K estimable' = every visible T2 under {K_OK:.0%} relative SD; 'functional estimable' = the entry's clinical "
-         f"functional under {F_OK:.0%} relative SD (delta method). **All dictionary values are RECALLED (unverified) — see "
-         "`mexp/tissues.py`; the table shapes the question, it does not yet settle it.**", ""]
+         f"functional under {F_OK:.0%} relative SD (delta method). The status column is the provenance of the component "
+         "set (`mexp/tissue_data.py`): PRIMARY / SECONDARY are read from the literature this project opened; THEORY rows are "
+         "working configurations for organs with no multi-component study reached (abdominal T2 splits); RECALLED rows are "
+         "from memory. Rows marked THEORY or RECALLED shape the question, they do not settle it.", ""]
 
 for label, acq_of in (("Reference acquisition: 32 echoes × 10 ms, first-echo SNR 100", lambda e: (32, 10.0, 100.0)),
                       ("Entry-specific typical acquisition", lambda e: (int(e.typical_acquisition["n_echoes"]),
                                                                         float(e.typical_acquisition["dTE_ms"]),
                                                                         float(e.typical_acquisition["first_echo_snr"])))):
     lines += [f"## {label}", "",
-              "| tissue | visible K (of K) | composition (fraction @ T2 ms) | rel SD of T2 (%) | rel SD of fractions (%) | functional | value | SD (abs) | rel SD (%) | K estimable | functional estimable |",
-              "|---|---|---|---|---|---|---|---|---|---|---|"]
+              "| tissue | status | visible K (of K) | composition (fraction @ T2 ms) | rel SD of T2 (%) | rel SD of fractions (%) | functional | value | SD (abs) | rel SD (%) | K estimable | functional estimable |",
+              "|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for e in TS.entries(kernel="t2_cpmg"):
         n, dte, snr = acq_of(e)
         th, relT, rela, f_true, f_sd = evaluate(e, n, dte, snr)
@@ -69,7 +71,7 @@ for label, acq_of in (("Reference acquisition: 32 echoes × 10 ms, first-echo SN
         else:
             frel = f_sd / f_true if f_true > 0 else np.inf
             f_cells = f"{e.functional} | {f_true:.3f} | {f_sd:.3f} | {100*frel:.0f} | {k_ok} | {'yes' if frel < F_OK else 'no'}"
-        lines.append(f"| {e.tissue} ({e.organ}){acq} | {th.K} (of {e.K}) | {comp} | "
+        lines.append(f"| {e.tissue} ({e.organ}){acq} | {e.status.value} | {th.K} (of {e.K}) | {comp} | "
                      f"{', '.join(f'{100*v:.0f}' for v in relT)} | {', '.join(f'{100*v:.0f}' for v in rela)} | {f_cells} |")
     lines.append("")
 
@@ -79,7 +81,7 @@ lines += ["## Myelin-type functional under three parameterisations (32 × 10 ms)
           "|---|---|---|---|---|---|---|"]
 from mexp.params import Theta
 for key in ("brain_wm", "brain_gm", "spinal_cord_wm"):
-    e = TS.get(key)
+    e = TS.get(key).T2
     th3 = e.theta()
     a2 = th3.amplitudes[:2] / th3.amplitudes[:2].sum()
     th2 = Theta(a2, th3.nonlinear[:2])
@@ -101,19 +103,26 @@ lines.append("")
 
 lines += ["## Reading", "",
           "- At the reference acquisition no myelin-type entry is 'estimable' by either criterion under a free K = 3 model: the "
-          "free long component (2000 ms, unpinned by a 320 ms window) roughly doubles the bound on the myelin water fraction. "
-          "With the long component fixed or dropped, the MWF bound is ±0.030 (1σ) for white matter at SNR 100 and ±0.010 at "
-          "SNR 300 — the familiar experience that myelin water imaging needs high SNR or averaging, now as a bound.",
-          "- The functional is better determined than the parameters (white matter MWF 25 % relative vs myelin T2 57 % in the "
-          "K = 2 model): a first sighting of charter Phase 3's 'estimate functionals, not spectra', at the level of the bound.",
-          "- Minor components under ~5 % (grey-matter myelin water, the liver vascular fraction) are the failure cases; "
-          "well-separated two-component tissues (prostate luminal water, ratio ~8) are estimable, and at their own 64 × 8 ms "
-          "acquisition the luminal water fraction reaches 5 % relative.",
-          "- The entry-specific acquisitions move results mostly through the window (prostate's train reaches 500 ms; the "
-          "16 × 8 ms liver train loses the 200 ms component entirely; the 8 × 12 ms myocardial train is a K = 1 null case), "
-          "consistent with the window rule in charter §1.2.",
-          "- Everything here inherits the RECALLED status of the dictionary; the verification pass may move numbers, not the "
-          "structure of the conclusion, which is set by component ratios and minor-fraction sizes."]
+          "free long component (2000 ms, unpinned by a 320 ms window) roughly doubles the bound on the myelin water fraction "
+          "(white matter: 0.072 free vs 0.037 with the long T2 fixed vs 0.029 with it dropped, at SNR 100). With the long "
+          "component fixed or dropped the white-matter MWF bound is about ±0.03 (1σ) at SNR 100 and ±0.01 at SNR 300 — the "
+          "familiar experience that myelin water imaging needs high SNR or averaging, now as a bound.",
+          "- The functional is better determined than the parameters (white matter MWF ~20 % relative vs myelin T2 44 % in the "
+          "K = 2 model at SNR 100): a first sighting of charter Phase 3's 'estimate functionals, not spectra', at the level of the bound.",
+          "- Minor components under ~5 % (grey-matter myelin water) fail outright; muscle's four-component structure (Saab 1999, "
+          "measured at SNR ~3500 with 1.2 ms echoes) collapses to an unestimable three-component fit at clinical SNR — the "
+          "clinical protocol sees one ~30 ms pool and, at best, the ~120 ms extracellular tail; well-separated two-component "
+          "tissues (prostate luminal water, ratio ~8) are estimable, to ~5 % relative at their own 64 × 8 ms train.",
+          "- The abdominal THEORY rows (liver, pancreas: ratio ~3.5, minor fraction ~0.2) come out 'K estimable' at the reference "
+          "acquisition but not at their own shorter, noisier protocols; spleen and kidney (ratio ~2-3) are not estimable anywhere. "
+          "These rows test whether T2 can see the vascular compartment that IVIM sees; the physics (fast exchange) says it mostly cannot.",
+          "- The entry-specific acquisitions move results mostly through the window (prostate's train reaches 500 ms; the 16 × 8 ms "
+          "abdominal trains lose the 150-220 ms components; the 8 × 12 ms myocardial train is a K = 1 null case), consistent with "
+          "the window rule in charter §1.2.",
+          "- Provenance: the brain, cord, cartilage, bone, marrow, breast and blood rows rest on opened literature (SECONDARY/PRIMARY); "
+          "the abdominal T2 splits (liver, spleen, kidney, pancreas) are THEORY rows built from bulk T2 and IVIM perfusion fractions "
+          "because no in vivo multi-component T2 study of those organs was reached; prostate is RECALLED pending the luminal-water "
+          "full text. Verification moves numbers, not the structure of the conclusion, which is set by ratios and minor-fraction sizes."]
 
 (OUT / "threshold_tissues.md").write_text("\n".join(lines))
 print("\n".join(lines))

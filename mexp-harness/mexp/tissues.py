@@ -1,61 +1,97 @@
 """
-Tissue and organ dictionary — reference multi-component compositions.
+Tissue and organ dictionary — API over `mexp.tissue_data` (charter §1.2, §4, §6.1; v2).
 
-Why this exists (charter §1.2, v0.10): the falsifiable threshold on the
-"K = 2 comfortably, K = 3 marginal" figure turned out to depend on the
-amplitude vector more than on anything else, and a single myelin-like
-20/80 split is not the body.  Each entry here is a literature-derived
-composition (component fractions and time constants) for one tissue, one
-modality and, where it matters, one field strength, together with the
-clinically meaningful functional of that composition (e.g. the myelin water
-fraction, the luminal water fraction) and a typical acquisition.  The
-harness evaluates the CRLB clauses at every entry
-(scripts/phase0_threshold_tissues.py), so "what K does clinical data
-support" is answered per tissue rather than for one synthetic vector.
+Why this exists: the §1.2 falsifiable threshold depends on the amplitude vector
+more than on anything else, and one myelin-like split is not the body.  The
+dictionary carries, per tissue, the measured bulk MR properties (water content /
+relative PD, T1 and T2 at 1.5 T and 3 T, ADC), the multi-component structure per
+modality (T2 components for the CPMG kernel; T1 components; diffusion
+compartments), the clinical functional of that structure, a typical
+acquisition, and a *theory* block: the physical water pools a voxel of the
+tissue contains, their exchange regime, and hence how many components are
+apparent, documented and resolvable.  Every number has a provenance status
+(see `mexp.tissue_data`).
 
-PROVENANCE (charter §7).  Every entry carries a status:
+Usage:
+    from mexp import tissues as TS
+    for view in TS.entries(kernel="t2_cpmg"):    # one view per (tissue, T2 component set)
+        theta = view.theta(min_value=10.0)       # drop components below the first echo
+    TS.get("liver").properties["T1_ms"]["3T"]    # bulk property records
+    TS.get("liver").theory["n_pools"]
 
-    RECALLED   values written from memory of the named sources; NOT checked
-               against the paper in this session.  Usable to *shape* a
-               harness configuration; not citable as a number until checked.
-    SECONDARY  matched to a review, dataset or abstract that was read.
-    PRIMARY    matched to the table/figure of the original paper.
-
-As of 2026-09-07 every entry is RECALLED.  The verification pass is an open
-item in claude/phase0-harness-status.md; the sources named are the ones the
-verification should start from.  Values are representative central values
-with the range noted; real tissue varies with field strength, sequence
-(refocusing flip angle, TE_1), age and pathology, and several components
-(< 5 ms) are invisible to a CPMG train starting at 10 ms.
-
-Kernels: entries whose kernel is not yet registered ("t2star_ute", "t1_ir",
-"diffusion_ivim") are carried for completeness and skipped by the T2 scripts.
+`scripts/export_tissue_dictionary.py` writes data/tissue_dictionary.json.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
-from typing import Mapping
+from typing import Any, Mapping
 
 import numpy as np
 
-from .axes import Modality
+from . import tissue_data
 from .params import Theta
 
 
 class Provenance(Enum):
-    RECALLED = "recalled"
-    SECONDARY = "secondary"
-    PRIMARY = "primary"
+    PRIMARY = "PRIMARY"
+    SECONDARY = "SECONDARY"
+    TERTIARY = "TERTIARY"
+    RECALLED = "RECALLED"
+    THEORY = "THEORY"
+
+
+MODALITY_OF_KERNEL = {
+    "t2_cpmg": "T2", "t2star_ute": "T2", "t1_ir": "T1",
+    "diffusion_ivim": "diffusion", "diffusion_tensor": "diffusion", "diffusion_standard_model": "diffusion",
+}
 
 
 @dataclass(frozen=True)
 class Component:
     name: str
-    fraction: float          # signal fraction at the reference point (sums to 1 over the entry)
-    value: float             # T2 / T2* / T1 in ms, or D in um^2/ms (= 1e-3 mm^2/s)
-    range: tuple[float, float] | None = None   # literature range for `value`
+    fraction: float
+    value: float
+    status: Provenance
+    source: str
+    range: tuple[float, float] | None = None
     note: str = ""
+
+
+@dataclass(frozen=True)
+class ComponentSet:
+    """One tissue's components for one modality/kernel."""
+    tissue_key: str
+    organ: str
+    tissue: str
+    modality: str                       # "T2" | "T1" | "diffusion"
+    kernel: str
+    field_T: float | None
+    components: tuple[Component, ...]
+    functional: str
+    functional_threshold: float | None
+    typical_acquisition: Mapping[str, Any]
+    status: Provenance
+    note: str = ""
+
+    @property
+    def K(self) -> int:
+        return len(self.components)
+
+    def visible_components(self, min_value: float | None = None) -> tuple[Component, ...]:
+        if min_value is None:
+            return self.components
+        return tuple(c for c in self.components if c.value >= min_value)
+
+    def theta(self, min_value: float | None = None) -> Theta:
+        """Theta for the kernel: fractions as amplitudes (renormalised after dropping
+        components below `min_value`, e.g. the first echo), values as the non-linear
+        parameter (T2 / T1 / D). Zero-fraction tensor rows are dropped."""
+        comps = [c for c in self.visible_components(min_value) if c.fraction > 0]
+        if not comps:
+            raise ValueError(f"{self.tissue_key}/{self.modality}: no component visible above {min_value}")
+        a = np.array([c.fraction for c in comps], dtype=float)
+        return Theta(a / a.sum(), np.array([[c.value] for c in comps], dtype=float))
 
 
 @dataclass(frozen=True)
@@ -63,228 +99,105 @@ class TissueEntry:
     key: str
     organ: str
     tissue: str
-    modality: Modality
-    kernel: str                                  # registered kernel name, or a future one
-    field_T: float | None
-    components: tuple[Component, ...]
-    functional: str                              # human name of the clinical functional
-    functional_threshold: float | None           # mass below this value (same unit as Component.value); None if n/a
-    typical_acquisition: Mapping[str, float]     # e.g. n_echoes, dTE_ms, first_echo_snr
+    properties: Mapping[str, Any]
+    component_sets: Mapping[str, ComponentSet]     # keyed by modality: "T2", "T1", "diffusion"
+    theory: Mapping[str, Any]
     sources: tuple[str, ...]
-    status: Provenance = Provenance.RECALLED
-    notes: str = ""
 
-    def __post_init__(self):
-        s = sum(c.fraction for c in self.components)
-        if abs(s - 1.0) > 1e-6:
-            raise ValueError(f"{self.key}: fractions sum to {s}, not 1")
-        vals = [c.value for c in self.components]
-        if vals != sorted(vals):
-            raise ValueError(f"{self.key}: components must be ordered by increasing value")
+    def for_modality(self, modality: str) -> ComponentSet:
+        return self.component_sets[modality]
 
     @property
-    def K(self) -> int:
-        return len(self.components)
+    def T2(self) -> ComponentSet | None:
+        return self.component_sets.get("T2")
 
-    def theta(self, min_value: float | None = None) -> Theta:
-        """Theta for the entry's kernel; components with value < min_value are
-        dropped and the remaining fractions renormalised (a CPMG train starting
-        at 10 ms cannot see a 3 ms component; the harness should not pretend)."""
-        comps = [c for c in self.components if min_value is None or c.value >= min_value]
-        a = np.array([c.fraction for c in comps], dtype=float)
-        a = a / a.sum()
-        return Theta(a, np.array([[c.value] for c in comps], dtype=float))
+    def property(self, name: str, field: str | None = None) -> Mapping[str, Any]:
+        p = self.properties[name]
+        return p[field] if field is not None else p
 
-    def visible_components(self, min_value: float) -> tuple[Component, ...]:
-        return tuple(c for c in self.components if c.value >= min_value)
-
-
-_REG: dict[str, TissueEntry] = {}
+    def worst_status(self) -> Provenance:
+        order = [Provenance.PRIMARY, Provenance.SECONDARY, Provenance.TERTIARY, Provenance.RECALLED, Provenance.THEORY]
+        worst = Provenance.PRIMARY
+        for cs in self.component_sets.values():
+            for c in cs.components:
+                if order.index(c.status) > order.index(worst):
+                    worst = c.status
+        return worst
 
 
-def register(e: TissueEntry) -> TissueEntry:
-    if e.key in _REG:
-        raise ValueError(f"duplicate tissue key {e.key}")
-    _REG[e.key] = e
-    return e
+def _component(d) -> Component:
+    return Component(d["name"], float(d["fraction"]), float(d["value"]), Provenance(d["status"]), d["source"],
+                     tuple(d["range"]) if d.get("range") else None, d.get("note", ""))
+
+
+def _build() -> dict[str, TissueEntry]:
+    reg: dict[str, TissueEntry] = {}
+    for e in tissue_data.ENTRIES:
+        sets = {}
+        for modality, cs in e["components"].items():
+            comps = tuple(_component(c) for c in cs["list"])
+            s = sum(c.fraction for c in comps)
+            if abs(s - 1.0) > 1e-6:
+                raise ValueError(f"{e['key']}/{modality}: fractions sum to {s:.4f}")
+            vals = [c.value for c in comps if c.fraction > 0]
+            if modality in ("T2", "T1") and vals != sorted(vals):      # relaxation components: ordered by time constant
+                raise ValueError(f"{e['key']}/{modality}: components must be ordered by increasing value")
+            sets[modality] = ComponentSet(e["key"], e["organ"], e["tissue"], modality, cs["kernel"], cs.get("field_T"),
+                                          comps, cs["functional"], cs.get("functional_threshold"), cs["typical_acquisition"],
+                                          Provenance(cs["status"]), cs.get("note", ""))
+        if e["key"] in reg:
+            raise ValueError(f"duplicate tissue key {e['key']}")
+        reg[e["key"]] = TissueEntry(e["key"], e["organ"], e["tissue"], e["properties"], sets, e["theory"], tuple(e["sources"]))
+    return reg
+
+
+_REG = _build()
 
 
 def get(key: str) -> TissueEntry:
     return _REG[key]
 
 
-def entries(kernel: str | None = None, modality: Modality | None = None) -> list[TissueEntry]:
-    out = list(_REG.values())
-    if kernel is not None:
-        out = [e for e in out if e.kernel == kernel]
-    if modality is not None:
-        out = [e for e in out if e.modality is modality]
-    return out
-
-
 def keys() -> list[str]:
     return list(_REG)
 
 
-R = Provenance.RECALLED
-CPMG_REF = {"n_echoes": 32, "dTE_ms": 10.0, "first_echo_snr": 100.0}
+def all_entries() -> list[TissueEntry]:
+    return list(_REG.values())
 
-# ----------------------------------------------------------------------------------------------
-# T2 (CPMG) entries
-# ----------------------------------------------------------------------------------------------
 
-register(TissueEntry(
-    key="brain_wm", organ="brain", tissue="white matter", modality=Modality.T2, kernel="t2_cpmg", field_T=1.5,
-    components=(
-        Component("myelin water", 0.12, 15.0, (10.0, 20.0), "MWF ~0.08-0.15 across WM structures"),
-        Component("intra/extracellular water", 0.86, 75.0, (65.0, 90.0)),
-        Component("free/CSF-like water", 0.02, 2000.0, (1000.0, 2500.0), "partial volume; often absent in pure WM"),
-    ),
-    functional="myelin water fraction (mass below 40 ms)", functional_threshold=40.0,
-    typical_acquisition=CPMG_REF,
-    sources=("MacKay et al. 1994 MRM 31:673", "Whittall et al. 1997 MRM 37:34", "Laule et al. 2007 Neurotherapeutics 4:460",
-             "Prasloski et al. 2012 MRM 67:1803 (3 T, EPG)"),
-    notes="The canonical case. At 3 T with EPG-corrected fitting MWF is similar; myelin water T2 shifts shorter with field."))
+def entries(kernel: str | None = None, modality: str | None = None) -> list[ComponentSet]:
+    """Component sets across the dictionary, filtered by kernel and/or modality."""
+    out = []
+    for e in _REG.values():
+        for m, cs in e.component_sets.items():
+            if kernel is not None and cs.kernel != kernel:
+                continue
+            if modality is not None and m != modality:
+                continue
+            out.append(cs)
+    return out
 
-register(TissueEntry(
-    key="brain_gm", organ="brain", tissue="cortical grey matter", modality=Modality.T2, kernel="t2_cpmg", field_T=1.5,
-    components=(
-        Component("myelin water", 0.03, 15.0, (10.0, 20.0)),
-        Component("intra/extracellular water", 0.94, 90.0, (80.0, 110.0)),
-        Component("free/CSF-like water", 0.03, 2000.0, (1000.0, 2500.0), "cortical partial volume with CSF"),
-    ),
-    functional="myelin water fraction (mass below 40 ms)", functional_threshold=40.0,
-    typical_acquisition=CPMG_REF,
-    sources=("Whittall et al. 1997 MRM 37:34", "Laule et al. 2007"),
-    notes="Small minor component: the hard case for the short-T2 fraction."))
 
-register(TissueEntry(
-    key="spinal_cord_wm", organ="spinal cord", tissue="white matter (dorsal/lateral columns)", modality=Modality.T2,
-    kernel="t2_cpmg", field_T=3.0,
-    components=(
-        Component("myelin water", 0.25, 15.0, (10.0, 20.0), "MWF 0.2-0.3 in cord WM"),
-        Component("intra/extracellular water", 0.72, 80.0, (70.0, 100.0)),
-        Component("free/CSF-like water", 0.03, 2000.0, (1500.0, 2500.0), "CSF partial volume is severe in cord"),
-    ),
-    functional="myelin water fraction (mass below 40 ms)", functional_threshold=40.0,
-    typical_acquisition=CPMG_REF,
-    sources=("MacMillan et al. 2011 NeuroImage 54:1083", "Laule et al. 2010"),
-    notes="Higher MWF than brain; the easy myelin case."))
+def status_summary() -> dict[str, int]:
+    """Count of component values by provenance status (for the docs and the changelog)."""
+    counts = {p.value: 0 for p in Provenance}
+    for cs in entries():
+        for c in cs.components:
+            counts[c.status.value] += 1
+    return counts
 
-register(TissueEntry(
-    key="skeletal_muscle", organ="musculoskeletal", tissue="skeletal muscle (calf/thigh)", modality=Modality.T2,
-    kernel="t2_cpmg", field_T=1.5,
-    components=(
-        Component("macromolecule-associated water", 0.05, 4.0, (2.0, 8.0), "invisible to a 10 ms first echo"),
-        Component("intracellular water", 0.85, 33.0, (28.0, 40.0)),
-        Component("extracellular/interstitial water", 0.10, 130.0, (100.0, 200.0), "rises with oedema, exercise"),
-    ),
-    functional="extracellular fraction (mass above 60 ms, i.e. 1 - mass below 60 ms)", functional_threshold=60.0,
-    typical_acquisition=CPMG_REF,
-    sources=("Saab, Thompson & Marsh 1999 MRM 42:150", "Araujo et al. 2014 Biophys J 106:2267 (3 T)"),
-    notes="Saab et al. report four components at 1.5 T; the shortest is below any clinical first echo."))
 
-register(TissueEntry(
-    key="articular_cartilage", organ="knee", tissue="articular cartilage", modality=Modality.T2, kernel="t2_cpmg", field_T=3.0,
-    components=(
-        Component("collagen-bound water", 0.05, 3.0, (1.0, 5.0), "needs UTE; invisible to CPMG at 10 ms"),
-        Component("intermediate (proteoglycan-associated) water", 0.20, 25.0, (15.0, 35.0)),
-        Component("bulk water", 0.75, 90.0, (60.0, 150.0)),
-    ),
-    functional="short/intermediate fraction (mass below 45 ms)", functional_threshold=45.0,
-    typical_acquisition={"n_echoes": 32, "dTE_ms": 6.0, "first_echo_snr": 100.0},
-    sources=("Reiter, Lin, Fishbein & Spencer 2009 MRM 61:803 (bovine nasal cartilage, ex vivo)",
-             "Bouhrara et al. 2015 MRM 73:352 (biexponential T2*, 3 T / 7 T)"),
-    notes="Ex vivo values; in vivo human cartilage is thinner and lower SNR. Fractions depend strongly on depth zone."))
-
-register(TissueEntry(
-    key="prostate_pz", organ="prostate", tissue="peripheral zone, normal", modality=Modality.T2, kernel="t2_cpmg", field_T=3.0,
-    components=(
-        Component("epithelial/stromal water", 0.65, 60.0, (40.0, 80.0)),
-        Component("luminal water", 0.35, 500.0, (300.0, 800.0), "long-T2 glandular lumen"),
-    ),
-    functional="luminal water fraction (1 - mass below 200 ms)", functional_threshold=200.0,
-    typical_acquisition={"n_echoes": 64, "dTE_ms": 8.0, "first_echo_snr": 80.0},
-    sources=("Sabouri et al. 2017 MRM 77:2038 (luminal water imaging)", "Sabouri et al. 2017 Radiology"),
-    notes="Two well-separated components (ratio ~8); LWF falls in tumour. Long echo train needed for the 500 ms component."))
-
-register(TissueEntry(
-    key="breast_fibroglandular", organ="breast", tissue="fibroglandular tissue with fat partial volume", modality=Modality.T2,
-    kernel="t2_cpmg", field_T=1.5,
-    components=(
-        Component("fibroglandular water", 0.6, 50.0, (40.0, 70.0)),
-        Component("fat (methylene)", 0.4, 100.0, (70.0, 140.0), "chemically shifted; better separated by Dixon than by T2"),
-    ),
-    functional="fat fraction (1 - mass below 75 ms)", functional_threshold=75.0,
-    typical_acquisition=CPMG_REF,
-    sources=("Edden et al. 2009 JMRI (breast T2)", "general fat/water relaxometry literature"),
-    notes="Illustrates a two-component case with ratio ~2: at the resolvability limit at clinical SNR."))
-
-register(TissueEntry(
-    key="myocardium", organ="heart", tissue="left-ventricular myocardium", modality=Modality.T2, kernel="t2_cpmg", field_T=1.5,
-    components=(
-        Component("myocardial water", 1.0, 48.0, (42.0, 55.0)),
-    ),
-    functional="T2 (mono-exponential)", functional_threshold=None,
-    typical_acquisition={"n_echoes": 8, "dTE_ms": 12.0, "first_echo_snr": 60.0},
-    sources=("Giri et al. 2009 JCMR (T2 mapping)", "Baessler et al. 2015"),
-    notes="K = 1 null case: a method that finds two components here is fitting noise. Austere budget."))
-
-register(TissueEntry(
-    key="liver_parenchyma_t2", organ="liver", tissue="parenchyma (normal iron)", modality=Modality.T2, kernel="t2_cpmg", field_T=1.5,
-    components=(
-        Component("hepatocellular water", 0.9, 45.0, (35.0, 55.0)),
-        Component("blood/bile/vascular partial volume", 0.1, 200.0, (120.0, 300.0)),
-    ),
-    functional="long-T2 fraction (1 - mass below 100 ms)", functional_threshold=100.0,
-    typical_acquisition={"n_echoes": 16, "dTE_ms": 8.0, "first_echo_snr": 60.0},
-    sources=("general hepatic T2 relaxometry literature; iron-overload T2/T2* work (St Pierre 2005, Wood 2005)"),
-    notes="Iron shortens T2 drastically; this entry is the normal-iron case. Weak literature support for the second component."))
-
-# ----------------------------------------------------------------------------------------------
-# Entries for kernels not yet registered (carried for the dictionary's completeness)
-# ----------------------------------------------------------------------------------------------
-
-register(TissueEntry(
-    key="cortical_bone_ute", organ="bone", tissue="cortical bone", modality=Modality.T2STAR, kernel="t2star_ute", field_T=3.0,
-    components=(
-        Component("collagen-bound water", 0.7, 0.35, (0.25, 0.5), "T2* in ms"),
-        Component("pore water", 0.3, 3.0, (1.0, 10.0), "broad; multi-exponential in itself"),
-    ),
-    functional="bound-water fraction (mass below 1 ms)", functional_threshold=1.0,
-    typical_acquisition={"n_echoes": 12, "dTE_ms": 0.3, "first_echo_snr": 40.0},
-    sources=("Horch, Nyman, Gochberg, Dortch & Does 2010 MRM 64:680", "Du et al. 2010 JMR / Bydder UTE literature"),
-    notes="Needs a UTE T2* kernel; ratio ~10 but both components are sub-10 ms."))
-
-register(TissueEntry(
-    key="achilles_tendon_ute", organ="musculoskeletal", tissue="Achilles tendon", modality=Modality.T2STAR, kernel="t2star_ute", field_T=3.0,
-    components=(
-        Component("short T2* (bound)", 0.8, 1.0, (0.5, 2.0)),
-        Component("long T2* (free)", 0.2, 15.0, (10.0, 25.0)),
-    ),
-    functional="short fraction (mass below 5 ms)", functional_threshold=5.0,
-    typical_acquisition={"n_echoes": 12, "dTE_ms": 0.5, "first_echo_snr": 40.0},
-    sources=("Du et al. 2010 MRI 28:178 (UTE bicomponent T2*)", "Juras et al. 2013"),
-    notes="Magic-angle dependent; the fractions swing with fibre orientation."))
-
-register(TissueEntry(
-    key="brain_wm_t1", organ="brain", tissue="white matter", modality=Modality.T1, kernel="t1_ir", field_T=3.0,
-    components=(
-        Component("myelin-associated (short T1)", 0.15, 300.0, (150.0, 450.0), "exchange-attenuated; see charter §2.3"),
-        Component("intra/extracellular (long T1)", 0.85, 950.0, (800.0, 1100.0)),
-    ),
-    functional="short-T1 fraction (mass below 600 ms)", functional_threshold=600.0,
-    typical_acquisition={"n_points": 32, "TI_spacing_ms": 100.0, "first_echo_snr": 100.0},
-    sources=("Labadie et al. 2014 MRM 71:375", "Deoni et al. 2008 (mcDESPOT)", "Lankford & Does 2013 MRM 69:127 (precision critique)"),
-    notes="The exchange-limited case (charter §2.3); needs the IR kernel and a Bloch-McConnell truth to score honestly."))
-
-register(TissueEntry(
-    key="liver_ivim", organ="liver", tissue="parenchyma", modality=Modality.DIFFUSION, kernel="diffusion_ivim", field_T=1.5,
-    components=(
-        Component("tissue diffusion D", 0.75, 1.1, (0.9, 1.3), "um^2/ms"),
-        Component("pseudo-diffusion D*", 0.25, 50.0, (20.0, 100.0), "um^2/ms; perfusion fraction f ~0.2-0.3"),
-    ),
-    functional="perfusion fraction f (1 - mass below 10 um^2/ms)", functional_threshold=10.0,
-    typical_acquisition={"n_b": 10, "b_max_s_per_mm2": 800.0, "first_echo_snr": 50.0},
-    sources=("Le Bihan et al. 1988 Radiology 168:497", "Luciani et al. 2008 Radiology 249:891"),
-    notes="The canonical two-compartment diffusion case; ratio ~45 in D but the fast component lives in b < 100."))
+def to_json_dict() -> dict:
+    return {
+        "schema_version": "2.0",
+        "generated_from": "mexp.tissue_data",
+        "status_legend": {
+            "PRIMARY": "read from the original paper's own table/text", "SECONDARY": "abstract / review table / same-author conference abstract / mirrored PDF",
+            "TERTIARY": "textbook or website tabulation without a specific primary", "RECALLED": "from memory of the named sources; not opened",
+            "THEORY": "derived working configuration, not a measurement"},
+        "units": {"times": "ms", "diffusivity": "um^2/ms (= 1e-3 mm^2/s)", "water_content": "mass fraction", "pd_relative_csf": "CSF = 1"},
+        "sources": tissue_data.SRC,
+        "entries": tissue_data.ENTRIES,
+        "changelog": tissue_data.CHANGELOG,
+    }

@@ -1,0 +1,2767 @@
+{
+ "schema_version": "2.0",
+ "generated_from": "mexp.tissue_data",
+ "status_legend": {
+  "PRIMARY": "read from the original paper's own table/text",
+  "SECONDARY": "abstract / review table / same-author conference abstract / mirrored PDF",
+  "TERTIARY": "textbook or website tabulation without a specific primary",
+  "RECALLED": "from memory of the named sources; not opened",
+  "THEORY": "derived working configuration, not a measurement"
+ },
+ "units": {
+  "times": "ms",
+  "diffusivity": "um^2/ms (= 1e-3 mm^2/s)",
+  "water_content": "mass fraction",
+  "pd_relative_csf": "CSF = 1"
+ },
+ "sources": {
+  "St05": "Stanisz et al. 2005 MRM 54:507 (Table 1; in vitro 37 C, mixed species; read via publisher PDF mirror)",
+  "dB04": "de Bazelaire et al. 2004 Radiology 230:652 (3 T in vivo; abstract)",
+  "Han03": "Han/Gold et al. ISMRM 2003 #450 = Gold et al. 2004 AJR 183:343 (1.5/3 T in vivo; conference abstract table)",
+  "Wan99": "Wansapura et al. 1999 JMRI 9:531 (3 T; abstract)",
+  "Wri08": "Wright et al. 2008 MAGMA 21:121 (MPRAGE T1; abstract)",
+  "Roo07": "Rooney et al. 2007 MRM 57:308 (T1 field dependence; abstract)",
+  "Boj17": "Bojorquez et al. 2017 MRI 35:69 (3 T review table; read via mirror PDF)",
+  "RP06": "Rakow-Penner et al. 2006 JMRI 23:87 as tabulated by Keenan et al. 2016 (NIST) and Bojorquez 2017",
+  "vKB13": "von Knobelsdorff-Brenkenhoff et al. 2013 JCMR 15:53 (3 T myocardium; full text)",
+  "Giri09": "Giri et al. 2009 JCMR 11:56 (1.5 T myocardial T2, quoted in vKB13)",
+  "Qiao17": "Qiao et al. 2017 (Achilles UTE T2*; full text via Semantic Scholar PDF)",
+  "AR20": "Abbasi-Rad et al. 2020 arXiv:2002.00209 (cortical bone T2*/T1; preprint)",
+  "OP19": "Oros-Peusquens et al. 2019 Front Neurol 10:1333 (brain water content 3 T; full text)",
+  "Whi97": "Whittall et al. 1997 MRM 37:34 (abstract: water content WM 0.71, GM 0.83 g/ml; gmT2 70-86 ms)",
+  "MacK94": "MacKay et al. 1994 MRM 31:673 (full-text preview: MWF WM 15.6 +/- 8.1 %, GM 3.8 +/- 6.4 %; IE 70-95 ms)",
+  "Lau07": "Laule et al. 2007 Neurotherapeutics 4:460 (review; full text)",
+  "MacM07": "MacMillan et al. ISMRM 2007 #2331 (3 T cord MWF 0.226; precursor of MacMillan 2011 NeuroImage 54:1083)",
+  "Saab99": "Saab, Thompson & Marsh 1999 MRM 42:150 (abstract: <5 / 21 / 39 / 114 ms, 11 / 28 / 46 / 5 %)",
+  "Ara14": "Araujo, Fromes & Carlier 2014 Biophys J 106:2267 (record confirmed; values not reachable)",
+  "Rei09": "Reiter, Lin, Fishbein & Spencer 2009 MRM 61:803 (full text, PMC2711212; bovine nasal cartilage 9.4 T)",
+  "Bou15": "Bouhrara et al. 2015 MRM 73:352 (record confirmed)",
+  "Sab17": "Sabouri et al. 2017 Radiology 284:451 and JMRI 46:861 (records confirmed; LWF values not reachable)",
+  "Hor10": "Horch et al. 2010 MRM 64:680 (full text, PMC2933073; human cortical bone 4.7 T)",
+  "Du12": "Du et al. 2012 MRM 67:645 (abstract; UTE bicomponent T2*)",
+  "Lab14": "Labadie et al. 2014 MRM 71:375 (abstract: short-T1 106-225 ms, WM fraction 8.3 % at 3 T)",
+  "LeS16": "Le Ster et al. 2016 JMRI 44:549 (abstract; vertebral marrow 1.5 T Dixon)",
+  "Luc08": "Luciani et al. 2008 Radiology 249:891 (Table 4, full PDF; liver IVIM 1.5 T)",
+  "Li17": "Li et al. 2017 QIMS (27-study pooled liver IVIM; full text)",
+  "Yam99": "Yamada et al. 1999 Radiology 210:617 (abstract; IVIM D liver/spleen/kidney 1.5 T)",
+  "vBa17": "van Baalen et al. 2017 JMRI (full text; kidney cortex/medulla IVIM 3 T)",
+  "Fil15": "Filli et al. 2015 Eur Radiol 25:2049 (abstract; renal cortex IVIM 3 T)",
+  "Ser24": "Serafin et al. 2024 Diagnostics 14:571 (full text; pancreas IVIM 1.5 T, n=47)",
+  "May21": "Mayer et al. 2021 Cancer Imaging 21:13 (full PDF; pancreas IVIM)",
+  "McG15": "McGill et al. 2015 PLOS One 10:e0132360 (full text; myocardial DTI 3 T)",
+  "Maz21": "Mazzoli et al. 2021 Front Neurol 12:608549 (full text; muscle DTI 3 T; unit flag)",
+  "SM25": "bioRxiv 2025 doi 10.64898/2025.12.06.692761 and Jelescu & Budde 2017 Front Phys 5:61 (WM standard model ranges)",
+  "RK": "Radiology Key 'MRI tissue parameters' Table 6-1 (relative PD, CSF = 100; tertiary, no primary cited)",
+  "MRM-web": "mrimaster.com ADC table (tertiary; no b-values; no primary cited)",
+  "EJR20": "Egypt J Radiol Nucl Med 2020 doi 10.1186/s43055-020-00212-3 (liver/spleen ADC controls; spleen SD anomalous)",
+  "Ber83": "Bernardino et al. 1983 AJR 141:1203 (ex vivo biexponential liver T2; abstract, no values)",
+  "Tas24": "Tasbihi et al. 2024 MRM 91:2532 (rat kidney biexponential T2 as tubule-volume surrogate; abstract)"
+ },
+ "entries": [
+  {
+   "key": "brain_wm",
+   "organ": "brain",
+   "tissue": "white matter",
+   "properties": {
+    "water_content": {
+     "value": 0.69,
+     "status": "SECONDARY",
+     "source": "OP19; Whi97 (0.71 g/ml)",
+     "unit": "g/g",
+     "range": [
+      0.687,
+      0.716
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.7,
+     "status": "TERTIARY",
+     "source": "RK (WM 60-70 of CSF 100); consistent with water content 0.69/1.0",
+     "range": [
+      0.6,
+      0.72
+     ]
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 884,
+      "status": "SECONDARY",
+      "source": "St05 (bovine, 884+/-50); Wri08 MPRAGE in vivo 646+/-32; Roo07 fit 681",
+      "range": [
+       646,
+       884
+      ]
+     },
+     "3T": {
+      "value": 1084,
+      "status": "SECONDARY",
+      "source": "St05 (bovine 1084+/-45); Wan99 832; Wri08 838+/-50; Roo07 fit 887",
+      "range": [
+       832,
+       1084
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 72,
+      "status": "SECONDARY",
+      "source": "St05 (72+/-4)",
+      "range": [
+       65,
+       80
+      ]
+     },
+     "3T": {
+      "value": 69,
+      "status": "SECONDARY",
+      "source": "St05 (69+/-3); Lu05 via Boj17 75+/-3",
+      "range": [
+       65,
+       80
+      ]
+     }
+    },
+    "ADC": {
+     "value": 0.75,
+     "status": "TERTIARY",
+     "source": "MRM-web (0.70-0.80)",
+     "unit": "um2/ms",
+     "range": [
+      0.7,
+      0.8
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 1.5,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "myelin water",
+       "fraction": 0.15,
+       "value": 15.0,
+       "status": "SECONDARY",
+       "source": "MacK94 MWF 15.6+/-8.1 %; window 10-50 ms (Whi97, Lau07)",
+       "range": [
+        10,
+        20
+       ]
+      },
+      {
+       "name": "intra/extracellular water",
+       "fraction": 0.83,
+       "value": 78.0,
+       "status": "SECONDARY",
+       "source": "MacK94 70-95 ms; Whi97 gmT2 70-86 ms",
+       "range": [
+        70,
+        95
+       ]
+      },
+      {
+       "name": "free/CSF-like water",
+       "fraction": 0.02,
+       "value": 2000.0,
+       "status": "RECALLED",
+       "source": "Lau07 (>= 1 s); partial volume",
+       "range": [
+        1000,
+        2500
+       ]
+      }
+     ],
+     "functional": "myelin water fraction (mass below 40 ms)",
+     "functional_threshold": 40.0,
+     "typical_acquisition": {
+      "n_echoes": 32,
+      "dTE_ms": 10.0,
+      "first_echo_snr": 100.0
+     }
+    },
+    "T1": {
+     "kernel": "t1_ir",
+     "field_T": 3.0,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "myelin-associated (short T1)",
+       "fraction": 0.083,
+       "value": 170.0,
+       "status": "SECONDARY",
+       "source": "Lab14: 106-225 ms, WM fraction 8.3 % at 3 T",
+       "range": [
+        106,
+        225
+       ]
+      },
+      {
+       "name": "intra/extracellular (long T1)",
+       "fraction": 0.917,
+       "value": 1000.0,
+       "status": "SECONDARY",
+       "source": "Lab14 main peak; St05/Wri08 bulk T1",
+       "range": [
+        830,
+        1100
+       ]
+      }
+     ],
+     "functional": "short-T1 fraction (mass below 500 ms)",
+     "functional_threshold": 500.0,
+     "typical_acquisition": {
+      "n_points": 32,
+      "TI_spacing_ms": 100.0,
+      "first_echo_snr": 100.0
+     }
+    },
+    "diffusion": {
+     "kernel": "diffusion_standard_model",
+     "field_T": 3.0,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "intra-axonal (stick)",
+       "fraction": 0.5,
+       "value": 2.2,
+       "status": "SECONDARY",
+       "source": "SM25: f 0.35-0.70, Da 2.03-2.41",
+       "range": [
+        2.0,
+        2.4
+       ],
+       "note": "Da along the axon"
+      },
+      {
+       "name": "extra-axonal",
+       "fraction": 0.5,
+       "value": 0.6,
+       "status": "SECONDARY",
+       "source": "SM25: De_perp 0.51-0.72, De_par 1.87-2.27",
+       "range": [
+        0.5,
+        0.72
+       ],
+       "note": "value = De_perp"
+      }
+     ],
+     "functional": "intra-axonal signal fraction",
+     "functional_threshold": null,
+     "typical_acquisition": {
+      "b_values_ms_per_um2": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "directions": 60,
+      "first_echo_snr": 30.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "myelin water (between bilayers, ~15 % of WM water)",
+     "intra-axonal water",
+     "extra-axonal / interstitial water",
+     "glial intracellular water",
+     "blood (CBV ~ 2-3 %)",
+     "CSF partial volume at voxel scale",
+     "non-aqueous protons (lipid, protein; T2 < 100 us)"
+    ],
+    "n_pools": 7,
+    "exchange": "Myelin water exchanges with intra/extra-axonal water on ~100-300 ms (intermediate on the T2 scale, fast on the T1 scale -> multi-component T1 is exchange-attenuated); intra- and extra-axonal water exchange slowly (~0.5-2 s) but have nearly equal T2 and coalesce; glial water is unresolved.",
+    "n_apparent_T2": 3,
+    "n_resolvable_clinical_T2": 2,
+    "rationale": "Seven physical pools reduce to three apparent T2 components (myelin, IE, CSF) because IE-scale pools share T2 within the exchange-averaged tolerance; at clinical SNR two are resolvable, and the third (CSF) is unpinned by a 320 ms window. On the T1 axis exchange leaves only a weak short component (8 % at 3 T, rising with field)."
+   },
+   "sources": [
+    "MacK94",
+    "Whi97",
+    "Lau07",
+    "St05",
+    "Wri08",
+    "Roo07",
+    "OP19",
+    "Lab14",
+    "SM25"
+   ]
+  },
+  {
+   "key": "brain_gm",
+   "organ": "brain",
+   "tissue": "cortical grey matter",
+   "properties": {
+    "water_content": {
+     "value": 0.837,
+     "status": "SECONDARY",
+     "source": "OP19 (83.7+/-1.2 %); Whi97 0.83 g/ml",
+     "unit": "g/g",
+     "range": [
+      0.805,
+      0.846
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.83,
+     "status": "TERTIARY",
+     "source": "RK (GM 70-85); water content 0.84",
+     "range": [
+      0.7,
+      0.85
+     ]
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 1124,
+      "status": "SECONDARY",
+      "source": "St05 (bovine 1124+/-50); Wri08 MPRAGE 1197+/-134; Roo07 fit 998",
+      "range": [
+       998,
+       1197
+      ]
+     },
+     "3T": {
+      "value": 1607,
+      "status": "SECONDARY",
+      "source": "Wri08 (1607+/-112); St05 bovine 1820+/-114; Wan99 1331; Lu05 via Boj17 1165",
+      "range": [
+       1165,
+       1820
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 95,
+      "status": "SECONDARY",
+      "source": "St05 (95+/-8)",
+      "range": [
+       85,
+       110
+      ]
+     },
+     "3T": {
+      "value": 99,
+      "status": "SECONDARY",
+      "source": "St05 (99+/-7); Lu05 via Boj17 83+/-4",
+      "range": [
+       80,
+       110
+      ]
+     }
+    },
+    "ADC": {
+     "value": 0.85,
+     "status": "TERTIARY",
+     "source": "MRM-web (0.80-0.90)",
+     "unit": "um2/ms",
+     "range": [
+      0.8,
+      0.9
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 1.5,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "myelin water",
+       "fraction": 0.04,
+       "value": 15.0,
+       "status": "SECONDARY",
+       "source": "MacK94 GM MWF 3.8+/-6.4 %",
+       "range": [
+        10,
+        20
+       ]
+      },
+      {
+       "name": "intra/extracellular water",
+       "fraction": 0.93,
+       "value": 90.0,
+       "status": "SECONDARY",
+       "source": "Whi97 gmT2 70-86 ms (GM at the upper end); St05 95",
+       "range": [
+        80,
+        110
+       ]
+      },
+      {
+       "name": "CSF partial volume",
+       "fraction": 0.03,
+       "value": 2000.0,
+       "status": "RECALLED",
+       "source": "cortical ribbon partial volume",
+       "range": [
+        1000,
+        2500
+       ]
+      }
+     ],
+     "functional": "myelin water fraction (mass below 40 ms)",
+     "functional_threshold": 40.0,
+     "typical_acquisition": {
+      "n_echoes": 32,
+      "dTE_ms": 10.0,
+      "first_echo_snr": 100.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "neuronal/glial intracellular water",
+     "extracellular water",
+     "sparse myelin water",
+     "blood (CBV ~ 4-6 %)",
+     "CSF partial volume",
+     "non-aqueous protons"
+    ],
+    "n_pools": 6,
+    "exchange": "Intra/extracellular water coalesce; myelin water is sparse; blood is a few percent at longer T2 (oxygenation dependent).",
+    "n_apparent_T2": 3,
+    "n_resolvable_clinical_T2": 1,
+    "rationale": "The minor components (myelin ~4 %, blood ~5 %, CSF ~3 %) are each below the clinical detectability floor; GM is effectively mono-exponential to a CPMG train at SNR 100 and is the hard case for any short-T2 fraction."
+   },
+   "sources": [
+    "MacK94",
+    "Whi97",
+    "St05",
+    "Wri08",
+    "OP19"
+   ]
+  },
+  {
+   "key": "csf",
+   "organ": "brain",
+   "tissue": "cerebrospinal fluid (ventricular)",
+   "properties": {
+    "water_content": {
+     "value": 0.99,
+     "status": "TERTIARY",
+     "source": "reference fluid; RK CSF = 100",
+     "unit": "g/g"
+    },
+    "pd_relative_csf": {
+     "value": 1.0,
+     "status": "TERTIARY",
+     "source": "definition"
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 4300,
+      "status": "SECONDARY",
+      "source": "Roo07 (4300+/-200, field independent)",
+      "range": [
+       4000,
+       4500
+      ]
+     },
+     "3T": {
+      "value": 4300,
+      "status": "SECONDARY",
+      "source": "Roo07; Lu05 via Boj17 3817+/-424",
+      "range": [
+       3800,
+       4500
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 2200,
+      "status": "TERTIARY",
+      "source": "Wikipedia table (2100-2300, uncited)",
+      "range": [
+       1500,
+       2500
+      ]
+     },
+     "3T": {
+      "value": 2000,
+      "status": "RECALLED",
+      "source": "typically 1.5-2.5 s",
+      "range": [
+       1500,
+       2500
+      ]
+     }
+    },
+    "ADC": {
+     "value": 3.0,
+     "status": "TERTIARY",
+     "source": "MRM-web (2.0-3.0); free water at 37 C is 3.0",
+     "unit": "um2/ms",
+     "range": [
+      2.0,
+      3.2
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 1.5,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "free water",
+       "fraction": 1.0,
+       "value": 2000.0,
+       "status": "TERTIARY",
+       "source": "single pool",
+       "range": [
+        1500,
+        2500
+       ]
+      }
+     ],
+     "functional": "T2 (mono-exponential)",
+     "functional_threshold": null,
+     "typical_acquisition": {
+      "n_echoes": 32,
+      "dTE_ms": 10.0,
+      "first_echo_snr": 100.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "free water"
+    ],
+    "n_pools": 1,
+    "exchange": "n/a",
+    "n_apparent_T2": 1,
+    "n_resolvable_clinical_T2": 1,
+    "rationale": "K = 1 reference and the partial-volume contaminant of every brain entry; its T2 exceeds any clinical echo train, so it appears as a near-constant offset — the charter §3.2 sigma / long-T degeneracy in physical form."
+   },
+   "sources": [
+    "Roo07",
+    "Boj17"
+   ]
+  },
+  {
+   "key": "spinal_cord_wm",
+   "organ": "spinal cord",
+   "tissue": "cervical cord white matter (lateral/dorsal columns)",
+   "properties": {
+    "water_content": {
+     "value": 0.72,
+     "status": "RECALLED",
+     "source": "as brain WM; cord-specific value not opened",
+     "unit": "g/g",
+     "range": [
+      0.68,
+      0.75
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.7,
+     "status": "TERTIARY",
+     "source": "as WM",
+     "range": [
+      0.6,
+      0.75
+     ]
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 745,
+      "status": "SECONDARY",
+      "source": "St05 (rat cord 745+/-37)",
+      "range": [
+       700,
+       900
+      ]
+     },
+     "3T": {
+      "value": 750,
+      "status": "SECONDARY",
+      "source": "Smith & van Zijl ISMRM 2007: lateral 752+/-89, dorsal 745+/-61; St05 rat 993+/-47",
+      "range": [
+       745,
+       993
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 74,
+      "status": "SECONDARY",
+      "source": "St05 (rat 74+/-6)",
+      "range": [
+       65,
+       80
+      ]
+     },
+     "3T": {
+      "value": 66,
+      "status": "SECONDARY",
+      "source": "Smith & van Zijl 2007: 65+/-4 / 66+/-4; St05 rat 78+/-2",
+      "range": [
+       65,
+       78
+      ]
+     }
+    },
+    "ADC": {
+     "value": 0.9,
+     "status": "RECALLED",
+     "source": "cord MD ~0.9 (strongly anisotropic)",
+     "unit": "um2/ms",
+     "range": [
+      0.8,
+      1.1
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 3.0,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "myelin water",
+       "fraction": 0.23,
+       "value": 20.0,
+       "status": "SECONDARY",
+       "source": "MacM07: whole-cord MWF 0.226, myelin T2 ~20 ms (window < 40 ms) at 3 T",
+       "range": [
+        10,
+        25
+       ]
+      },
+      {
+       "name": "intra/extracellular water",
+       "fraction": 0.74,
+       "value": 75.0,
+       "status": "SECONDARY",
+       "source": "Smith & van Zijl 2007 bulk 65-66 ms; St05",
+       "range": [
+        65,
+        90
+       ]
+      },
+      {
+       "name": "CSF partial volume",
+       "fraction": 0.03,
+       "value": 2000.0,
+       "status": "RECALLED",
+       "source": "severe around the cord",
+       "range": [
+        1500,
+        2500
+       ]
+      }
+     ],
+     "functional": "myelin water fraction (mass below 40 ms)",
+     "functional_threshold": 40.0,
+     "typical_acquisition": {
+      "n_echoes": 32,
+      "dTE_ms": 10.0,
+      "first_echo_snr": 100.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "myelin water (denser than brain WM)",
+     "intra-axonal",
+     "extra-axonal",
+     "glial",
+     "blood",
+     "CSF partial volume (large: small structure)",
+     "non-aqueous"
+    ],
+    "n_pools": 7,
+    "exchange": "as brain WM",
+    "n_apparent_T2": 3,
+    "n_resolvable_clinical_T2": 2,
+    "rationale": "Same pool structure as brain WM with a larger myelin fraction (0.2-0.3), which is why the MWF is the easy myelin case, and a larger CSF contaminant, which is why the long component matters more."
+   },
+   "sources": [
+    "MacM07",
+    "St05"
+   ]
+  },
+  {
+   "key": "skeletal_muscle",
+   "organ": "musculoskeletal",
+   "tissue": "skeletal muscle (calf / forearm / paravertebral)",
+   "properties": {
+    "water_content": {
+     "value": 0.75,
+     "status": "TERTIARY",
+     "source": "Wikipedia 'Body water' (~75 %); RK muscle PD 90",
+     "unit": "g/g",
+     "range": [
+      0.72,
+      0.78
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.9,
+     "status": "TERTIARY",
+     "source": "RK"
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 1008,
+      "status": "SECONDARY",
+      "source": "St05 (mouse 1008+/-20); Han03 in vivo 1130+/-92",
+      "range": [
+       1000,
+       1200
+      ]
+     },
+     "3T": {
+      "value": 1412,
+      "status": "SECONDARY",
+      "source": "St05 (1412+/-13); Han03 1420+/-38; dB04 paravertebral 898+/-33",
+      "range": [
+       898,
+       1420
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 35,
+      "status": "SECONDARY",
+      "source": "Han03 in vivo 35.3+/-3.9; St05 mouse 44+/-6; Saab99 imaging T2 31 ms",
+      "range": [
+       30,
+       45
+      ]
+     },
+     "3T": {
+      "value": 32,
+      "status": "SECONDARY",
+      "source": "Han03 31.7+/-1.9; dB04 29+/-4; St05 50+/-4 (mouse)",
+      "range": [
+       29,
+       50
+      ]
+     }
+    },
+    "ADC": {
+     "value": 1.5,
+     "status": "SECONDARY",
+     "source": "Maz21/Schlaffke: AD 1.9-2.6, RD 1.35-1.6 (unit flag in source); MRM-web 1.0-1.5",
+     "unit": "um2/ms",
+     "range": [
+      1.3,
+      1.8
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 1.5,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "macromolecule-associated water",
+       "fraction": 0.12,
+       "value": 4.0,
+       "status": "SECONDARY",
+       "source": "Saab99: < 5 ms, 11+/-2 %",
+       "range": [
+        2,
+        5
+       ],
+       "note": "invisible to a 10 ms first echo"
+      },
+      {
+       "name": "short intracellular (myofibrillar) water",
+       "fraction": 0.31,
+       "value": 21.0,
+       "status": "SECONDARY",
+       "source": "Saab99: 21+/-4 ms, 28+/-15 %",
+       "range": [
+        17,
+        25
+       ]
+      },
+      {
+       "name": "main intracellular (sarcoplasmic) water",
+       "fraction": 0.51,
+       "value": 39.0,
+       "status": "SECONDARY",
+       "source": "Saab99: 39+/-4 ms, 46+/-12 %",
+       "range": [
+        35,
+        43
+       ]
+      },
+      {
+       "name": "extracellular / interstitial water",
+       "fraction": 0.06,
+       "value": 114.0,
+       "status": "SECONDARY",
+       "source": "Saab99: 114+/-6 ms, 5 %",
+       "range": [
+        100,
+        200
+       ],
+       "note": "rises with oedema, exercise"
+      }
+     ],
+     "functional": "extracellular fraction (1 - mass below 60 ms)",
+     "functional_threshold": 60.0,
+     "typical_acquisition": {
+      "n_echoes": 32,
+      "dTE_ms": 10.0,
+      "first_echo_snr": 100.0
+     }
+    },
+    "diffusion": {
+     "kernel": "diffusion_tensor",
+     "field_T": 3.0,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "tensor: axial diffusivity",
+       "fraction": 1.0,
+       "value": 2.0,
+       "status": "SECONDARY",
+       "source": "Maz21 PGSE TA/soleus AD 2.32/2.64; Schlaffke AD 1.89/2.14",
+       "range": [
+        1.9,
+        2.6
+       ]
+      },
+      {
+       "name": "tensor: radial diffusivity",
+       "fraction": 0.0,
+       "value": 1.5,
+       "status": "SECONDARY",
+       "source": "Maz21 RD 1.55/1.51; Schlaffke 1.35/1.62",
+       "range": [
+        1.35,
+        1.6
+       ],
+       "note": "fraction 0 = same pool, second eigenvalue"
+      }
+     ],
+     "functional": "fractional anisotropy",
+     "functional_threshold": null,
+     "typical_acquisition": {
+      "b_values_s_per_mm2": [
+       0,
+       400,
+       600
+      ],
+      "directions": 12,
+      "first_echo_snr": 30.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "myofibrillar (intra-sarcomere) water",
+     "sarcoplasmic / mitochondrial water",
+     "interstitial (endomysial) water",
+     "vascular water (~ 3-5 % blood volume)",
+     "macromolecule-bound water (< 5 ms)",
+     "intramuscular fat (methylene protons; variable)"
+    ],
+    "n_pools": 6,
+    "exchange": "Intracellular sub-pools exchange on ms-tens of ms and are only separable at very high SNR (Saab99's 1000-echo, SNR 3500 data); intra/extracellular exchange ~ 100s of ms is slow enough to leave two visible components.",
+    "n_apparent_T2": 4,
+    "n_resolvable_clinical_T2": 2,
+    "rationale": "Saab et al. needed SNR ~3500 and 1.2 ms echoes to see four components; a clinical 32 x 10 ms train sees the ~30 ms intracellular pool and, at best, the ~120 ms extracellular one (the oedema marker)."
+   },
+   "sources": [
+    "Saab99",
+    "Ara14",
+    "St05",
+    "Han03",
+    "dB04",
+    "Maz21"
+   ]
+  },
+  {
+   "key": "articular_cartilage",
+   "organ": "knee",
+   "tissue": "articular (hyaline) cartilage",
+   "properties": {
+    "water_content": {
+     "value": 0.75,
+     "status": "SECONDARY",
+     "source": "Shiguetomi-Medina 2017 (up to 80 %); depth-dependent 65-80 %",
+     "unit": "g/g",
+     "range": [
+      0.65,
+      0.8
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.6,
+     "status": "RECALLED",
+     "source": "collagen/PG matrix reduces mobile PD; not opened",
+     "range": [
+      0.5,
+      0.7
+     ]
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 1024,
+      "status": "SECONDARY",
+      "source": "St05 (bovine 1024+/-70 at 0 deg); Han03 in vivo 1060+/-155",
+      "range": [
+       1000,
+       1100
+      ]
+     },
+     "3T": {
+      "value": 1168,
+      "status": "SECONDARY",
+      "source": "St05 (1168+/-18); Han03 1240+/-107",
+      "range": [
+       1150,
+       1250
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 37,
+      "status": "SECONDARY",
+      "source": "St05 30+/-4 (0 deg) / 44+/-5 (55 deg, magic angle); Han03 42.1+/-7.1",
+      "range": [
+       30,
+       44
+      ]
+     },
+     "3T": {
+      "value": 35,
+      "status": "SECONDARY",
+      "source": "St05 27+/-3 / 43+/-2; Han03 36.9+/-3.8",
+      "range": [
+       27,
+       43
+      ]
+     }
+    },
+    "ADC": {
+     "value": 1.3,
+     "status": "SECONDARY",
+     "source": "Raya 2012: healthy-vs-OA threshold ADC 1.2 (7 T); MRM-web n/a",
+     "unit": "um2/ms",
+     "range": [
+      1.1,
+      1.5
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 9.4,
+     "status": "PRIMARY",
+     "list": [
+      {
+       "name": "collagen-bound water",
+       "fraction": 0.062,
+       "value": 2.3,
+       "status": "PRIMARY",
+       "source": "Rei09 control: 2.3+/-0.6 ms, 6.2+/-2.5 %",
+       "range": [
+        1.7,
+        2.9
+       ],
+       "note": "needs UTE; invisible to CPMG at 10 ms"
+      },
+      {
+       "name": "proteoglycan-associated water",
+       "fraction": 0.145,
+       "value": 25.2,
+       "status": "PRIMARY",
+       "source": "Rei09: 25.2+/-6.2 ms, 14.5+/-3.9 %",
+       "range": [
+        19,
+        31
+       ]
+      },
+      {
+       "name": "bulk water",
+       "fraction": 0.793,
+       "value": 96.3,
+       "status": "PRIMARY",
+       "source": "Rei09: 96.3+/-4.7 ms, 79.3+/-6.1 %",
+       "range": [
+        90,
+        101
+       ]
+      }
+     ],
+     "functional": "short/intermediate fraction (mass below 45 ms)",
+     "functional_threshold": 45.0,
+     "typical_acquisition": {
+      "n_echoes": 32,
+      "dTE_ms": 6.0,
+      "first_echo_snr": 100.0
+     },
+     "note": "ex vivo bovine nasal cartilage at 9.4 T (Rei09); in vivo human articular cartilage at 3 T has shorter bulk T2 (~35-45 ms) and a magic-angle dependence; Bou15 treats it as biexponential T2* at 3/7 T"
+    }
+   },
+   "theory": {
+    "pools": [
+     "collagen-bound water (T2 ~ 1-3 ms)",
+     "proteoglycan-associated water",
+     "bulk (free) water",
+     "zonal variation superficial/transitional/deep (orientation-dependent T2)",
+     "synovial fluid partial volume at the surface"
+    ],
+    "n_pools": 5,
+    "exchange": "Bound and PG-associated water exchange with bulk on sub-ms to ms scales; the residual three-component structure (Rei09) survives because exchange is not complete. Orientation (magic angle) modulates T2 within the bulk pool, i.e. a distribution, not a discrete component.",
+    "n_apparent_T2": 3,
+    "n_resolvable_clinical_T2": 2,
+    "rationale": "At clinical TE_1 = 6-10 ms the 2 ms pool is gone; what remains is a ~25 ms / ~90 ms pair with ratio ~4 and a 15 % minor fraction — resolvable at high SNR in thick cartilage, marginal in vivo where SNR and thickness are both smaller."
+   },
+   "sources": [
+    "Rei09",
+    "Bou15",
+    "St05",
+    "Han03"
+   ]
+  },
+  {
+   "key": "achilles_tendon",
+   "organ": "musculoskeletal",
+   "tissue": "Achilles tendon",
+   "properties": {
+    "water_content": {
+     "value": 0.6,
+     "status": "RECALLED",
+     "source": "tendon ~ 55-70 % water; not opened",
+     "unit": "g/g",
+     "range": [
+      0.55,
+      0.7
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.3,
+     "status": "RECALLED",
+     "source": "most water is collagen-bound with sub-ms T2 (invisible at conventional TE)",
+     "range": [
+      0.1,
+      0.5
+     ]
+    },
+    "T1_ms": {
+     "3T": {
+      "value": 700,
+      "status": "RECALLED",
+      "source": "UTE-T1 of tendon ~ 600-800 ms; not opened",
+      "range": [
+       500,
+       900
+      ]
+     }
+    },
+    "T2_ms": {
+     "3T": {
+      "value": 11,
+      "status": "SECONDARY",
+      "source": "Qiao17: mono-exponential UTE T2* 11.1+/-0.3 ms (T2*, not CPMG T2)",
+      "range": [
+       8,
+       15
+      ]
+     }
+    },
+    "ADC": {
+     "value": 1.0,
+     "status": "RECALLED",
+     "source": "tendon diffusion rarely measured; anisotropic",
+     "unit": "um2/ms",
+     "range": [
+      0.8,
+      1.4
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2star_ute",
+     "field_T": 3.0,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "short T2* (collagen-bound)",
+       "fraction": 0.8,
+       "value": 1.0,
+       "status": "SECONDARY",
+       "source": "Du12: short-T2* fraction up to 80.9 % (ligament); short T2* 0.3-2.9 ms across tissues",
+       "range": [
+        0.5,
+        2.0
+       ]
+      },
+      {
+       "name": "long T2* (free water)",
+       "fraction": 0.2,
+       "value": 15.0,
+       "status": "SECONDARY",
+       "source": "Du12; Qiao17 mono 11.1 ms",
+       "range": [
+        8,
+        25
+       ]
+      }
+     ],
+     "functional": "short fraction (mass below 5 ms)",
+     "functional_threshold": 5.0,
+     "typical_acquisition": {
+      "n_echoes": 12,
+      "dTE_ms": 0.5,
+      "first_echo_snr": 40.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "collagen-bound water (sub-ms)",
+     "free/interfibrillar water",
+     "peritendinous fluid partial volume",
+     "collagen protons (T2 ~ 10s of us)"
+    ],
+    "n_pools": 4,
+    "exchange": "Bound/free exchange is fast relative to T1 but slow relative to the sub-ms/ms T2 split; magic-angle orientation dependence dominates the free pool's T2.",
+    "n_apparent_T2": 2,
+    "n_resolvable_clinical_T2": 2,
+    "rationale": "A two-component UTE T2* case with ratio ~10 and a dominant short pool: the mirror image of the myelin problem (major short component), estimable when TE_1 < 0.5 ms."
+   },
+   "sources": [
+    "Du12",
+    "Qiao17"
+   ]
+  },
+  {
+   "key": "cortical_bone",
+   "organ": "bone",
+   "tissue": "cortical bone (femur / tibia)",
+   "properties": {
+    "water_content": {
+     "value": 0.15,
+     "status": "SECONDARY",
+     "source": "Hor10: bound + pore water ~ 31-34 mol 1H/L; bulk water ~ 15-20 % by volume",
+     "unit": "g/g",
+     "range": [
+      0.1,
+      0.25
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.05,
+     "status": "TERTIARY",
+     "source": "RK cortical bone 1-10",
+     "range": [
+      0.01,
+      0.1
+     ]
+    },
+    "T1_ms": {
+     "3T": {
+      "value": 306,
+      "status": "SECONDARY",
+      "source": "AR20 quoting prior work: free (pore) water T1 306 ms; bound water T1 ~ 100-150 ms",
+      "range": [
+       100,
+       400
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 0.45,
+      "status": "SECONDARY",
+      "source": "AR20: bound-water T2* 0.45 ms (quoted), free-water T2* 2.81+/-0.31 ms (T2*, not CPMG T2)",
+      "range": [
+       0.3,
+       3.0
+      ]
+     }
+    },
+    "ADC": {
+     "value": null,
+     "status": "RECALLED",
+     "source": "not measurable with conventional DWI",
+     "unit": "um2/ms"
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2star_ute",
+     "field_T": 4.7,
+     "status": "PRIMARY",
+     "list": [
+      {
+       "name": "collagen-bound water",
+       "fraction": 0.68,
+       "value": 0.42,
+       "status": "PRIMARY",
+       "source": "Hor10 CPMG: 416+/-35 us, 60.8+/-5.3 % (plus 57 us pool 16.1 %); FID T2* 736 us 57.7 %",
+       "range": [
+        0.3,
+        0.75
+       ]
+      },
+      {
+       "name": "pore water (and lipid)",
+       "fraction": 0.32,
+       "value": 5.0,
+       "status": "PRIMARY",
+       "source": "Hor10: 1-1000 ms long-lived, 23.0+/-6.5 % (~60 % pore water / 40 % lipid); AR20 free T2* 2.8 ms at 1.5 T",
+       "range": [
+        1.0,
+        20.0
+       ]
+      }
+     ],
+     "functional": "bound-water fraction (mass below 1 ms)",
+     "functional_threshold": 1.0,
+     "typical_acquisition": {
+      "n_echoes": 12,
+      "dTE_ms": 0.3,
+      "first_echo_snr": 40.0
+     },
+     "note": "fractions renormalised over the two water pools visible to UTE; Hor10 also sees a 57 us pool (16 %) and a collagen 12 us pool (34 % of FID) that only solid-state methods reach"
+    }
+   },
+   "theory": {
+    "pools": [
+     "collagen-bound water (~0.4 ms)",
+     "pore water in Haversian/lacunar-canalicular space (1-1000 ms, itself distributed by pore size)",
+     "lipid in pores",
+     "collagen backbone protons (~12 us)",
+     "a 57 us pool (Hor10; assignment debated)"
+    ],
+    "n_pools": 5,
+    "exchange": "Pore and bound water do not exchange on the T2 scale; pore water T2 is a size distribution, not one value.",
+    "n_apparent_T2": 3,
+    "n_resolvable_clinical_T2": 2,
+    "rationale": "Well-separated (ratio > 10) but both pools are sub-10 ms and need UTE/ZTE; the continuous pore-size distribution makes the pore component a spectrum, the charter's continuum form in miniature."
+   },
+   "sources": [
+    "Hor10",
+    "AR20",
+    "Du12"
+   ]
+  },
+  {
+   "key": "bone_marrow_vertebral",
+   "organ": "bone",
+   "tissue": "vertebral (red / haematopoietic) bone marrow",
+   "properties": {
+    "water_content": {
+     "value": 0.45,
+     "status": "RECALLED",
+     "source": "fat fraction ~ 30-40 % in lumbar marrow of young adults (LeS16 33 %); water content of the non-fat part ~ 0.7",
+     "unit": "g/g",
+     "range": [
+      0.35,
+      0.55
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.85,
+     "status": "RECALLED",
+     "source": "water + fat protons both visible",
+     "range": [
+      0.7,
+      0.95
+     ]
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 701,
+      "status": "SECONDARY",
+      "source": "LeS16: T1 water 701+/-151, T1 fat 334+/-113 (1.5 T, Dixon)",
+      "range": [
+       334,
+       850
+      ]
+     },
+     "3T": {
+      "value": 586,
+      "status": "SECONDARY",
+      "source": "dB04 L4 vertebra 586+/-73 (bulk, fat-dominated)",
+      "range": [
+       500,
+       700
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 49,
+      "status": "SECONDARY",
+      "source": "dB04 (3 T) 49+/-4 bulk; LeS16 T2* water 13.7+/-2.9, fat 11.4+/-2.7 (T2*)",
+      "range": [
+       40,
+       60
+      ]
+     }
+    },
+    "ADC": {
+     "value": 0.4,
+     "status": "TERTIARY",
+     "source": "MRM-web marrow 0.20-0.60",
+     "unit": "um2/ms",
+     "range": [
+      0.2,
+      0.6
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 1.5,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "haematopoietic/water",
+       "fraction": 0.67,
+       "value": 45.0,
+       "status": "SECONDARY",
+       "source": "LeS16 water fraction 67 %; T2 of marrow water ~ 40-60 ms (T2* 13.7)",
+       "range": [
+        35,
+        60
+       ]
+      },
+      {
+       "name": "fat (methylene)",
+       "fraction": 0.33,
+       "value": 100.0,
+       "status": "SECONDARY",
+       "source": "LeS16 FF 33+/-8 %; fat T2 at 1.5 T 100-165 (Han03 165 for yellow marrow; dB04 68 at 3 T)",
+       "range": [
+        68,
+        165
+       ]
+      }
+     ],
+     "functional": "fat fraction (1 - mass below 75 ms)",
+     "functional_threshold": 75.0,
+     "typical_acquisition": {
+      "n_echoes": 32,
+      "dTE_ms": 10.0,
+      "first_echo_snr": 100.0
+     },
+     "note": "fat and water are chemically shifted; Dixon separates them far better than T2 — this entry is a T2-only stress test"
+    }
+   },
+   "theory": {
+    "pools": [
+     "haematopoietic cell water",
+     "adipocyte lipid (multiple resonances: methylene, methyl, olefinic)",
+     "trabecular-bone-adjacent water (susceptibility broadened)",
+     "sinusoidal blood (~5-10 %)"
+    ],
+    "n_pools": 4,
+    "exchange": "Fat and water do not exchange; the fat pool is itself multi-resonance (chemical shift, not relaxation).",
+    "n_apparent_T2": 2,
+    "n_resolvable_clinical_T2": 1,
+    "rationale": "A ratio ~2 two-component case at the resolvability floor (delta ~ 2.7 at SNR 100): T2 alone should fail and chemical shift should be used — a deliberate 'wrong tool' row for the harness."
+   },
+   "sources": [
+    "LeS16",
+    "dB04",
+    "Han03"
+   ]
+  },
+  {
+   "key": "myocardium",
+   "organ": "heart",
+   "tissue": "left-ventricular myocardium",
+   "properties": {
+    "water_content": {
+     "value": 0.78,
+     "status": "RECALLED",
+     "source": "myocardial water ~ 76-80 %; not opened",
+     "unit": "g/g",
+     "range": [
+      0.75,
+      0.8
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.85,
+     "status": "RECALLED",
+     "source": "",
+     "range": [
+      0.8,
+      0.9
+     ]
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 1030,
+      "status": "SECONDARY",
+      "source": "St05 (mouse heart 1030+/-34); in vivo MOLLI ~950-1000 (RECALLED)",
+      "range": [
+       950,
+       1050
+      ]
+     },
+     "3T": {
+      "value": 1170,
+      "status": "SECONDARY",
+      "source": "vKB13 MOLLI 1157-1181 base->apex; St05 1471+/-31 (mouse); Boj17 1116-1341",
+      "range": [
+       1116,
+       1341
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 52,
+      "status": "SECONDARY",
+      "source": "Giri09 52.2 (quoted in vKB13); St05 mouse 40+/-6",
+      "range": [
+       40,
+       55
+      ]
+     },
+     "3T": {
+      "value": 45,
+      "status": "SECONDARY",
+      "source": "vKB13 44.1-46.9; St05 47+/-11; Boj17 39-67",
+      "range": [
+       39,
+       67
+      ]
+     }
+    },
+    "ADC": {
+     "value": 0.89,
+     "status": "SECONDARY",
+     "source": "McG15 MD 0.89+/-0.06, FA 0.42+/-0.03 (3 T DW-STEAM)",
+     "unit": "um2/ms",
+     "range": [
+      0.8,
+      1.0
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 1.5,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "myocardial water",
+       "fraction": 1.0,
+       "value": 48.0,
+       "status": "SECONDARY",
+       "source": "Giri09/vKB13 mono-exponential 44-52 ms",
+       "range": [
+        42,
+        55
+       ]
+      }
+     ],
+     "functional": "T2 (mono-exponential)",
+     "functional_threshold": null,
+     "typical_acquisition": {
+      "n_echoes": 8,
+      "dTE_ms": 12.0,
+      "first_echo_snr": 60.0
+     }
+    },
+    "diffusion": {
+     "kernel": "diffusion_tensor",
+     "field_T": 3.0,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "tensor: mean diffusivity",
+       "fraction": 1.0,
+       "value": 0.89,
+       "status": "SECONDARY",
+       "source": "McG15 MD 0.89 (epi 0.87, meso 0.89, endo 0.91)",
+       "range": [
+        0.85,
+        0.95
+       ]
+      }
+     ],
+     "functional": "fractional anisotropy (0.42)",
+     "functional_threshold": null,
+     "typical_acquisition": {
+      "b_values_s_per_mm2": [
+       150,
+       750
+      ],
+      "directions": 6,
+      "first_echo_snr": 20.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "myocyte intracellular water",
+     "interstitial water",
+     "capillary/vascular blood (~10 % of myocardial volume)",
+     "blood-pool partial volume at endocardium",
+     "epicardial fat partial volume"
+    ],
+    "n_pools": 5,
+    "exchange": "Intra/extracellular exchange is fast enough at clinical TE that myocardium fits as mono-exponential; the vascular pool (~10 %, T2 ~ 100-250 ms depending on oxygenation) is the candidate second component that oedema/haemorrhage/iron perturb.",
+    "n_apparent_T2": 2,
+    "n_resolvable_clinical_T2": 1,
+    "rationale": "K = 1 null case at clinical echo counts (8 x 12 ms): any method reporting two components here is fitting noise unless SNR and echo count are raised substantially."
+   },
+   "sources": [
+    "vKB13",
+    "Giri09",
+    "St05",
+    "McG15",
+    "Boj17"
+   ]
+  },
+  {
+   "key": "blood_arterial",
+   "organ": "vascular",
+   "tissue": "arterial blood (Hct ~ 0.42, Y ~ 0.98)",
+   "properties": {
+    "water_content": {
+     "value": 0.83,
+     "status": "RECALLED",
+     "source": "plasma 0.92, RBC 0.65 -> ~0.83 at Hct 0.42",
+     "unit": "g/g",
+     "range": [
+      0.8,
+      0.85
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.85,
+     "status": "TERTIARY",
+     "source": "RK blood 85",
+     "range": [
+      0.8,
+      0.9
+     ]
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 1441,
+      "status": "SECONDARY",
+      "source": "St05 (human in vitro 1441+/-120); Roo07 fit 1550",
+      "range": [
+       1350,
+       1600
+      ]
+     },
+     "3T": {
+      "value": 1932,
+      "status": "SECONDARY",
+      "source": "St05 (1932+/-85); Roo07 fit 1961",
+      "range": [
+       1650,
+       2000
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 290,
+      "status": "SECONDARY",
+      "source": "St05 (oxygenated in vitro 290+/-30); venous 50-200 depending on Y (Wikipedia tertiary)",
+      "range": [
+       150,
+       300
+      ]
+     },
+     "3T": {
+      "value": 275,
+      "status": "SECONDARY",
+      "source": "St05 (275+/-50); venous much shorter",
+      "range": [
+       100,
+       275
+      ]
+     }
+    },
+    "ADC": {
+     "value": 3.0,
+     "status": "RECALLED",
+     "source": "free-water-like plus flow; Funck 2018 not opened",
+     "unit": "um2/ms",
+     "range": [
+      2.5,
+      3.5
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 1.5,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "blood water (plasma + RBC, fast exchange)",
+       "fraction": 1.0,
+       "value": 250.0,
+       "status": "SECONDARY",
+       "source": "St05 290 in vitro; in vivo arterial ~ 200-250 (RECALLED)",
+       "range": [
+        150,
+        300
+       ]
+      }
+     ],
+     "functional": "T2 (mono-exponential; oxygenation via Luz-Meiboom)",
+     "functional_threshold": null,
+     "typical_acquisition": {
+      "n_echoes": 32,
+      "dTE_ms": 10.0,
+      "first_echo_snr": 60.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "plasma water",
+     "erythrocyte intracellular water"
+    ],
+    "n_pools": 2,
+    "exchange": "Plasma-RBC water exchange ~ 10 ms is fast relative to the T2 difference: one apparent component whose T2 depends on oxygenation and echo spacing (Luz-Meiboom), i.e. a CPMG-spacing-dependent 'T2' — a model-misspecification case rather than a K > 1 case.",
+    "n_apparent_T2": 1,
+    "n_resolvable_clinical_T2": 1,
+    "rationale": "K = 1 physically but with echo-spacing dependence; the partial-volume contaminant for kidney, spleen, liver and myocardium entries."
+   },
+   "sources": [
+    "St05",
+    "Roo07"
+   ]
+  },
+  {
+   "key": "liver",
+   "organ": "liver",
+   "tissue": "parenchyma (normal iron, no steatosis)",
+   "properties": {
+    "water_content": {
+     "value": 0.71,
+     "status": "RECALLED",
+     "source": "liver ~ 70-72 % water (Woodard & White not opened); RK PD 90",
+     "unit": "g/g",
+     "range": [
+      0.68,
+      0.74
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.9,
+     "status": "TERTIARY",
+     "source": "RK"
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 576,
+      "status": "SECONDARY",
+      "source": "St05 (mouse 576+/-30); in vivo human ~ 550-600 (RECALLED)",
+      "range": [
+       550,
+       620
+      ]
+     },
+     "3T": {
+      "value": 809,
+      "status": "SECONDARY",
+      "source": "dB04 809+/-71; St05 812+/-64",
+      "range": [
+       750,
+       870
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 46,
+      "status": "SECONDARY",
+      "source": "St05 46+/-6",
+      "range": [
+       40,
+       55
+      ]
+     },
+     "3T": {
+      "value": 34,
+      "status": "SECONDARY",
+      "source": "dB04 34+/-4; St05 42+/-3",
+      "range": [
+       30,
+       45
+      ]
+     }
+    },
+    "ADC": {
+     "value": 1.39,
+     "status": "PRIMARY",
+     "source": "Luc08 Table 4: 1.39+/-0.2 (b up to 800); EJR20 1.65+/-0.44; MRM-web 0.6-1.1",
+     "unit": "um2/ms",
+     "range": [
+      1.0,
+      1.7
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 1.5,
+     "status": "THEORY",
+     "list": [
+      {
+       "name": "hepatocellular water",
+       "fraction": 0.78,
+       "value": 42.0,
+       "status": "THEORY",
+       "source": "bulk T2 (St05/dB04); fraction = 1 - IVIM perfusion fraction (Luc08 f 0.27; Li17 0.22)",
+       "range": [
+        35,
+        50
+       ]
+      },
+      {
+       "name": "sinusoidal blood / bile",
+       "fraction": 0.22,
+       "value": 150.0,
+       "status": "THEORY",
+       "source": "vascular fraction from IVIM f (0.22-0.27); T2 of partially deoxygenated blood 100-200 ms",
+       "range": [
+        100,
+        250
+       ]
+      }
+     ],
+     "functional": "vascular/long-T2 fraction (1 - mass below 90 ms)",
+     "functional_threshold": 90.0,
+     "typical_acquisition": {
+      "n_echoes": 16,
+      "dTE_ms": 8.0,
+      "first_echo_snr": 60.0
+     },
+     "note": "no in vivo multi-component liver T2 study reached (Ber83 ex vivo biexponential, no values); the split is a working configuration from IVIM and bulk T2"
+    },
+    "diffusion": {
+     "kernel": "diffusion_ivim",
+     "field_T": 1.5,
+     "status": "PRIMARY",
+     "list": [
+      {
+       "name": "tissue diffusion D",
+       "fraction": 0.73,
+       "value": 1.1,
+       "status": "PRIMARY",
+       "source": "Luc08 Table 4: D 1.10+/-0.7, f 27.0+/-5.3 %; Li17 pooled D 1.09, f 22.4 %; Yam99 D 0.72",
+       "range": [
+        0.9,
+        1.3
+       ]
+      },
+      {
+       "name": "pseudo-diffusion D*",
+       "fraction": 0.27,
+       "value": 79.1,
+       "status": "PRIMARY",
+       "source": "Luc08: D* 79.1+/-18.1; Li17 pooled 70.6",
+       "range": [
+        50,
+        100
+       ]
+      }
+     ],
+     "functional": "perfusion fraction f",
+     "functional_threshold": 10.0,
+     "typical_acquisition": {
+      "b_values_s_per_mm2": [
+       0,
+       10,
+       20,
+       30,
+       50,
+       80,
+       100,
+       200,
+       400,
+       800
+      ],
+      "first_echo_snr": 50.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "hepatocyte cytoplasmic water",
+     "sinusoidal blood (large: ~ 25 % of volume, hence IVIM f 0.2-0.3)",
+     "bile canalicular/ductal fluid (~ 1-2 %)",
+     "Kupffer/endothelial cell water",
+     "lipid droplets in steatosis (0-30 %)",
+     "iron-loaded cells (shorten T2 drastically)"
+    ],
+    "n_pools": 6,
+    "exchange": "Hepatocyte-sinusoid water exchange across fenestrated endothelium is fast (tens of ms), so the blood pool is partially averaged into the parenchymal T2; steatosis adds a chemically shifted fat pool; iron collapses T2 (T2* especially).",
+    "n_apparent_T2": 2,
+    "n_resolvable_clinical_T2": 1,
+    "rationale": "The large vascular fraction is the physical reason liver ADC is IVIM-biexponential; on the T2 axis the same pool is partially exchange-averaged and only a long tail survives — a good test of whether T2 and diffusion compartment fractions agree (they need not)."
+   },
+   "sources": [
+    "St05",
+    "dB04",
+    "Luc08",
+    "Li17",
+    "Yam99",
+    "Ber83"
+   ]
+  },
+  {
+   "key": "spleen",
+   "organ": "spleen",
+   "tissue": "splenic parenchyma",
+   "properties": {
+    "water_content": {
+     "value": 0.77,
+     "status": "RECALLED",
+     "source": "spleen ~ 76-79 % water; RK PD 90",
+     "unit": "g/g",
+     "range": [
+      0.74,
+      0.8
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.9,
+     "status": "TERTIARY",
+     "source": "RK"
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 1050,
+      "status": "RECALLED",
+      "source": "~1000-1100 at 1.5 T; not opened",
+      "range": [
+       950,
+       1150
+      ]
+     },
+     "3T": {
+      "value": 1328,
+      "status": "SECONDARY",
+      "source": "dB04 1328+/-31",
+      "range": [
+       1250,
+       1400
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 75,
+      "status": "RECALLED",
+      "source": "~70-80 at 1.5 T; not opened",
+      "range": [
+       65,
+       85
+      ]
+     },
+     "3T": {
+      "value": 61,
+      "status": "SECONDARY",
+      "source": "dB04 61+/-9",
+      "range": [
+       52,
+       70
+      ]
+     }
+    },
+    "ADC": {
+     "value": 0.85,
+     "status": "SECONDARY",
+     "source": "EJR20 0.85 (SD anomalous); Yam99 IVIM D 0.80; MRM-web n/a",
+     "unit": "um2/ms",
+     "range": [
+      0.7,
+      1.0
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 1.5,
+     "status": "THEORY",
+     "list": [
+      {
+       "name": "red-pulp / cellular water",
+       "fraction": 0.65,
+       "value": 65.0,
+       "status": "THEORY",
+       "source": "bulk T2 (dB04 61 at 3 T)",
+       "range": [
+        55,
+        80
+       ]
+      },
+      {
+       "name": "sinusoidal / venous blood",
+       "fraction": 0.35,
+       "value": 130.0,
+       "status": "THEORY",
+       "source": "spleen is ~ 30-40 % blood by volume; venous T2 100-150 ms at 1.5 T",
+       "range": [
+        90,
+        180
+       ]
+      }
+     ],
+     "functional": "blood/long-T2 fraction (1 - mass below 95 ms)",
+     "functional_threshold": 95.0,
+     "typical_acquisition": {
+      "n_echoes": 16,
+      "dTE_ms": 8.0,
+      "first_echo_snr": 60.0
+     },
+     "note": "no multi-component spleen relaxometry reached in the literature search; working configuration"
+    }
+   },
+   "theory": {
+    "pools": [
+     "red-pulp cord cells and macrophages",
+     "sinusoidal blood (very high blood volume)",
+     "white-pulp lymphoid tissue",
+     "fibrous trabeculae"
+    ],
+    "n_pools": 4,
+    "exchange": "Open circulation: cell water and blood exchange freely; splenic T2 is strongly oxygenation- and blood-volume-dependent (splenic contraction). Likely close to mono-exponential with a long blood tail.",
+    "n_apparent_T2": 2,
+    "n_resolvable_clinical_T2": 1,
+    "rationale": "Ratio ~2 between the working components: at the resolvability floor, so the T2 axis will report K = 1; the IVIM axis is where the blood pool shows."
+   },
+   "sources": [
+    "dB04",
+    "Yam99",
+    "EJR20"
+   ]
+  },
+  {
+   "key": "kidney_cortex",
+   "organ": "kidney",
+   "tissue": "renal cortex",
+   "properties": {
+    "water_content": {
+     "value": 0.8,
+     "status": "RECALLED",
+     "source": "kidney ~ 78-82 % water; RK PD 95",
+     "unit": "g/g",
+     "range": [
+      0.76,
+      0.83
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.95,
+     "status": "TERTIARY",
+     "source": "RK"
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 690,
+      "status": "SECONDARY",
+      "source": "St05 (rat whole kidney 690+/-30); in vivo human cortex ~ 950 (RECALLED)",
+      "range": [
+       690,
+       1000
+      ]
+     },
+     "3T": {
+      "value": 1142,
+      "status": "SECONDARY",
+      "source": "dB04 cortex 1142+/-154; St05 rat whole 1194+/-27",
+      "range": [
+       1000,
+       1250
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 55,
+      "status": "SECONDARY",
+      "source": "St05 rat whole kidney 55+/-3; human cortex at 1.5 T ~ 80-90 (RECALLED)",
+      "range": [
+       55,
+       95
+      ]
+     },
+     "3T": {
+      "value": 76,
+      "status": "SECONDARY",
+      "source": "dB04 cortex 76+/-7",
+      "range": [
+       65,
+       85
+      ]
+     }
+    },
+    "ADC": {
+     "value": 2.0,
+     "status": "SECONDARY",
+     "source": "vBa17 cortex D 2.04+/-0.08 (bi-exp); Fil15 D 1.7, ADC MRM-web 1.5-2.5",
+     "unit": "um2/ms",
+     "range": [
+      1.7,
+      2.3
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 3.0,
+     "status": "THEORY",
+     "list": [
+      {
+       "name": "tubular epithelium + interstitium",
+       "fraction": 0.75,
+       "value": 70.0,
+       "status": "THEORY",
+       "source": "bulk T2 (dB04 76)",
+       "range": [
+        60,
+        85
+       ]
+      },
+      {
+       "name": "tubular lumen fluid + glomerular capillary blood",
+       "fraction": 0.25,
+       "value": 200.0,
+       "status": "THEORY",
+       "source": "IVIM f 0.10-0.21 (vBa17, Fil15) plus tubular fluid; Tas24 uses the long-T2 amplitude as a tubule-volume surrogate",
+       "range": [
+        150,
+        300
+       ]
+      }
+     ],
+     "functional": "tubular/vascular long-T2 fraction (1 - mass below 120 ms)",
+     "functional_threshold": 120.0,
+     "typical_acquisition": {
+      "n_echoes": 16,
+      "dTE_ms": 8.0,
+      "first_echo_snr": 60.0
+     },
+     "note": "in vivo human multi-component renal T2 not reached; Tas24 (rat, 9.4 T) supports a biexponential structure; working configuration"
+    },
+    "diffusion": {
+     "kernel": "diffusion_ivim",
+     "field_T": 3.0,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "tissue diffusion D",
+       "fraction": 0.85,
+       "value": 2.04,
+       "status": "SECONDARY",
+       "source": "vBa17 cortex D 2.04+/-0.08, f 9.7+/-1.7 %; Fil15 D 1.7, f 20.9 %",
+       "range": [
+        1.7,
+        2.1
+       ]
+      },
+      {
+       "name": "pseudo-diffusion D*",
+       "fraction": 0.15,
+       "value": 15.6,
+       "status": "SECONDARY",
+       "source": "Fil15 D* 15.6+/-6.5",
+       "range": [
+        10,
+        40
+       ]
+      }
+     ],
+     "functional": "perfusion fraction f",
+     "functional_threshold": 8.0,
+     "typical_acquisition": {
+      "b_values_s_per_mm2": [
+       0,
+       10,
+       25,
+       40,
+       75,
+       100,
+       200,
+       300,
+       500,
+       700
+      ],
+      "first_echo_snr": 40.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "proximal/distal tubular epithelial cell water",
+     "tubular lumen filtrate (fast-flowing free fluid)",
+     "peritubular interstitium",
+     "glomerular and peritubular capillary blood (high renal blood flow; f ~ 0.1-0.2)",
+     "Bowman's space filtrate"
+    ],
+    "n_pools": 5,
+    "exchange": "Aquaporin-rich epithelium makes lumen-cell water exchange fast (ms), so tubular fluid is largely averaged into the parenchymal T2; blood and free fluid contribute a long tail; directional tubular flow gives the medulla its diffusion anisotropy.",
+    "n_apparent_T2": 2,
+    "n_resolvable_clinical_T2": 1,
+    "rationale": "Physiologically the most compartmentalised abdominal organ, yet fast water exchange hides it on T2; the documented multi-exponential signal is in diffusion (IVIM, with the fluid/flow component) and in rat T2 at 9.4 T. A strong test case for 'exchange-coupled' ground truth (charter §6.1)."
+   },
+   "sources": [
+    "dB04",
+    "St05",
+    "vBa17",
+    "Fil15",
+    "Tas24"
+   ]
+  },
+  {
+   "key": "kidney_medulla",
+   "organ": "kidney",
+   "tissue": "renal medulla",
+   "properties": {
+    "water_content": {
+     "value": 0.82,
+     "status": "RECALLED",
+     "source": "medulla slightly wetter than cortex; not opened",
+     "unit": "g/g",
+     "range": [
+      0.78,
+      0.85
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.95,
+     "status": "TERTIARY",
+     "source": "RK (kidney)"
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 1200,
+      "status": "RECALLED",
+      "source": "human medulla at 1.5 T ~ 1200-1400; not opened",
+      "range": [
+       1100,
+       1450
+      ]
+     },
+     "3T": {
+      "value": 1545,
+      "status": "SECONDARY",
+      "source": "dB04 medulla 1545+/-142",
+      "range": [
+       1400,
+       1700
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 90,
+      "status": "RECALLED",
+      "source": "~85-100 at 1.5 T; not opened",
+      "range": [
+       80,
+       110
+      ]
+     },
+     "3T": {
+      "value": 81,
+      "status": "SECONDARY",
+      "source": "dB04 medulla 81+/-8",
+      "range": [
+       70,
+       90
+      ]
+     }
+    },
+    "ADC": {
+     "value": 1.93,
+     "status": "SECONDARY",
+     "source": "vBa17 medulla D 1.93+/-0.08; MRM-web 1.8-2.2",
+     "unit": "um2/ms",
+     "range": [
+      1.8,
+      2.2
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 3.0,
+     "status": "THEORY",
+     "list": [
+      {
+       "name": "tubular epithelium (loops, collecting ducts) + interstitium",
+       "fraction": 0.7,
+       "value": 75.0,
+       "status": "THEORY",
+       "source": "bulk T2 (dB04 81)",
+       "range": [
+        65,
+        90
+       ]
+      },
+      {
+       "name": "luminal fluid (loops of Henle, collecting ducts) + vasa recta blood",
+       "fraction": 0.3,
+       "value": 220.0,
+       "status": "THEORY",
+       "source": "vBa17 medullary f 15.8 %; larger luminal fraction than cortex",
+       "range": [
+        150,
+        300
+       ]
+      }
+     ],
+     "functional": "luminal/vascular long-T2 fraction (1 - mass below 120 ms)",
+     "functional_threshold": 120.0,
+     "typical_acquisition": {
+      "n_echoes": 16,
+      "dTE_ms": 8.0,
+      "first_echo_snr": 50.0
+     }
+    },
+    "diffusion": {
+     "kernel": "diffusion_ivim",
+     "field_T": 3.0,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "tissue diffusion D",
+       "fraction": 0.84,
+       "value": 1.93,
+       "status": "SECONDARY",
+       "source": "vBa17 medulla D 1.93+/-0.08, f 15.8+/-2.8 %",
+       "range": [
+        1.8,
+        2.1
+       ]
+      },
+      {
+       "name": "pseudo-diffusion D*",
+       "fraction": 0.16,
+       "value": 20.0,
+       "status": "RECALLED",
+       "source": "medullary D* not on an opened page; cortex 15.6 (Fil15)",
+       "range": [
+        10,
+        40
+       ]
+      }
+     ],
+     "functional": "perfusion fraction f",
+     "functional_threshold": 8.0,
+     "typical_acquisition": {
+      "b_values_s_per_mm2": [
+       0,
+       10,
+       25,
+       40,
+       75,
+       100,
+       200,
+       300,
+       500,
+       700
+      ],
+      "first_echo_snr": 40.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "loop-of-Henle and collecting-duct epithelium",
+     "luminal fluid in radially oriented tubules (directional flow)",
+     "vasa recta blood (countercurrent)",
+     "hypertonic interstitium"
+    ],
+    "n_pools": 4,
+    "exchange": "As cortex, with a larger luminal fraction and radial orientation: diffusion is anisotropic, T2 slightly longer, T1 longer (higher water content, hypertonicity).",
+    "n_apparent_T2": 2,
+    "n_resolvable_clinical_T2": 1,
+    "rationale": "Companion row to the cortex; the medulla/cortex difference is the clinically used contrast (corticomedullary differentiation), so the dictionary must carry both."
+   },
+   "sources": [
+    "dB04",
+    "vBa17"
+   ]
+  },
+  {
+   "key": "pancreas",
+   "organ": "pancreas",
+   "tissue": "pancreatic parenchyma",
+   "properties": {
+    "water_content": {
+     "value": 0.72,
+     "status": "RECALLED",
+     "source": "~ 70-75 % water; fat infiltration increases with age; not opened",
+     "unit": "g/g",
+     "range": [
+      0.65,
+      0.78
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.85,
+     "status": "RECALLED",
+     "source": "",
+     "range": [
+      0.8,
+      0.9
+     ]
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 580,
+      "status": "RECALLED",
+      "source": "~ 550-650 at 1.5 T; not opened",
+      "range": [
+       500,
+       700
+      ]
+     },
+     "3T": {
+      "value": 725,
+      "status": "SECONDARY",
+      "source": "dB04 725+/-71",
+      "range": [
+       650,
+       800
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 50,
+      "status": "RECALLED",
+      "source": "~ 45-55 at 1.5 T; not opened",
+      "range": [
+       40,
+       60
+      ]
+     },
+     "3T": {
+      "value": 43,
+      "status": "SECONDARY",
+      "source": "dB04 43+/-7",
+      "range": [
+       36,
+       50
+      ]
+     }
+    },
+    "ADC": {
+     "value": 1.86,
+     "status": "SECONDARY",
+     "source": "Ser24 ADC 1.86 (1.66-2.06); Mayer 2021 D 1.5",
+     "unit": "um2/ms",
+     "range": [
+      1.5,
+      2.1
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 3.0,
+     "status": "THEORY",
+     "list": [
+      {
+       "name": "acinar/ductal cell water",
+       "fraction": 0.78,
+       "value": 45.0,
+       "status": "THEORY",
+       "source": "bulk T2 (dB04 43)",
+       "range": [
+        38,
+        55
+       ]
+      },
+      {
+       "name": "capillary blood + ductal fluid",
+       "fraction": 0.22,
+       "value": 160.0,
+       "status": "THEORY",
+       "source": "IVIM f 0.21-0.40 (May21, Ser24, Klauss 2016 20.7 %)",
+       "range": [
+        100,
+        250
+       ]
+      }
+     ],
+     "functional": "vascular/long-T2 fraction (1 - mass below 90 ms)",
+     "functional_threshold": 90.0,
+     "typical_acquisition": {
+      "n_echoes": 16,
+      "dTE_ms": 8.0,
+      "first_echo_snr": 50.0
+     },
+     "note": "no multi-component pancreatic T2 study reached; working configuration"
+    },
+    "diffusion": {
+     "kernel": "diffusion_ivim",
+     "field_T": 1.5,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "tissue diffusion D",
+       "fraction": 0.7,
+       "value": 1.19,
+       "status": "SECONDARY",
+       "source": "Ser24 D 1.19 (1.08-1.30), f 0.40; May21 D 1.5, f 0.211; Klauss 2016 f 0.207",
+       "range": [
+        1.1,
+        1.5
+       ]
+      },
+      {
+       "name": "pseudo-diffusion D*",
+       "fraction": 0.3,
+       "value": 20.0,
+       "status": "SECONDARY",
+       "source": "Ser24 D* 18.5; May21 21.9",
+       "range": [
+        15,
+        25
+       ]
+      }
+     ],
+     "functional": "perfusion fraction f",
+     "functional_threshold": 8.0,
+     "typical_acquisition": {
+      "b_values_s_per_mm2": [
+       0,
+       10,
+       20,
+       50,
+       100,
+       200,
+       400,
+       600,
+       1000
+      ],
+      "first_echo_snr": 40.0
+     }
+    }
+   },
+   "theory": {
+    "pools": [
+     "acinar cell water (protein-rich, short T1)",
+     "ductal fluid",
+     "capillary blood (high perfusion: f 0.2-0.4)",
+     "interlobular fat (increases with age/obesity)"
+    ],
+    "n_pools": 4,
+    "exchange": "Cell-capillary exchange fast; fat is a chemically shifted non-exchanging pool; perfusion dominates the IVIM signal.",
+    "n_apparent_T2": 2,
+    "n_resolvable_clinical_T2": 1,
+    "rationale": "Perfusion-rich organ with a short bulk T2: the IVIM axis carries the compartment information; on T2 the organ is near mono-exponential unless fat infiltration is present."
+   },
+   "sources": [
+    "dB04",
+    "Ser24",
+    "May21"
+   ]
+  },
+  {
+   "key": "prostate_pz",
+   "organ": "prostate",
+   "tissue": "peripheral zone, normal",
+   "properties": {
+    "water_content": {
+     "value": 0.8,
+     "status": "RECALLED",
+     "source": "glandular tissue with abundant luminal fluid; not opened",
+     "unit": "g/g",
+     "range": [
+      0.75,
+      0.85
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.85,
+     "status": "RECALLED",
+     "source": "",
+     "range": [
+      0.8,
+      0.95
+     ]
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 1300,
+      "status": "RECALLED",
+      "source": "~1200-1400 at 1.5 T; not opened",
+      "range": [
+       1100,
+       1500
+      ]
+     },
+     "3T": {
+      "value": 1597,
+      "status": "SECONDARY",
+      "source": "dB04 whole gland 1597+/-42; Boj17 1400-1700",
+      "range": [
+       1400,
+       1700
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 110,
+      "status": "RECALLED",
+      "source": "PZ ~ 100-130 at 1.5 T (higher than whole gland); not opened",
+      "range": [
+       90,
+       140
+      ]
+     },
+     "3T": {
+      "value": 74,
+      "status": "SECONDARY",
+      "source": "dB04 whole gland 74+/-9 (PZ alone is longer, ~ 100-120 RECALLED)",
+      "range": [
+       70,
+       130
+      ]
+     }
+    },
+    "ADC": {
+     "value": 1.6,
+     "status": "TERTIARY",
+     "source": "MRM-web prostate 1.4-1.8",
+     "unit": "um2/ms",
+     "range": [
+      1.4,
+      1.9
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 3.0,
+     "status": "RECALLED",
+     "list": [
+      {
+       "name": "epithelial / stromal water",
+       "fraction": 0.65,
+       "value": 60.0,
+       "status": "RECALLED",
+       "source": "Sab17 T2short (values not reachable this session)",
+       "range": [
+        40,
+        90
+       ]
+      },
+      {
+       "name": "luminal water",
+       "fraction": 0.35,
+       "value": 500.0,
+       "status": "RECALLED",
+       "source": "Sab17 T2long / LWF; LWF correlates with luminal space (JMRI 46:861, rho 0.75) and falls with Gleason grade (rho -0.78)",
+       "range": [
+        300,
+        800
+       ]
+      }
+     ],
+     "functional": "luminal water fraction (1 - mass below 200 ms)",
+     "functional_threshold": 200.0,
+     "typical_acquisition": {
+      "n_echoes": 64,
+      "dTE_ms": 8.0,
+      "first_echo_snr": 80.0
+     },
+     "note": "the strongest clinically validated two-component T2 case; component numbers still RECALLED pending the full text"
+    }
+   },
+   "theory": {
+    "pools": [
+     "glandular lumen fluid (secretions; large in normal PZ)",
+     "epithelial cell water",
+     "stromal (smooth muscle/fibrous) water",
+     "vascular blood"
+    ],
+    "n_pools": 4,
+    "exchange": "Lumen-epithelium exchange is slow relative to the large T2 difference (ratio ~ 8), so two components persist; stroma and epithelium share T2 and coalesce. Cancer replaces lumen with cells -> LWF falls.",
+    "n_apparent_T2": 2,
+    "n_resolvable_clinical_T2": 2,
+    "rationale": "Well-separated, both fractions large: the easy case, estimable to ~5 % on the LWF with a 64-echo train — the positive control for every estimator."
+   },
+   "sources": [
+    "Sab17",
+    "dB04",
+    "Boj17"
+   ]
+  },
+  {
+   "key": "breast_fibroglandular",
+   "organ": "breast",
+   "tissue": "fibroglandular tissue (with fat partial volume)",
+   "properties": {
+    "water_content": {
+     "value": 0.6,
+     "status": "RECALLED",
+     "source": "fibroglandular ~ 0.7-0.8; voxels mix with fat",
+     "unit": "g/g",
+     "range": [
+      0.4,
+      0.8
+     ]
+    },
+    "pd_relative_csf": {
+     "value": 0.8,
+     "status": "RECALLED",
+     "source": "",
+     "range": [
+      0.7,
+      0.95
+     ]
+    },
+    "T1_ms": {
+     "1.5T": {
+      "value": 1266,
+      "status": "SECONDARY",
+      "source": "RP06 via Keenan 2016: fibroglandular 1266+/-82; fat 296+/-13",
+      "range": [
+       1100,
+       1400
+      ]
+     },
+     "3T": {
+      "value": 1445,
+      "status": "SECONDARY",
+      "source": "RP06 via Keenan/Boj17: 1445+/-93; fat 367+/-8",
+      "range": [
+       1300,
+       1550
+      ]
+     }
+    },
+    "T2_ms": {
+     "1.5T": {
+      "value": 57.5,
+      "status": "SECONDARY",
+      "source": "RP06: 57.5+/-10.2; fat 53.3+/-2.1",
+      "range": [
+       45,
+       70
+      ]
+     },
+     "3T": {
+      "value": 54.4,
+      "status": "SECONDARY",
+      "source": "RP06: 54.4+/-9.4; fat 53.0+/-1.5",
+      "range": [
+       45,
+       65
+      ]
+     }
+    },
+    "ADC": {
+     "value": 1.5,
+     "status": "TERTIARY",
+     "source": "MRM-web glandular 1.2-1.8",
+     "unit": "um2/ms",
+     "range": [
+      1.2,
+      1.8
+     ]
+    }
+   },
+   "components": {
+    "T2": {
+     "kernel": "t2_cpmg",
+     "field_T": 1.5,
+     "status": "SECONDARY",
+     "list": [
+      {
+       "name": "fibroglandular water",
+       "fraction": 0.6,
+       "value": 57.0,
+       "status": "SECONDARY",
+       "source": "RP06 57.5 (1.5 T)",
+       "range": [
+        45,
+        70
+       ]
+      },
+      {
+       "name": "fat (methylene)",
+       "fraction": 0.4,
+       "value": 110.0,
+       "status": "SECONDARY",
+       "source": "RP06 breast fat T2 53 (short, spin-echo w/ J-coupling); Han03 subcutaneous fat 165 (1.5 T); dB04 68 (3 T) — CPMG fat T2 is sequence-dependent",
+       "range": [
+        53,
+        165
+       ]
+      }
+     ],
+     "functional": "fat fraction (1 - mass below 80 ms)",
+     "functional_threshold": 80.0,
+     "typical_acquisition": {
+      "n_echoes": 32,
+      "dTE_ms": 10.0,
+      "first_echo_snr": 100.0
+     },
+     "note": "fat T2 under CPMG depends on echo spacing (J-coupling); Dixon is the right tool — a deliberate 'wrong tool' row like marrow"
+    }
+   },
+   "theory": {
+    "pools": [
+     "ductal/lobular epithelial water",
+     "fibrous stroma water",
+     "ductal fluid",
+     "adipose lipid (multi-resonance)",
+     "vascular"
+    ],
+    "n_pools": 5,
+    "exchange": "Water pools coalesce; fat is non-exchanging and chemically shifted; the apparent two-component T2 is a water/fat mixture, not two water pools.",
+    "n_apparent_T2": 2,
+    "n_resolvable_clinical_T2": 1,
+    "rationale": "Ratio ~2 with sequence-dependent fat T2: at the resolvability floor and misspecified for a pure-exponential kernel; belongs in the harness as a failure-mode row."
+   },
+   "sources": [
+    "RP06",
+    "Han03",
+    "dB04"
+   ]
+  }
+ ],
+ "changelog": [
+  "2026-09-07 v1: 13 entries, all RECALLED (first draft).",
+  "2026-09-07 v2: restructured (properties: water/PD, T1, T2 at 1.5 and 3 T, ADC; components per modality; theory block); 20 entries; verified values from Stanisz 2005 (SECONDARY, table via mirror), de Bazelaire 2004 (abstract), Han/Gold 2003, Reiter 2009 (PRIMARY), Horch 2010 (PRIMARY), Saab 1999 (abstract), MacKay 1994 / Whittall 1997 (abstract/preview), Labadie 2014 (abstract), Luciani 2008 (PRIMARY table), van Baalen 2017, Filli 2015, Serafin 2024, Mayer 2021, McGill 2015, Mazzoli 2021, Oros-Peusquens 2019; liver, spleen, kidney cortex/medulla, pancreas, marrow, blood, CSF added; abdominal T2 splits are THEORY (no multi-component study reached) and say so."
+ ]
+}

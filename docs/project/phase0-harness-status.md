@@ -1,11 +1,11 @@
-# Phase 0 harness — status (2026-09-07, revision 3)
+# Phase 0 harness — status (2026-09-07, revision 4)
 
-Companion to `claude/phase0-findings.md` (revision 2) and charter v0.10. Short, operational; update when the harness moves.
+Companion to `claude/phase0-findings.md` (revision 2 + addendum) and charter v0.11. Short, operational; update when the harness moves.
 
 ## Where the code is
 Git repository in the connected folder `~/Documents/ExponentialParameterEstimation/` (charter §7, v0.10):
 `mexp-harness/` is the code, `docs/project/` mirrors the living documents. Python ≥ 3.10, numpy/scipy;
-`pip install -e ".[dev]" && pytest` inside `mexp-harness/` (60 tests, ~15 s). The local Cowork VM has no scipy, so
+`pip install -e ".[dev]" && pytest` inside `mexp-harness/` (64 tests, ~20 s). The local Cowork VM has no scipy, so
 tests run in the cloud session or on the Mac itself.
 
 ## What exists
@@ -25,11 +25,10 @@ tests run in the cloud session or on the Mac itself.
   Mellin / BBP continuum expressions, `r_min` and `k_max` in both constant conventions, Ostrowsky spacing.
 - `mexp.crlb` (revision 2) — Fisher information / CRLB for Gaussian real, Gaussian complex and Rician
   noise, σ known or jointly estimated; exact Rician per-sample blocks; delta-method functional bounds; not an estimator.
-- `mexp.tissues` (revision 3) — tissue and organ dictionary, 13 entries, all `RECALLED`; `scripts/phase0_threshold_tissues.py`.
+- `mexp.tissue_data` + `mexp.tissues` (v2) — tissue and organ dictionary: 18 entries; bulk properties (water/PD, T1, T2 at 1.5/3 T, ADC), components per modality, theory block, status per value (7 PRIMARY / 30 SECONDARY / 1 TERTIARY / 6 RECALLED / 10 THEORY component values); `data/tissue_dictionary.json` and `docs/tissue-dictionary.md` are generated (`scripts/export_tissue_dictionary.py`, `scripts/render_tissue_dictionary_doc.py`); `scripts/phase0_threshold_tissues.py` evaluates the §1.2 clauses over it.
 - Scripts: `scripts/phase0_conditioning.py` (sweep, figures), `scripts/phase0_threshold.py` (charter §1.2
   threshold at the reference configuration), `scripts/provenance/lanczos_two_exp_approximant.py`.
-- Correctness test #1 (Lanczos) passes under charter v0.7's (a)/(b) criteria; marked
-  `provisional_pending_primary`.
+- Correctness test #1 (Lanczos) passes under charter v0.7's (a)/(b) criteria and is **locked against the primary** (pp. 272–279 read 2026-09-07; six Lanczos-specific tests).
 
 ## SNR conventions in use
 Harness axis default: SNR = S_ref / σ₁ (S_ref = unattenuated magnetisation sum; σ₁ from the R = 1 single-coil
@@ -37,16 +36,9 @@ reconstruction of the same k-space noise) — logged in charter §8. Charter §1
 first-echo SNR, σ = S(t₁)/SNR. `mexp.crlb.sigma_from_first_echo_snr` / `sigma_from_reference_snr` convert.
 
 ## Open items carried forward
-1. **Home for the code.** Resolved: the repository above.
-2. **Lanczos book check** (*Applied Analysis* 1956, ch. IV, ~p. 276): record Δt, number of points, decimals in
-   the table, and whether Lanczos claims a number or "within the accuracy of the data"; the quoted pair
-   (2.202, 4.45; 0.305, 1.58) fits a Δt = 0.1 long-window table slightly better than NIST's Δt = 0.05 grid.
-   No test depends on it. Also check whether Varah (1985, journal version) actually quotes the coefficients —
-   the 1982 tech report does not.
-3. **Istratov & Vyvenko constant convention** for the resolvable ratio: harness carries both
-   exp(π²/arccosh(SNR²)) (exact from the Mellin gain) and exp(π²/(2 ln SNR)); indistinguishable by the count.
-4. **Charter v0.9/v0.10 threshold wording** (kernel-level two vectors + tissue-level dictionary): accept or amend.
-5. **Dictionary verification pass** (charter §10 step 8): open each source in `mexp/tissues.py`, move entries from `RECALLED`; re-run the tissue threshold; add organs.
-6. Next Phase 0 items in charter order: joint (θ, σ) analytic work aimed at the misspecified / offset /
-   χ-pipeline / external-σ rungs (§3.2 probe shows the clean-likelihood cost is < 2 %); k-space-first
-   simulator (E2); EPG physical-truth path; `crlb_optimal`; Bates–Watts curvature with the §6.2 calibration metric.
+1. **Home for the code.** Resolved: the repository above. **Still open: a license** (needed before the harness can be the E1 release; recommendation in the 2026-09-07 session summary — Apache-2.0 or BSD-3 for code, CC-BY-4.0 for the dictionary and documents).
+2. **Lanczos book check.** Closed 2026-09-07 (primary read). Only Varah 1985's journal text remains a citation check (`literature-requests.md` #2).
+3. **Istratov & Vyvenko constant convention.** Resolved in principle (amplitude SNR, arccosh form; charter §1.2); read the paper for the citation (`literature-requests.md` #1, DOI 10.1063/1.1149581).
+4. **Threshold framing.** Accepted by Eric 2026-09-07 (two-level: kernel-level vectors + tissue-level dictionary).
+5. **Dictionary verification pass** (charter §10 step 8): PDFs into `literature/` per `literature-requests.md` (priority 1: prostate luminal water, Whittall 1997, Saab 1999, Stanisz 2005); move values to PRIMARY; replace the abdominal THEORY splits when a study is found; add the pathology axis; then organs and fields.
+6. Next Phase 0 items in charter order: CRLB map (K = 2, 3 × separation × SNR × three arms × noise-knowledge ladder, over the dictionary); joint (θ, σ) analytic work aimed at the misspecified / offset / χ-pipeline / external-σ rungs; k-space-first simulator (E2); EPG physical-truth path; `crlb_optimal`; Bates–Watts curvature with the §6.2 calibration metric.

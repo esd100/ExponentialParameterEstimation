@@ -5,3 +5,7 @@ __pycache__/
 .DS_Store
 .venv/
 _to_delete/
+# copyrighted material stays local
+literature/*
+!literature/README.md
+appliedanalysisLanczos/

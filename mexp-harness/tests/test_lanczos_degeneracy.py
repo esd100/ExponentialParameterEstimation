@@ -9,11 +9,11 @@ Charter v0.7 §4 Phase 0 pass criteria:
   (b) the two- and three-component models are indistinguishable at any noise level
       above that residual.
 
-Status: PROVISIONAL (charter §7 provenance discipline). The three-exponential
-constants and the NIST grid are locked (NIST StRD Lanczos1, certified to 1e-10).
-The two-exponential coefficients and Lanczos's own grid/precision are not yet
-checked against Applied Analysis (1956) ch. IV; see mexp/datasets/lanczos.py
-and docs/phase0-findings.md §1 for what the numerics say the primary must settle.
+Status: LOCKED (charter §7 provenance discipline), 2026-09-07. The
+three-exponential constants and the grid are locked against NIST StRD Lanczos1
+and against Lanczos (1956) pp. 276/279; the two-exponential coefficients, the
+two-decimal precision and Lanczos's stated agreement are locked against
+pp. 276-279 (page images read this session). See mexp/datasets/lanczos.py.
 
 Estimator note (charter G2): the harness package contains no estimator. The
 best two-exponential fit needed by criterion (a) is computed HERE, in the test,
@@ -33,7 +33,6 @@ from mexp.design import scattered
 from mexp.kernels import get
 from mexp.params import Theta
 
-pytestmark = pytest.mark.provisional_pending_primary   # registered in conftest.py
 
 
 def _theta(pairs):
@@ -115,19 +114,32 @@ def test_a_frozen_constant_is_a_stationary_point(kernel, design, f3):
     assert np.linalg.norm(g) < 1e-4 * np.linalg.norm(g_off)
 
 
-# --- criterion (a), second half: the QUOTED coefficients, checked separately -----------------
+# --- criterion (a), second half: Lanczos's OWN coefficients against his own text (PRIMARY) ------
 
-def test_a_quoted_coefficients_are_two_decimal_not_0p001(kernel, design, f3):
-    """The coefficients quoted by the secondaries deviate from f(t) by 0.0064 at t = 0,
-    on any grid containing t = 0. They are consistent with a two-decimal table
-    (23 of 24 NIST-grid points round identically), not with 'better than 0.001'.
-    This test pins the discrepancy the charter's provenance flag describes."""
+def test_lanczos_data_table_is_the_nist_function_to_two_decimals():
+    """p. 276: 24 observations, dx = 0.05 from x = 0, two decimals — the NIST grid."""
+    assert np.array_equal(np.round(L.evaluate(L.THREE_EXP), 2), L.LANCZOS_DATA_TABLE)
+
+
+def test_lanczos_prony_grouped_sums_reproduce():
+    """pp. 276-277: sums over groups of 4 (759, 346, 168, 87, 49, 30) and of 6 (964, 309, 115, 51)."""
+    y = L.LANCZOS_DATA_TABLE
+    assert [int(round(100 * v)) for v in y.reshape(6, 4).sum(axis=1)] == [759, 346, 168, 87, 49, 30]
+    assert [int(round(100 * v)) for v in y.reshape(4, 6).sum(axis=1)] == [964, 309, 115, 51]
+
+
+def test_lanczos_fit_table_and_stated_agreement(kernel, design, f3):
+    """p. 278 table of 2.202 e^{-4.45x} + 0.305 e^{-1.58x} (hand arithmetic, 3 decimals) and the
+    p. 279 claims: max deviation 0.006 at k = 5, RMS 0.0026, data accurate to 1/2 unit."""
     f2q = kernel.forward(_theta(L.LANCZOS_TWO_EXP), design)
+    assert np.max(np.abs(np.round(f2q, 3) - L.LANCZOS_FIT_TABLE)) < 0.0025     # slide-rule era arithmetic (8 of 24 differ by <= 0.002)
+    dev = L.LANCZOS_FIT_TABLE - L.LANCZOS_DATA_TABLE
+    assert np.argmax(np.abs(dev)) == 4 and abs(np.abs(dev).max() - L.LANCZOS_STATED_MAX_DEVIATION) < 5e-4
+    assert abs(np.sqrt(np.mean(dev**2)) - L.LANCZOS_STATED_RMS_DEVIATION) < 1e-4
+    assert np.sum(np.abs(dev) > L.LANCZOS_STATED_ACCURACY) == 1                   # "except in the single instance of k = 5"
+    # exact evaluation of his coefficients against the exact function: 0.0064 at t = 0, within two decimals
     d = np.abs(f3 - f2q)
-    assert d.max() == pytest.approx(0.0064, abs=2e-4)
-    assert np.argmax(d) == 0
-    assert d.max() > 1e-3                                   # NOT better than 0.001
-    assert np.sum(np.round(f3, 2) != np.round(f2q, 2)) <= 1   # but within the two-decimal table
+    assert d.max() == pytest.approx(0.0064, abs=2e-4) and d.max() > 1e-3
 
 
 # --- criterion (b): indistinguishable at any noise level above the residual --------------------

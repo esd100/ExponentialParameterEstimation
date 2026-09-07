@@ -1,0 +1,6 @@
+# Pinned versions the Phase 0 results were produced with (2026-09-07). `pip install -e ".[dev]"` installs unpinned.
+numpy==2.4.4
+scipy==1.17.1
+matplotlib==3.10.9
+pytest==9.1.1
+mpmath==1.4.1
