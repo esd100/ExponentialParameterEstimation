@@ -1,10 +1,11 @@
 # Literature to fetch — full citations and DOI links
 
-**Version:** 2 — 2026-09-08 (Eric): every row retrieved into `literature/`; retrieval-status column added (this is Eric's
-`literature-requests-updated.md`, adopted as the living copy on 2026-09-09). Rows stay here as the reading list for the
-dictionary verification pass (charter §10 step 8); the session that reads a paper records what it took from it in
-`bibliography.md` and, where a dictionary value rests on it, in `mexp/tissue_data.py`. Read so far (2026-09-09): #1, #2, #8, #9,
-#17, #18, #23.
+**Version:** 3 — 2026-09-09: every priority-1 row has now been read (#1–#17) and applied to `bibliography.md` v0.4 and the
+dictionary (v2.2); a **priority 1b** block is added for the water–fat papers that would settle the lean-organ PDFF ranges,
+which none of the 57 PDFs on hand covers. (v2, 2026-09-08, Eric: every row retrieved into `literature/`; retrieval-status
+column added — Eric's `literature-requests-updated.md`, adopted as the living copy on 2026-09-09.) Rows stay here as the
+reading list; the session that reads a paper records what it took from it in `bibliography.md` and, where a dictionary value
+rests on it, in `mexp/tissue_data.py`. Read so far (2026-09-09): #1–#18, #23.
 
 **Purpose.** Papers the project needs to *open* (not merely cite) to move dictionary values, charter constants and
 bibliography rows from `RECALLED` / `SECONDARY` to `PRIMARY`. Download the PDF and drop it into the repository's
@@ -34,6 +35,25 @@ noted where one is known. Every DOI below was confirmed against a Crossref/OpenA
 | 15 | Du J, Diaz E, Carl M, Bae W, Chung CB, Bydder GM. Ultrashort echo time imaging with bicomponent analysis. *MRM* 2012;67(3):645–649. | https://doi.org/10.1002/mrm.23047 | — | Tendon/ligament/bone short-T2* fractions (abstract only so far). | `Du2012_MRM.pdf` | **Retrieved** |
 | 16 | Bouhrara M, Reiter DA, Celik H, et al. Incorporation of Rician noise in the analysis of biexponential transverse relaxation in cartilage using a multiple gradient echo sequence at 3 and 7 Tesla. *MRM* 2015;73(1):352–366. | https://doi.org/10.1002/mrm.25111 | PMC4171354 (author manuscript) | Cartilage row at 3 T/7 T; noise-track prior art (§3.2). | `Bouhrara2015_MRM.pdf` | **Retrieved** |
 | 17 | Le Ster C, Gambarota G, Lasbleiz J, Guillin R, Decaux O, Saint-Jalmes H. Breath-hold MR measurements of fat fraction, T1, and T2* of water and fat in vertebral bone marrow. *JMRI* 2016;44(3):549–555. | https://doi.org/10.1002/jmri.25205 | — | Marrow row. | `LeSter2016_JMRI.pdf` | **Retrieved** |
+
+## Priority 1b — water–fat sources for the lean-organ PDFF ranges and the steatosis axis (added 2026-09-09; not yet in `literature/`)
+
+The dictionary's `pdff` column carries RECALLED ranges for muscle, myocardium, liver, spleen, kidney, pancreas and breast, and
+the pathology axis starts with steatotic liver at PDFF 10 and 25 % (charter §10 step 8e). None of the 57 PDFs above is a
+water–fat paper for those organs, so these are the reads that would move them; DOIs confirmed against Crossref on 2026-09-09
+unless marked.
+
+| # | Citation | DOI / link | Open copy | Why | File name | Status in `literature/` |
+|---|---|---|---|---|---|---|
+| 58 | Szczepaniak LS, Nurenberg P, Leonard D, et al. Magnetic resonance spectroscopy to measure hepatic triglyceride content: prevalence of hepatic steatosis in the general population. *Am. J. Physiol. Endocrinol. Metab.* 2005;288(2):E462–E468. | https://doi.org/10.1152/ajpendo.00064.2004 | journal (free after 12 months) | The 5.56 % steatosis cut-off the dictionary quotes from memory; healthy-liver PDFF distribution. | `Szczepaniak2005_AJPEM.pdf` | not retrieved |
+| 59 | Tang A, Tan J, Sun M, et al. Nonalcoholic fatty liver disease: MR imaging of liver proton density fat fraction to assess hepatic steatosis. *Radiology* 2013;267(2):422–431. | https://doi.org/10.1148/radiol.12120896 | PMC | Grade thresholds (~6.4 / 17.4 / 22.1 %) for the steatotic-liver rows at PDFF 10 and 25 %. | `Tang2013_Radiology.pdf` | not retrieved |
+| 60 | Reeder SB, Hu HH, Sirlin CB. Proton density fat-fraction: a standardized MR-based biomarker of tissue fat concentration. *JMRI* 2012;36(5):1011–1014. | https://doi.org/10.1002/jmri.23741 | PMC | The PDFF definition; confounder list (T1 bias, T2* decay, spectral complexity, noise bias) the fat-axis simulator must model. | `Reeder2012_JMRI.pdf` | not retrieved |
+| 61 | Yokoo T, Serai SD, Pirasteh A, et al. Linearity, bias, and precision of hepatic proton density fat fraction measurements by using MR imaging: a meta-analysis. *Radiology* 2018;286(2):486–498. | https://doi.org/10.1148/radiol.2017170550 | PMC | Hepatic PDFF accuracy vs MRS: the calibration for the steatosis rows. | `Yokoo2018_Radiology.pdf` | not retrieved |
+| 62 | Hamilton G, Yokoo T, Bydder M, et al. In vivo characterization of the liver fat ¹H MR spectrum. *NMR Biomed.* 2011;24(7):784–790. | https://doi.org/10.1002/nbm.1622 | PMC | The six-peak triglyceride spectrum (peak positions and relative areas) a chemically shifted fat pool needs in the simulator. | `Hamilton2011_NMRBiomed.pdf` | not retrieved |
+| 63 | Kühn J-P, Berthold F, Mayerle J, et al. Pancreatic steatosis demonstrated at MR imaging in the general population: clinical relevance. *Radiology* 2015;276(1):129–136. | https://doi.org/10.1148/radiol.15140446 | — | Population pancreatic PDFF (replaces the RECALLED 2–10 % range). | `Kuhn2015_Radiology.pdf` | not retrieved |
+| 64 | Grimm A, Meyer H, Nickel MD, et al. Repeatability of Dixon magnetic resonance imaging and magnetic resonance spectroscopy for quantitative muscle fat assessments in the thigh. *J. Cachexia Sarcopenia Muscle* 2018;9(6):1093–1100. | https://doi.org/10.1002/jcsm.12343 | gold OA | Healthy thigh-muscle PDFF (replaces the RECALLED 1–5 % range). | `Grimm2018_JCSM.pdf` | not retrieved |
+| 65 | Szczepaniak LS, Dobbins RL, Metzger GJ, et al. Myocardial triglycerides and systolic function in humans: in vivo evaluation by localized proton spectroscopy and cardiac imaging. *MRM* 2003;49(3):417–423. | https://doi.org/10.1002/mrm.10372 | — | Myocardial triglyceride in lean subjects (replaces the RECALLED 0.5–1.5 % range). | `Szczepaniak2003_MRM.pdf` | not retrieved |
+| 66 | Henkelman RM, Hardy PA, Bishop JE, Poon CS, Plewes DB. Why fat is bright in RARE and fast spin-echo imaging. *JMRI* 1992;2(5):533–540. | https://doi.org/10.1002/jmri.1880020511 | — | J-coupling makes the CPMG fat T2 echo-spacing dependent — the physics behind the adipose misspecification row. | `Henkelman1992_JMRI.pdf` | not retrieved |
 
 ## Priority 2 — bulk-property and diffusion sources (dictionary columns)
 

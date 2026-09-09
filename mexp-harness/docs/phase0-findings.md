@@ -49,6 +49,28 @@ S_ref = Σ|a| (`mexp.crlb.sigma_from_*` convert).
 > (10 % water fraction at ratio 3.5: not estimable, relative SD ~60 %); no other row's estimability class changed, because the
 > PRIMARY values replaced abstract-level values of the same numbers. (4) Licenses (Apache-2.0 / CC BY 4.0) and 70 tests.
 
+> **Revision 5 addendum (2026-09-09, later — dictionary v2.2, charter v0.13).** The twelve priority-1 papers were read from
+> `literature/` and their own tables carried into `mexp/tissue_data.py`; the numbers are in `bibliography.md` v0.4 per row and in
+> `claude/changelog.md`, and only what changes a Phase 0 measurement is repeated here. (1) **Prostate is no longer the easy case
+> at the reference train.** Sabouri 2017 gives LWF 0.24 ± 0.09 at T2long 545 ± 115 ms against T2short 90 ± 26 ms (ratio ≈ 6), on a
+> 64-echo train at **25 ms** spacing (TE 25–1600 ms, SNR ~103) — not the 0.35 at 500 ms, ratio ≈ 8 and 64 × 8 ms that v0.10–v0.12
+> carried from memory. At the reference 32 × 10 ms train the Rician CRLB now gives 65 % relative SD on the long T2 and ±0.105 on
+> the LWF ('K estimable' → no); at Sabouri's own train it is 5 / 4 % and ±0.013 (still 'yes' on both criteria). The 320 ms window
+> cannot pin a 545 ms component — the window rule of §3.2 above, met in the one clinical multi-component protocol that is
+> validated against histology, and the reason that protocol uses a 1600 ms train. (2) **The cord under a K = 2 model is
+> estimable at SNR 100** (myelin T2 18 % relative, MWF 0.296 ± 0.024) with MacMillan 2011's MWF 0.296 and IE gmT2 100 ms (the IE
+> component moved from 75 to 100 ms; the v2.1 numbers gave 29 % and ±0.042 → 'no'). (3) **White matter** with Whittall 1997's
+> structure-average MWF 0.113 (MacKay 1994's 15.6 ± 8.1 % is the top of the range): MWF bound 0.074 free / 0.038 long fixed /
+> 0.030 dropped at SNR 100, myelin T2 60 % relative in the K = 2 model (was 0.072 / 0.037 / 0.029 and 44 % for MWF 0.15) — class
+> unchanged, marginal; the §1.2 numbers are updated. Grey matter (MWF 0.031) and muscle (Saab 1999 Table 1: 27.8 / 45.5 / 11.3 %
+> at 20.8 / 38.9 / 114.3 ms visible to a 10 ms first echo, at 1.89 T) unchanged in class. (4) Stanisz 2005 Table 1 from the
+> publisher PDF confirms every value the mirror had given; all St05 values are PRIMARY. (5) Two primaries are now on record
+> stating the resolution limit in their own words — Whittall 1997 (“components that differ by less than a factor of three” cannot
+> be separated) and Saab 1999 (“T2 values separated by less than a factor of 3 cannot be resolved” in a typical experiment;
+> SNR_min 338 to split 20 and 40 ms at 1000 echoes, 1460 for four components) — the same statement §1.2 derives from the Mellin
+> singular values and §3.3 measures. (6) The lean-organ PDFF ranges could not be moved: no water–fat paper is among the 57 PDFs;
+> the reads are listed (`literature-requests.md` #58–#66). Status counts 23 / 17 / 1 / 1 / 14; 71 tests.
+
 ## 0. What v0.7 changed for this work, and what was redone
 
 | v0.7 item | Consequence | Done |

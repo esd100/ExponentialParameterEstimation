@@ -39,7 +39,7 @@ disagree, the higher version number wins and the other is brought up to date bef
 ```
 cd mexp-harness
 pip install -e ".[dev]"
-pytest                                        # 70 tests
+pytest                                        # 71 tests
 python scripts/phase0_conditioning.py         # SVD / Picard / truncation sweep
 python scripts/phase0_threshold.py            # charter §1.2 threshold at the reference configuration
 python scripts/phase0_threshold_tissues.py    # the same clauses over the tissue dictionary

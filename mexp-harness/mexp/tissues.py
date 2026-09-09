@@ -1,5 +1,5 @@
 """
-Tissue and organ dictionary — API over `mexp.tissue_data` (charter §1.2, §4, §6.1; v2.1).
+Tissue and organ dictionary — API over `mexp.tissue_data` (charter §1.2, §4, §6.1; v2.2).
 
 Why this exists: the §1.2 falsifiable threshold depends on the amplitude vector
 more than on anything else, and one myelin-like split is not the body.  The
@@ -190,7 +190,7 @@ def status_summary() -> dict[str, int]:
 
 def to_json_dict() -> dict:
     return {
-        "schema_version": "2.1",
+        "schema_version": "2.2",
         "generated_from": "mexp.tissue_data",
         "status_legend": {
             "PRIMARY": "read from the original paper's own table/text", "SECONDARY": "abstract / review table / same-author conference abstract / mirrored PDF",

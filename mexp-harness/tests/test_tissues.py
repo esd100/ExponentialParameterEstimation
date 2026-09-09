@@ -47,15 +47,25 @@ def test_adipose_entry_is_the_misspecification_row():
 
 def test_status_summary_matches_expected_shape():
     s = TS.status_summary()
-    assert s["PRIMARY"] >= 5 and s["SECONDARY"] >= 20
+    assert s["PRIMARY"] >= 20 and s["SECONDARY"] >= 10      # v2.2: the priority-1 verification pass moved 16 values to PRIMARY
     assert s["THEORY"] >= 8            # the abdominal T2 splits are declared, not measured
+    assert s["RECALLED"] <= 1          # v2.2: no RECALLED *component* set remains (kidney-medulla D* is the one value)
+
+
+def test_no_recalled_component_set_remains():
+    """v2.2 (charter §10 step 8a): prostate luminal water was the last RECALLED set; it now rests on Sabouri 2017."""
+    for cs in TS.entries():
+        assert cs.status != TS.Provenance.RECALLED, cs.tissue_key
+    p = TS.get("prostate_pz").T2
+    assert p.status == TS.Provenance.PRIMARY and abs(p.components[-1].fraction - 0.24) < 1e-9
+    assert p.typical_acquisition["dTE_ms"] == 25.0 and p.typical_acquisition["n_echoes"] == 64    # Sabouri's 64 x 25 ms train
 
 
 def test_theta_drops_invisible_components_and_renormalises():
     cs = TS.get("skeletal_muscle").T2
     th = cs.theta(min_value=10.0)
     assert cs.K == 4 and th.K == 3 and abs(th.amplitudes.sum() - 1) < 1e-12
-    assert np.allclose(th.nonlinear[:, 0], [21.0, 39.0, 114.0])
+    assert np.allclose(th.nonlinear[:, 0], [20.8, 38.9, 114.3])        # Saab 1999 Table 1, in vivo row
 
 
 def test_t2_sets_run_through_crlb_and_functional():
@@ -89,4 +99,4 @@ def test_json_export_round_trips():
     d = TS.to_json_dict()
     s = json.dumps(d)
     back = json.loads(s)
-    assert back["schema_version"] == "2.1" and len(back["entries"]) == len(TS.keys())
+    assert back["schema_version"] == "2.2" and len(back["entries"]) == len(TS.keys())

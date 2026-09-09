@@ -101,31 +101,41 @@ for key in ("brain_wm", "brain_gm", "spinal_cord_wm"):
         lines.append(f"| {e.tissue} | {snr} | {th3.amplitudes[0]:.2f} | {sd_free:.3f} | {sd_fix:.3f} | {sd_2:.3f} | {relT0:.0f} |")
 lines.append("")
 
-lines += ["## Reading", "",
+lines += ["## Reading (dictionary v2.2 — the priority-1 primaries applied; class changes against v2.1 are marked)", "",
           "- At the reference acquisition no myelin-type entry is 'estimable' by either criterion under a free K = 3 model: the "
           "free long component (2000 ms, unpinned by a 320 ms window) roughly doubles the bound on the myelin water fraction "
-          "(white matter: 0.072 free vs 0.037 with the long T2 fixed vs 0.029 with it dropped, at SNR 100). With the long "
-          "component fixed or dropped the white-matter MWF bound is about ±0.03 (1σ) at SNR 100 and ±0.01 at SNR 300 — the "
-          "familiar experience that myelin water imaging needs high SNR or averaging, now as a bound.",
-          "- The functional is better determined than the parameters (white matter MWF ~20 % relative vs myelin T2 44 % in the "
+          "(white matter: 0.074 free vs 0.038 with the long T2 fixed vs 0.030 with it dropped, at SNR 100, for the Whittall 1997 "
+          "MWF of 0.113). With the long component fixed or dropped the white-matter MWF bound is about ±0.03 (1σ) at SNR 100 and "
+          "±0.01 at SNR 300 — the familiar experience that myelin water imaging needs high SNR or averaging, now as a bound. "
+          "**Class change (cord):** with MacMillan 2011's MWF 0.296 and IE T2 100 ms the cervical cord under the K = 2 model is "
+          "estimable at SNR 100 on both criteria (myelin T2 18 % relative, MWF 0.296 ± 0.024, i.e. 8 %), where the v2.1 numbers "
+          "(0.23 at 20 ms, IE 75 ms) gave 29 % and 18 %; it stays unestimable under the free K = 3 model.",
+          "- The functional is better determined than the parameters (white matter MWF ~27 % relative vs myelin T2 60 % in the "
           "K = 2 model at SNR 100): a first sighting of charter Phase 3's 'estimate functionals, not spectra', at the level of the bound.",
-          "- Minor components under ~5 % (grey-matter myelin water) fail outright; muscle's four-component structure (Saab 1999, "
-          "measured at SNR ~3500 with 1.2 ms echoes) collapses to an unestimable three-component fit at clinical SNR — the "
-          "clinical protocol sees one ~30 ms pool and, at best, the ~120 ms extracellular tail; well-separated two-component "
-          "tissues (prostate luminal water, ratio ~8) are estimable, to ~5 % relative at their own 64 × 8 ms train.",
+          "- Minor components under ~5 % (grey-matter myelin water, 3.1 % in Whittall 1997) fail outright; muscle's four-component "
+          "structure (Saab 1999 Table 1, measured at SNR ~3200 with 1.2 ms echoes at 1.89 T) collapses to an unestimable "
+          "three-component fit at clinical SNR — the clinical protocol sees one ~30 ms pool and, at best, the ~115-160 ms "
+          "vascular/extracellular tail (Saab's 11 %, Araujo 2014's 8 % at 3 T); well-separated two-component tissues (prostate "
+          "luminal water, Sabouri 2017: 0.24 at 545 ms against 0.76 at 90 ms, ratio ~6) are estimable to ~5 % relative on the LWF "
+          "at their own 64 × 25 ms train. **Class change (prostate):** at the *reference* 32 × 10 ms train the prostate row is no "
+          "longer 'K estimable' (long T2 65 % relative, LWF 0.24 ± 0.105) — the 545 ms component is unpinned by a 320 ms window, "
+          "and the v2.1 row (0.35 at 500 ms, 'yes') rested on a recalled fraction that was too large; Sabouri's own protocol, "
+          "with its 1600 ms window, is what makes luminal water imaging work, which is the window rule of charter §1.2 in a "
+          "clinical protocol.",
           "- The abdominal THEORY rows (liver, pancreas: ratio ~3.5, minor fraction ~0.2) come out 'K estimable' at the reference "
           "acquisition but not at their own shorter, noisier protocols; spleen and kidney (ratio ~2-3) are not estimable anywhere. "
           "These rows test whether T2 can see the vascular compartment that IVIM sees; the physics (fast exchange) says it mostly cannot.",
-          "- The entry-specific acquisitions move results mostly through the window (prostate's train reaches 500 ms; the 16 × 8 ms "
+          "- The entry-specific acquisitions move results mostly through the window (prostate's train reaches 1600 ms; the 16 × 8 ms "
           "abdominal trains lose the 150-220 ms components; the 8 × 12 ms myocardial train is a K = 1 null case), consistent with "
           "the window rule in charter §1.2.",
           "- The adipose row (v2.1) is a 90/10 fat/water mixture at ratio 3.5: the 10 % water fraction is not estimable at the reference "
           "acquisition (relative SD ~ 60 %) even under the pure-exponential model the row is known to violate (J-coupled, chemically "
           "shifted fat) — so it fails twice, once by information and once by model, which is why it is the misspecification row and not a K test.",
-          "- Provenance: the brain, cord, cartilage, bone, marrow, breast and blood rows rest on opened literature (SECONDARY/PRIMARY); "
-          "the abdominal T2 splits (liver, spleen, kidney, pancreas) are THEORY rows built from bulk T2 and IVIM perfusion fractions "
-          "because no in vivo multi-component T2 study of those organs was reached; prostate is RECALLED pending the luminal-water "
-          "full text. Verification moves numbers, not the structure of the conclusion, which is set by ratios and minor-fraction sizes."]
+          "- Provenance: the brain, cord, muscle, cartilage, bone, tendon and prostate component sets rest on the papers' own tables "
+          "(PRIMARY, v2.2); marrow, breast and blood on opened secondary sources; the abdominal T2 splits (liver, spleen, kidney, "
+          "pancreas) are THEORY rows built from bulk T2 and IVIM perfusion fractions because no in vivo multi-component T2 study of "
+          "those organs was reached; no RECALLED component set remains. Verification moved numbers and two classes (cord under K = 2 "
+          "up, prostate at the reference train down); the structure of the conclusion, set by ratios and minor-fraction sizes, stands."]
 
 (OUT / "threshold_tissues.md").write_text("\n".join(lines))
 print("\n".join(lines))

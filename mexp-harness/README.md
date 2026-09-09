@@ -5,7 +5,7 @@ Benchmark harness for multi-exponential MR parameter estimation, built against t
 
 ```
 pip install -e ".[dev]"
-pytest                                   # 70 tests, ~25 s
+pytest                                   # 71 tests, ~25 s
 python scripts/phase0_conditioning.py    # SVD / Picard / truncation sweep -> results/
 python scripts/phase0_threshold.py       # charter §1.2 falsifiable threshold at the reference configuration
 python scripts/phase0_threshold_tissues.py  # the same clauses over the tissue dictionary
@@ -24,7 +24,7 @@ python scripts/render_tissue_dictionary_doc.py  # regenerate docs/tissue-diction
 | `mexp/sim/` | k-space-first simulator **interface**; the only noise entry point is `add_kspace_noise` |
 | `mexp/conditioning.py` | SVD, effective rank, Picard (raw + smoothed), TSVD resolution, Mellin/BBP reference, `r_min`/`k_max` in both constant conventions, Ostrowsky spacing |
 | `mexp/crlb.py` | Fisher information / CRLB: Gaussian real & complex, Rician with σ known or jointly estimated; functional (delta-method) bounds; not an estimator |
-| `mexp/tissue_data.py`, `mexp/tissues.py` | tissue and organ dictionary (v2.1, 19 entries incl. adipose): bulk properties (water, PD, T1, T2, ADC, lipid mass fraction, PDFF), components per modality, theory block, provenance status on every value; API and JSON/document generators |
+| `mexp/tissue_data.py`, `mexp/tissues.py` | tissue and organ dictionary (v2.2, 19 entries incl. adipose; component sets on the papers' own tables after the 2026-09-09 verification pass): bulk properties (water, PD, T1, T2, ADC, lipid mass fraction, PDFF), components per modality, theory block, provenance status on every value; API and JSON/document generators |
 | `data/tissue_dictionary.json` | generated JSON release of the dictionary |
 | `docs/tissue-dictionary.md` | generated human-readable dictionary with the pool/exchange framework |
 | `mexp/estimators/` | `Estimator` protocol; **no implementations** (charter G2) |
