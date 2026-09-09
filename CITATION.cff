@@ -7,7 +7,7 @@ authors:
     given-names: Eric
     email: eric.diaz@gmail.com
 date-released: "2026-09-09"
-version: "charter-v0.13"
+version: "charter-v0.14"
 license: Apache-2.0
 abstract: >
   A Phase 0 benchmark harness (pluggable-kernel forward models, CRLB machinery, conditioning analysis, k-space-first
