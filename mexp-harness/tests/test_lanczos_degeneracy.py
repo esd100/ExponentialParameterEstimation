@@ -142,6 +142,31 @@ def test_lanczos_fit_table_and_stated_agreement(kernel, design, f3):
     assert d.max() == pytest.approx(0.0064, abs=2e-4) and d.max() > 1e-3
 
 
+def test_varah_1985_table_2_reproduces(kernel, design):
+    """Varah 1985 §2 (read 2026-09-09): his Table 1 is Lanczos's two-decimal table; his Table 2 gives the best
+    two-term least-squares fit to it, a = (0.40, 2.11), b = (-1.81, -4.57), I = 1.0e-4.  He does not quote
+    Lanczos's own coefficients — the v0.7 provenance note that attributed them to Varah is corrected here."""
+    p, r = _best_two_exp(kernel, design, L.LANCZOS_DATA_TABLE)
+    a = np.array([p[0], p[2]]); rate = np.array([p[1], p[3]])
+    order = np.argsort(-rate)                                     # fast component first, as Varah's Table 2 lists a2, b2
+    a_ref, r_ref = L.VARAH_TWO_EXP_LS[:, 0], L.VARAH_TWO_EXP_LS[:, 1]
+    assert np.allclose(a[order], a_ref, atol=0.006) and np.allclose(rate[order], r_ref, atol=0.006)   # his 2-3 sig. figs
+    assert (r**2).sum() == pytest.approx(L.VARAH_TWO_EXP_LS_SS, rel=0.2)                          # I = 1.0e-4 (1 sig. fig.)
+    # Varah Table 3: (b1, b2) = (-1.6, -4.4) and (-2.1, -4.7) lie inside his data-error uncertainty region.  Checked in the
+    # form the data support directly: with those rates fixed, the linear LS fit's RMS residual (0.0034, 0.0028) stays below
+    # the table's stated accuracy of 0.005 — rate pairs 30 % apart fit the two-decimal data within its own precision.
+    for b in [(1.6, 4.4), (2.1, 4.7)]:
+        A = np.exp(-np.outer(L.X, b))
+        coef, res, *_ = np.linalg.lstsq(A, L.LANCZOS_DATA_TABLE, rcond=None)
+        assert np.all(coef > 0) and np.sqrt(float(res[0]) / 24) < L.LANCZOS_STATED_ACCURACY
+
+
+def test_istratov_vyvenko_fig2_quotes_lanczos_exactly():
+    """I&V 1999 Fig. 2 caption (read 2026-09-09): f2 = 2.202 exp(-4.45 t) + 0.305 exp(-1.58 t), 24 points, hours."""
+    assert np.array_equal(L.LANCZOS_TWO_EXP, np.array([[2.202, 4.45], [0.305, 1.58]]))
+    assert np.array_equal(L.THREE_EXP, np.array([[0.0951, 1.0], [0.8607, 3.0], [1.5576, 5.0]])) and L.X.size == 24
+
+
 # --- criterion (b): indistinguishable at any noise level above the residual --------------------
 
 def test_b_models_indistinguishable_above_residual_noise(kernel, design, f3):

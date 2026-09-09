@@ -119,6 +119,9 @@ lines += ["## Reading", "",
           "- The entry-specific acquisitions move results mostly through the window (prostate's train reaches 500 ms; the 16 × 8 ms "
           "abdominal trains lose the 150-220 ms components; the 8 × 12 ms myocardial train is a K = 1 null case), consistent with "
           "the window rule in charter §1.2.",
+          "- The adipose row (v2.1) is a 90/10 fat/water mixture at ratio 3.5: the 10 % water fraction is not estimable at the reference "
+          "acquisition (relative SD ~ 60 %) even under the pure-exponential model the row is known to violate (J-coupled, chemically "
+          "shifted fat) — so it fails twice, once by information and once by model, which is why it is the misspecification row and not a K test.",
           "- Provenance: the brain, cord, cartilage, bone, marrow, breast and blood rows rest on opened literature (SECONDARY/PRIMARY); "
           "the abdominal T2 splits (liver, spleen, kidney, pancreas) are THEORY rows built from bulk T2 and IVIM perfusion fractions "
           "because no in vivo multi-component T2 study of those organs was reached; prostate is RECALLED pending the luminal-water "

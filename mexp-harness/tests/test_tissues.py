@@ -8,7 +8,7 @@ from mexp.kernels import get
 
 
 def test_registry_loads_and_is_consistent():
-    assert len(TS.keys()) >= 18
+    assert len(TS.keys()) >= 19
     for e in TS.all_entries():
         assert e.properties and e.theory["n_pools"] >= 1 and e.sources
         for m, cs in e.component_sets.items():
@@ -25,6 +25,24 @@ def test_every_value_carries_a_status_and_theory_counts_are_ordered():
                 assert r["status"] in {p.value for p in TS.Provenance}, (e.key, name)
         th = e.theory
         assert th["n_resolvable_clinical_T2"] <= th["n_apparent_T2"] <= th["n_pools"], e.key
+
+
+def test_fat_content_is_carried_as_two_distinct_quantities():
+    """v2.1: chemical lipid by mass (Woodard & White) and MR PDFF are different numbers; both on every entry."""
+    for e in TS.all_entries():
+        lm, pdff = e.properties["lipid_mass_fraction"], e.properties["pdff"]
+        assert 0 <= lm["value"] <= 1 and 0 <= pdff["value"] <= 1, e.key
+    assert TS.get("brain_wm").properties["lipid_mass_fraction"]["value"] > 0.15   # membrane lipid ...
+    assert TS.get("brain_wm").properties["pdff"]["value"] == 0.0                  # ... is MR-invisible
+    assert TS.get("adipose_tissue").properties["pdff"]["value"] > 0.8
+    assert TS.get("bone_marrow_vertebral").properties["pdff"]["status"] == "PRIMARY"   # Le Ster 2016 Table 1
+
+
+def test_adipose_entry_is_the_misspecification_row():
+    e = TS.get("adipose_tissue")
+    assert e.T2.K == 2 and e.T2.components[-1].fraction > 0.8
+    assert "J-coupling" in e.T2.note and e.theory["n_resolvable_clinical_T2"] == 1
+    assert e.property("T2_ms", "3T")["range"][0] < 60 < e.property("T2_ms", "3T")["value"]   # sequence dependence recorded
 
 
 def test_status_summary_matches_expected_shape():
@@ -71,4 +89,4 @@ def test_json_export_round_trips():
     d = TS.to_json_dict()
     s = json.dumps(d)
     back = json.loads(s)
-    assert back["schema_version"] == "2.0" and len(back["entries"]) == len(TS.keys())
+    assert back["schema_version"] == "2.1" and len(back["entries"]) == len(TS.keys())

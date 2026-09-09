@@ -66,11 +66,30 @@ models needs peak-to-sigma SNR above ~3.6e3 for d' = 3, and for every
 sigma >= 8.8e-4 the expected excess chi-square of the wrong model (<= 5.5)
 stays below the chi-square(2) 95 % critical value 5.99 (criterion (b)).
 
+Secondary restatements, checked against the PDFs on 2026-09-09:
+  Istratov & Vyvenko 1999 (Rev. Sci. Instrum. 70:1233), Fig. 2 caption: 24 points,
+          f2 = 2.202 exp(-4.45 t) + 0.305 exp(-1.58 t), f3 = 0.0951 e^{-t} + 0.8607 e^{-3t}
+          + 1.5576 e^{-5t}, "units of time are hours" -> quotes Lanczos's coefficients
+          exactly (their text says "two ... reproduced by three", the reverse direction
+          of Lanczos's narrative; same content).  Their Fig. 5 extends the two functions
+          to 6 h, where they separate visibly but by < 0.001 of the amplitude.
+  Varah 1985 (SIAM J. Sci. Stat. Comput. 6:30), §2: generator (2.4) = f3, "dt = .05,
+          24 points, truncating the values to two decimal places"; his Table 1 equals
+          LANCZOS_DATA_TABLE at all 24 points.  He does NOT quote Lanczos's two-term
+          coefficients (nor does his 1982 tech report); his Table 2 gives his own
+          best two-term least-squares fit to the two-decimal data:
+          a = (0.40, 2.11), b = (-1.81, -4.57), I = 1.0e-4 -> VARAH_TWO_EXP_LS below.
+          His Table 3: with data error 0.001 the uncertainty region for (b1, b2)
+          contains (-1.6, -4.4) and (-2.1, -4.7).
+          The harness's own least squares on LANCZOS_DATA_TABLE gives
+          (0.403, 2.105; 1.809, 4.572), SS = 1.14e-4 (tests/test_lanczos_degeneracy.py).
+
 Status (charter §7 provenance discipline): everything in this module is
 LOCKED against a primary source as of 2026-09-07 — the three-exponential
 constants and grid against NIST StRD and against Lanczos p. 276/279, the
 two-exponential coefficients, table precision and Lanczos's stated
-agreement against pp. 276-279.
+agreement against pp. 276-279; the two secondaries above were read on
+2026-09-09 and agree with the primary where they quote it.
 """
 from __future__ import annotations
 
@@ -82,6 +101,8 @@ X = 0.05 * np.arange(24)
 THREE_EXP = np.array([[0.0951, 1.0], [0.8607, 3.0], [1.5576, 5.0]])
 LANCZOS_TWO_EXP = np.array([[2.202, 4.45], [0.305, 1.58]])              # Lanczos 1956 eq. (4-23.16), p. 278 (PRIMARY)
 BEST_TWO_EXP_LS = np.array([[2.06878068, 4.63964313], [0.44401299, 1.87246563]])  # frozen offline
+VARAH_TWO_EXP_LS = np.array([[2.11, 4.57], [0.40, 1.81]])   # Varah 1985 Table 2: his LS fit to the two-decimal data (PRIMARY)
+VARAH_TWO_EXP_LS_SS = 1.0e-4                                  # Varah 1985 Table 2, I (sum of squares), one significant figure
 
 # Lanczos 1956, p. 276: the 24 "decay observations", two decimals, dx = 0.05 h from x = 0
 LANCZOS_DATA_TABLE = np.array([2.51, 2.04, 1.67, 1.37, 1.12, 0.93, 0.77, 0.64, 0.53, 0.45, 0.38, 0.32,

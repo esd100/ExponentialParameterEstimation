@@ -7,6 +7,8 @@ name = "mexp"
 version = "0.0.1"
 description = "Phase 0 benchmark harness for multi-exponential MR parameter estimation (pluggable kernels)."
 requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{name = "Eric Diaz", email = "eric.diaz@gmail.com"}]
 dependencies = ["numpy>=1.24", "scipy>=1.10"]
 
 [project.optional-dependencies]

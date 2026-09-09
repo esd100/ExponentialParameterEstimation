@@ -1,13 +1,14 @@
 cff-version: 1.2.0
 title: "Exponential Parameter Estimation: benchmark harness and tissue dictionary for multi-exponential MR parameter estimation"
-message: "If you use this repository, please cite it as below. A license has not yet been chosen; see README."
+message: "If you use this repository, please cite it as below. Code: Apache-2.0 (LICENSE); documents and data: CC BY 4.0 (LICENSE-DOCS)."
 type: software
 authors:
   - family-names: Diaz
     given-names: Eric
     email: eric.diaz@gmail.com
-date-released: "2026-09-07"
-version: "charter-v0.11"
+date-released: "2026-09-09"
+version: "charter-v0.12"
+license: Apache-2.0
 abstract: >
   A Phase 0 benchmark harness (pluggable-kernel forward models, CRLB machinery, conditioning analysis, k-space-first
   simulator interface) and a provenance-flagged tissue and organ dictionary of multi-component MR properties, developed

@@ -25,6 +25,30 @@ S_ref = Σ|a| (`mexp.crlb.sigma_from_*` convert).
 > artefact that reported zero variance on an unpinned 2000 ms component was removed; §4's reference-configuration numbers
 > were unaffected (byte-identical output), and the dictionary numbers in charter §1.2 are the corrected ones.
 
+> **Revision 4 addendum (2026-09-09).** Recorded here because it changes a number in §3.3 below. (1) **Istratov & Vyvenko
+> read (PDF).** Their printed resolution limit is δ = exp(π/ω_max) with **cosh(πω_max) = π·SNR²** (eqs 12–13, after Bertero et
+> al.), Table I 2.44 / 1.88 / 1.63 at SNR 10²/10³/10⁴ — not the SNR² inside the arccosh that §3.3 derives from the *relative*
+> criterion σ(ω)/σ(0) = 1/SNR. The π is |Γ(½)|², the leading singular value squared: theirs is the *absolute* criterion. SNR is
+> an amplitude ratio in their text (formula in SNR²; "exp(4.6) ≈ 100"; √K averaging gain), so §3.3's convention conclusion
+> stands and its constant is amended: three forms now sit side by side in `conditioning.r_min` — `istratov` (2.44 at SNR 100),
+> `arccosh` (2.71, the relative form the harness's SVD actually tests) and `charter` (2.92, the common large-SNR limit) — and
+> the count differs between the first two by (ln π/π²)·ln Γ = 0.4 at Γ = 30, inside the ±0.8 of the table in §3.3. Table I is
+> reproduced: the unrestricted column from the closed form exactly; the known-support columns (b₀/a₀ = 5: 1.74/1.45/1.32;
+> = 2: 1.44/1.27/1.20) from the harness's SVD of a 400-point log T-grid spanning exactly b₀/a₀ under a 2000-point covering
+> window, via their eq. (14) δ = (b₀/a₀)^{1/M} — integer M = 3/4/5 and 2/3/4 give 1.71/1.50/1.38 and 1.41/1.26/1.19, within
+> 0.07 of their interpolated values (`tests/test_conditioning.py`). The Steinbeck & Chmelka figure cited in revision 3 is a
+> quote of their §VI literature review (Clayden: 2.4 / 3.5), not of Table I. Open §7 flags: none. (2) **Varah 1985 read
+> (PDF).** He does not quote Lanczos's two-term coefficients (Istratov & Vyvenko's Fig. 2 caption does, exactly); his Table 1
+> equals Lanczos's two-decimal table, his Table 2 is his own best two-term fit to it (0.40/2.11, −1.81/−4.57, I = 1.0e-4),
+> which the harness reproduces (0.403/2.105, 1.809/4.572, SS 1.14e-4), and his Table 3 rate pairs 30 % apart fit the table
+> within its 0.005 precision — Lanczos's degeneracy in Varah's own numbers. (3) **Dictionary v2.1**: adipose tissue as the
+> misspecification row (J-coupled, chemically shifted fat: under CPMG its T2 runs from 41 to 154 ms with echo spacing at 3 T,
+> Bojorquez Table 2a), lipid mass fraction (Woodard & White 1986, PRIMARY) and PDFF on every entry as two distinct
+> quantities, and the water-content and abdominal/pelvic T1/T2 columns moved to PRIMARY from Woodard & White, de Bazelaire
+> 2004 (Tables 1–2), Gold 2004 and Le Ster 2016. The threshold table in `results/threshold_tissues.md` gained the adipose row
+> (10 % water fraction at ratio 3.5: not estimable, relative SD ~60 %); no other row's estimability class changed, because the
+> PRIMARY values replaced abstract-level values of the same numbers. (4) Licenses (Apache-2.0 / CC BY 4.0) and 70 tests.
+
 ## 0. What v0.7 changed for this work, and what was redone
 
 | v0.7 item | Consequence | Done |
@@ -242,5 +266,5 @@ Applied in **v0.9** and **v0.10** (this revision; all marked, all reversible, lo
 7. §8: two rows; §10: steps 2, 3, 5, 6 updated.
 Gaps register v0.5: Phase 0 numerical notes on A1, A3, D1; v0.6: E3 (open tissue-composition table). `bibliography.md` v0.1 opened (G1).
 v0.10 also: tissue dictionary (§1.2 tissue-level threshold, §4 bullet, §6.1 level, §10 step 8), repository/sync practice (§7), header version number fixed (v0.9 had left it at 0.8).
-Still open (need the user or the primary): the Lanczos book check with its four fields; the Istratov–Vyvenko
-constant convention; the dictionary verification pass; acceptance of the threshold wording.
+Still open (need the user or the primary): ~~the Lanczos book check with its four fields~~ (closed v0.11); ~~the Istratov–Vyvenko
+constant convention~~ (closed v0.12, constant corrected); the dictionary verification pass (all PDFs on hand as of v0.12; four applied); ~~acceptance of the threshold wording~~ (accepted v0.11).

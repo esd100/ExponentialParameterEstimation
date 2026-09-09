@@ -16,8 +16,9 @@ Every number carries a provenance status (charter §7):
     THEORY     not a measured number: derived from physiology/physics as a working
                configuration (typically a compartment split that no paper reports)
 
-Units: times in ms; diffusivities in um^2/ms (= 1e-3 mm^2/s); water content as
-mass fraction; relative proton density with CSF = 1.  Fields: "1.5T" / "3T"
+Units: times in ms; diffusivities in um^2/ms (= 1e-3 mm^2/s); water content and
+lipid content as mass fractions; PDFF (proton-density fat fraction) as a fraction of
+MR-visible protons; relative proton density with CSF = 1.  Fields: "1.5T" / "3T"
 (other fields noted in `note`).  Component fractions are signal fractions at the
 reference point and sum to 1 within each component list.
 
@@ -49,12 +50,14 @@ CPMG_REF = {"n_echoes": 32, "dTE_ms": 10.0, "first_echo_snr": 100.0}
 # Short source keys -> full citations are in docs/project/bibliography.md
 SRC = {
     "St05": "Stanisz et al. 2005 MRM 54:507 (Table 1; in vitro 37 C, mixed species; read via publisher PDF mirror)",
-    "dB04": "de Bazelaire et al. 2004 Radiology 230:652 (3 T in vivo; abstract)",
-    "Han03": "Han/Gold et al. ISMRM 2003 #450 = Gold et al. 2004 AJR 183:343 (1.5/3 T in vivo; conference abstract table)",
+    "dB04": "de Bazelaire et al. 2004 Radiology 230:652 (Tables 1-2 read 2026-09-09: T1/T2 at 1.5 and 3 T in vivo, n = 6; SSFSE-IR / SSFSE multi-TE)",
+    "Han03": "Han/Gold et al. ISMRM 2003 #450 (conference abstract table; superseded by Gold04 where the AJR table was read)",
+    "Gold04": "Gold et al. 2004 AJR 183:343 (Tables read 2026-09-09: T1 by IR-FSE, T2 by T2-prep spiral, 1.5 and 3 T in vivo, n = 5)",
+    "Woo86": "Woodard & White 1986 Br J Radiol 59:1209 (Table I read 2026-09-09: water / lipid / protein / ash, % by mass; three compositions where the literature spread is large)",
     "Wan99": "Wansapura et al. 1999 JMRI 9:531 (3 T; abstract)",
     "Wri08": "Wright et al. 2008 MAGMA 21:121 (MPRAGE T1; abstract)",
     "Roo07": "Rooney et al. 2007 MRM 57:308 (T1 field dependence; abstract)",
-    "Boj17": "Bojorquez et al. 2017 MRI 35:69 (3 T review table; read via mirror PDF)",
+    "Boj17": "Bojorquez et al. 2017 MRI 35:69 (3 T review; Tables 1-2 read from the publisher PDF 2026-09-09)",
     "RP06": "Rakow-Penner et al. 2006 JMRI 23:87 as tabulated by Keenan et al. 2016 (NIST) and Bojorquez 2017",
     "vKB13": "von Knobelsdorff-Brenkenhoff et al. 2013 JCMR 15:53 (3 T myocardium; full text)",
     "Giri09": "Giri et al. 2009 JCMR 11:56 (1.5 T myocardial T2, quoted in vKB13)",
@@ -73,7 +76,7 @@ SRC = {
     "Hor10": "Horch et al. 2010 MRM 64:680 (full text, PMC2933073; human cortical bone 4.7 T)",
     "Du12": "Du et al. 2012 MRM 67:645 (abstract; UTE bicomponent T2*)",
     "Lab14": "Labadie et al. 2014 MRM 71:375 (abstract: short-T1 106-225 ms, WM fraction 8.3 % at 3 T)",
-    "LeS16": "Le Ster et al. 2016 JMRI 44:549 (abstract; vertebral marrow 1.5 T Dixon)",
+    "LeS16": "Le Ster et al. 2016 JMRI 44:549 (Table 1 read 2026-09-09: L1-L5 marrow at 1.5 T, VIBE-Dixon two flip angles, n = 8: FF 33+/-8 %, T1w 701+/-151, T1f 334+/-113, T2*w 13.7+/-2.9, T2*f 11.4+/-2.7 ms)",
     "Luc08": "Luciani et al. 2008 Radiology 249:891 (Table 4, full PDF; liver IVIM 1.5 T)",
     "Li17": "Li et al. 2017 QIMS (27-study pooled liver IVIM; full text)",
     "Yam99": "Yamada et al. 1999 Radiology 210:617 (abstract; IVIM D liver/spleen/kidney 1.5 T)",
@@ -89,6 +92,11 @@ SRC = {
     "EJR20": "Egypt J Radiol Nucl Med 2020 doi 10.1186/s43055-020-00212-3 (liver/spleen ADC controls; spleen SD anomalous)",
     "Ber83": "Bernardino et al. 1983 AJR 141:1203 (ex vivo biexponential liver T2; abstract, no values)",
     "Tas24": "Tasbihi et al. 2024 MRM 91:2532 (rat kidney biexponential T2 as tubule-volume surrogate; abstract)",
+    "Szc05": "Szczepaniak et al. 2005 Am J Physiol Endocrinol Metab 288:E462 (Dallas Heart Study: hepatic triglyceride 95th percentile 5.56 % by MRS; not opened)",
+    "Tang13": "Tang et al. 2013 Radiology 267:422 (MRI-PDFF vs histologic steatosis grade thresholds ~ 6.4 / 17.4 / 22.1 %; not opened)",
+    "Hen92": "Henkelman, Hardy, Bishop, Poon & Plewes 1992 JMRI 2:533 ('Why fat is bright in RARE and fast spin-echo imaging': J-coupling makes fat T2 echo-spacing dependent; not opened)",
+    "Ham11": "Hamilton et al. 2011 NMR Biomed 24:784 (six-peak triglyceride spectrum model for fat quantification; not opened)",
+    "PDFF-lit": "PDFF ranges for lean organs from the water-fat imaging literature (Reeder/Hu/Yokoo reviews; muscle, myocardium, pancreas, kidney; not opened this session)",
 }
 
 ENTRIES = []
@@ -101,7 +109,7 @@ def add(**e):
 # ==============================================================================================
 add(key="brain_wm", organ="brain", tissue="white matter",
     properties={
-        "water_content": V(0.69, "SECONDARY", "OP19; Whi97 (0.71 g/ml)", "g/g", (0.687, 0.716)),
+        "water_content": V(0.69, "PRIMARY", "Woo86 Table I WM 68.5 %; OP19 in vivo 68.7-71.6 %; Whi97 0.71 g/ml", "g/g", (0.685, 0.716)),
         "pd_relative_csf": V(0.70, "TERTIARY", "RK (WM 60-70 of CSF 100); consistent with water content 0.69/1.0", None, (0.60, 0.72)),
         "T1_ms": {"1.5T": V(884, "SECONDARY", "St05 (bovine, 884+/-50); Wri08 MPRAGE in vivo 646+/-32; Roo07 fit 681", None, (646, 884)),
                   "3T": V(1084, "SECONDARY", "St05 (bovine 1084+/-45); Wan99 832; Wri08 838+/-50; Roo07 fit 887", None, (832, 1084))},
@@ -139,7 +147,7 @@ add(key="brain_wm", organ="brain", tissue="white matter",
 
 add(key="brain_gm", organ="brain", tissue="cortical grey matter",
     properties={
-        "water_content": V(0.837, "SECONDARY", "OP19 (83.7+/-1.2 %); Whi97 0.83 g/ml", "g/g", (0.805, 0.846)),
+        "water_content": V(0.83, "PRIMARY", "Woo86 Table I GM 82.6 %; OP19 83.7+/-1.2 %; Whi97 0.83 g/ml", "g/g", (0.805, 0.846)),
         "pd_relative_csf": V(0.83, "TERTIARY", "RK (GM 70-85); water content 0.84", None, (0.70, 0.85)),
         "T1_ms": {"1.5T": V(1124, "SECONDARY", "St05 (bovine 1124+/-50); Wri08 MPRAGE 1197+/-134; Roo07 fit 998", None, (998, 1197)),
                   "3T": V(1607, "SECONDARY", "Wri08 (1607+/-112); St05 bovine 1820+/-114; Wan99 1331; Lu05 via Boj17 1165", None, (1165, 1820))},
@@ -162,7 +170,7 @@ add(key="brain_gm", organ="brain", tissue="cortical grey matter",
 
 add(key="csf", organ="brain", tissue="cerebrospinal fluid (ventricular)",
     properties={
-        "water_content": V(0.99, "TERTIARY", "reference fluid; RK CSF = 100", "g/g"),
+        "water_content": V(0.99, "PRIMARY", "Woo86 Table I CSF 99.0 %", "g/g"),
         "pd_relative_csf": V(1.0, "TERTIARY", "definition"),
         "T1_ms": {"1.5T": V(4300, "SECONDARY", "Roo07 (4300+/-200, field independent)", None, (4000, 4500)),
                   "3T": V(4300, "SECONDARY", "Roo07; Lu05 via Boj17 3817+/-424", None, (3800, 4500))},
@@ -180,7 +188,7 @@ add(key="csf", organ="brain", tissue="cerebrospinal fluid (ventricular)",
 
 add(key="spinal_cord_wm", organ="spinal cord", tissue="cervical cord white matter (lateral/dorsal columns)",
     properties={
-        "water_content": V(0.72, "RECALLED", "as brain WM; cord-specific value not opened", "g/g", (0.68, 0.75)),
+        "water_content": V(0.70, "THEORY", "no cord-specific composition in Woo86; taken as brain WM (68.5 %) with a small GM/CSF admixture", "g/g", (0.68, 0.75)),
         "pd_relative_csf": V(0.70, "TERTIARY", "as WM", None, (0.60, 0.75)),
         "T1_ms": {"1.5T": V(745, "SECONDARY", "St05 (rat cord 745+/-37)", None, (700, 900)),
                   "3T": V(750, "SECONDARY", "Smith & van Zijl ISMRM 2007: lateral 752+/-89, dorsal 745+/-61; St05 rat 993+/-47", None, (745, 993))},
@@ -203,12 +211,12 @@ add(key="spinal_cord_wm", organ="spinal cord", tissue="cervical cord white matte
 # ==============================================================================================
 add(key="skeletal_muscle", organ="musculoskeletal", tissue="skeletal muscle (calf / forearm / paravertebral)",
     properties={
-        "water_content": V(0.75, "TERTIARY", "Wikipedia 'Body water' (~75 %); RK muscle PD 90", "g/g", (0.72, 0.78)),
+        "water_content": V(0.74, "PRIMARY", "Woo86 Table I skeletal muscle 2: 74.1 % (compositions 1-3: 70.0 / 74.1 / 78.6 %)", "g/g", (0.70, 0.786)),
         "pd_relative_csf": V(0.90, "TERTIARY", "RK"),
-        "T1_ms": {"1.5T": V(1008, "SECONDARY", "St05 (mouse 1008+/-20); Han03 in vivo 1130+/-92", None, (1000, 1200)),
-                  "3T": V(1412, "SECONDARY", "St05 (1412+/-13); Han03 1420+/-38; dB04 paravertebral 898+/-33", None, (898, 1420))},
-        "T2_ms": {"1.5T": V(35, "SECONDARY", "Han03 in vivo 35.3+/-3.9; St05 mouse 44+/-6; Saab99 imaging T2 31 ms", None, (30, 45)),
-                  "3T": V(32, "SECONDARY", "Han03 31.7+/-1.9; dB04 29+/-4; St05 50+/-4 (mouse)", None, (29, 50))},
+        "T1_ms": {"1.5T": V(1008, "SECONDARY", "St05 (mouse 1008+/-20); Han03 in vivo 1130+/-92; dB04 paravertebral 856+/-61 (PRIMARY)", None, (856, 1200)),
+                  "3T": V(1412, "SECONDARY", "St05 (1412+/-13); Han03 1420+/-38; dB04 paravertebral 898+/-33 (PRIMARY)", None, (898, 1420))},
+        "T2_ms": {"1.5T": V(35, "SECONDARY", "Han03 in vivo 35.3+/-3.9; dB04 paravertebral 27+/-8 (PRIMARY); St05 mouse 44+/-6; Saab99 imaging T2 31 ms", None, (27, 45)),
+                  "3T": V(32, "SECONDARY", "Han03 31.7+/-1.9; dB04 paravertebral 29+/-4 (PRIMARY); St05 50+/-4 (mouse)", None, (29, 50))},
         "ADC": V(1.5, "SECONDARY", "Maz21/Schlaffke: AD 1.9-2.6, RD 1.35-1.6 (unit flag in source); MRM-web 1.0-1.5", "um2/ms", (1.3, 1.8)),
     },
     components={
@@ -233,7 +241,7 @@ add(key="skeletal_muscle", organ="musculoskeletal", tissue="skeletal muscle (cal
 
 add(key="articular_cartilage", organ="knee", tissue="articular (hyaline) cartilage",
     properties={
-        "water_content": V(0.75, "SECONDARY", "Shiguetomi-Medina 2017 (up to 80 %); depth-dependent 65-80 %", "g/g", (0.65, 0.80)),
+        "water_content": V(0.75, "PRIMARY", "Woo86 Table I cartilage 75.0 %; depth-dependent 65-80 % (Shiguetomi-Medina 2017, SECONDARY)", "g/g", (0.65, 0.80)),
         "pd_relative_csf": V(0.60, "RECALLED", "collagen/PG matrix reduces mobile PD; not opened", None, (0.5, 0.7)),
         "T1_ms": {"1.5T": V(1024, "SECONDARY", "St05 (bovine 1024+/-70 at 0 deg); Han03 in vivo 1060+/-155", None, (1000, 1100)),
                   "3T": V(1168, "SECONDARY", "St05 (1168+/-18); Han03 1240+/-107", None, (1150, 1250))},
@@ -256,7 +264,7 @@ add(key="articular_cartilage", organ="knee", tissue="articular (hyaline) cartila
 
 add(key="achilles_tendon", organ="musculoskeletal", tissue="Achilles tendon",
     properties={
-        "water_content": V(0.60, "RECALLED", "tendon ~ 55-70 % water; not opened", "g/g", (0.55, 0.70)),
+        "water_content": V(0.60, "PRIMARY", "Woo86 Table I connective tissue 60.4 % (composition based on cattle tendon, Oser 1965)", "g/g", (0.55, 0.70)),
         "pd_relative_csf": V(0.3, "RECALLED", "most water is collagen-bound with sub-ms T2 (invisible at conventional TE)", None, (0.1, 0.5)),
         "T1_ms": {"3T": V(700, "RECALLED", "UTE-T1 of tendon ~ 600-800 ms; not opened", None, (500, 900))},
         "T2_ms": {"3T": V(11, "SECONDARY", "Qiao17: mono-exponential UTE T2* 11.1+/-0.3 ms (T2*, not CPMG T2)", None, (8, 15))},
@@ -275,7 +283,7 @@ add(key="achilles_tendon", organ="musculoskeletal", tissue="Achilles tendon",
 
 add(key="cortical_bone", organ="bone", tissue="cortical bone (femur / tibia)",
     properties={
-        "water_content": V(0.15, "SECONDARY", "Hor10: bound + pore water ~ 31-34 mol 1H/L; bulk water ~ 15-20 % by volume", "g/g", (0.10, 0.25)),
+        "water_content": V(0.12, "PRIMARY", "Woo86 Table I cortical bone 12.2 % by mass; Hor10 bound + pore water ~ 31-34 mol 1H/L (~ 15-20 % by volume)", "g/g", (0.10, 0.25)),
         "pd_relative_csf": V(0.05, "TERTIARY", "RK cortical bone 1-10", None, (0.01, 0.10)),
         "T1_ms": {"3T": V(306, "SECONDARY", "AR20 quoting prior work: free (pore) water T1 306 ms; bound water T1 ~ 100-150 ms", None, (100, 400))},
         "T2_ms": {"1.5T": V(0.45, "SECONDARY", "AR20: bound-water T2* 0.45 ms (quoted), free-water T2* 2.81+/-0.31 ms (T2*, not CPMG T2)", None, (0.3, 3.0))},
@@ -295,16 +303,17 @@ add(key="cortical_bone", organ="bone", tissue="cortical bone (femur / tibia)",
 
 add(key="bone_marrow_vertebral", organ="bone", tissue="vertebral (red / haematopoietic) bone marrow",
     properties={
-        "water_content": V(0.45, "RECALLED", "fat fraction ~ 30-40 % in lumbar marrow of young adults (LeS16 33 %); water content of the non-fat part ~ 0.7", "g/g", (0.35, 0.55)),
+        "water_content": V(0.35, "SECONDARY", "Woo86 Table I red marrow 39.7 %, yellow marrow 15.3 %; lumbar marrow of young adults is ~ 2/3 water-signal (LeS16 FF 33 %), i.e. between the two compositions", "g/g", (0.28, 0.40)),
         "pd_relative_csf": V(0.85, "RECALLED", "water + fat protons both visible", None, (0.7, 0.95)),
-        "T1_ms": {"1.5T": V(701, "SECONDARY", "LeS16: T1 water 701+/-151, T1 fat 334+/-113 (1.5 T, Dixon)", None, (334, 850)),
-                  "3T": V(586, "SECONDARY", "dB04 L4 vertebra 586+/-73 (bulk, fat-dominated)", None, (500, 700))},
-        "T2_ms": {"1.5T": V(49, "SECONDARY", "dB04 (3 T) 49+/-4 bulk; LeS16 T2* water 13.7+/-2.9, fat 11.4+/-2.7 (T2*)", None, (40, 60))},
+        "T1_ms": {"1.5T": V(701, "PRIMARY", "LeS16 Table 1: T1 water 701+/-151, T1 fat 334+/-113 (1.5 T, Dixon two flip angles); dB04 bulk 549+/-52", None, (334, 850)),
+                  "3T": V(586, "PRIMARY", "dB04 Table 1 L4 vertebra 586+/-73 at 3 T (549+/-52 at 1.5 T); bulk, fat-dominated", None, (500, 700))},
+        "T2_ms": {"1.5T": V(49, "PRIMARY", "dB04 Table 2 L4 vertebra 49+/-8 at 1.5 T; LeS16 T2* water 13.7+/-2.9, fat 11.4+/-2.7 (T2*, 1.5 T)", None, (40, 60)),
+                  "3T": V(49, "PRIMARY", "dB04 Table 2 L4 vertebra 49+/-4 at 3 T", None, (40, 60))},
         "ADC": V(0.4, "TERTIARY", "MRM-web marrow 0.20-0.60", "um2/ms", (0.2, 0.6)),
     },
     components={"T2": {"kernel": "t2_cpmg", "field_T": 1.5, "status": "SECONDARY",
-                       "list": [C("haematopoietic/water", 0.67, 45.0, "SECONDARY", "LeS16 water fraction 67 %; T2 of marrow water ~ 40-60 ms (T2* 13.7)", (35, 60)),
-                                C("fat (methylene)", 0.33, 100.0, "SECONDARY", "LeS16 FF 33+/-8 %; fat T2 at 1.5 T 100-165 (Han03 165 for yellow marrow; dB04 68 at 3 T)", (68, 165))],
+                       "list": [C("haematopoietic/water", 0.67, 45.0, "SECONDARY", "LeS16 Table 1 water fraction 67 % (PRIMARY); T2 of marrow water ~ 40-60 ms is inferred from bulk 49 (dB04) and T2* 13.7", (35, 60)),
+                                C("fat (methylene)", 0.33, 130.0, "SECONDARY", "LeS16 Table 1 FF 33+/-8 % (PRIMARY); fat T2 sequence-dependent: Gold04 T2-prep marrow fat 165 (1.5 T) / 133 (3 T), dB04 SSFSE subcutaneous fat 58 / 68", (58, 165))],
                        "functional": "fat fraction (1 - mass below 75 ms)", "functional_threshold": 75.0,
                        "typical_acquisition": CPMG_REF,
                        "note": "fat and water are chemically shifted; Dixon separates them far better than T2 — this entry is a T2-only stress test"}},
@@ -319,7 +328,7 @@ add(key="bone_marrow_vertebral", organ="bone", tissue="vertebral (red / haematop
 # ==============================================================================================
 add(key="myocardium", organ="heart", tissue="left-ventricular myocardium",
     properties={
-        "water_content": V(0.78, "RECALLED", "myocardial water ~ 76-80 %; not opened", "g/g", (0.75, 0.80)),
+        "water_content": V(0.76, "PRIMARY", "Woo86 Table I heart 2: 75.9 % (compositions 1-3: 71.0 / 75.9 / 80.9 %; blood-filled 77.7 %)", "g/g", (0.71, 0.81)),
         "pd_relative_csf": V(0.85, "RECALLED", "", None, (0.8, 0.9)),
         "T1_ms": {"1.5T": V(1030, "SECONDARY", "St05 (mouse heart 1030+/-34); in vivo MOLLI ~950-1000 (RECALLED)", None, (950, 1050)),
                   "3T": V(1170, "SECONDARY", "vKB13 MOLLI 1157-1181 base->apex; St05 1471+/-31 (mouse); Boj17 1116-1341", None, (1116, 1341))},
@@ -343,7 +352,7 @@ add(key="myocardium", organ="heart", tissue="left-ventricular myocardium",
 
 add(key="blood_arterial", organ="vascular", tissue="arterial blood (Hct ~ 0.42, Y ~ 0.98)",
     properties={
-        "water_content": V(0.83, "RECALLED", "plasma 0.92, RBC 0.65 -> ~0.83 at Hct 0.42", "g/g", (0.80, 0.85)),
+        "water_content": V(0.79, "PRIMARY", "Woo86 Table I whole blood 79.0 % (plasma 91.9 %, erythrocytes 64.0 %)", "g/g", (0.77, 0.83)),
         "pd_relative_csf": V(0.85, "TERTIARY", "RK blood 85", None, (0.8, 0.9)),
         "T1_ms": {"1.5T": V(1441, "SECONDARY", "St05 (human in vitro 1441+/-120); Roo07 fit 1550", None, (1350, 1600)),
                   "3T": V(1932, "SECONDARY", "St05 (1932+/-85); Roo07 fit 1961", None, (1650, 2000))},
@@ -366,12 +375,12 @@ add(key="blood_arterial", organ="vascular", tissue="arterial blood (Hct ~ 0.42, 
 # ==============================================================================================
 add(key="liver", organ="liver", tissue="parenchyma (normal iron, no steatosis)",
     properties={
-        "water_content": V(0.71, "RECALLED", "liver ~ 70-72 % water (Woodard & White not opened); RK PD 90", "g/g", (0.68, 0.74)),
+        "water_content": V(0.745, "PRIMARY", "Woo86 Table I liver 2: 74.5 % (compositions 1-3: 72.8 / 74.5 / 75.6 %)", "g/g", (0.728, 0.756)),
         "pd_relative_csf": V(0.90, "TERTIARY", "RK"),
-        "T1_ms": {"1.5T": V(576, "SECONDARY", "St05 (mouse 576+/-30); in vivo human ~ 550-600 (RECALLED)", None, (550, 620)),
-                  "3T": V(809, "SECONDARY", "dB04 809+/-71; St05 812+/-64", None, (750, 870))},
-        "T2_ms": {"1.5T": V(46, "SECONDARY", "St05 46+/-6", None, (40, 55)),
-                  "3T": V(34, "SECONDARY", "dB04 34+/-4; St05 42+/-3", None, (30, 45))},
+        "T1_ms": {"1.5T": V(586, "PRIMARY", "dB04 Table 1 586+/-39 (human in vivo); St05 mouse 576+/-30", None, (550, 620)),
+                  "3T": V(809, "PRIMARY", "dB04 Table 1 809+/-71; St05 812+/-64", None, (750, 870))},
+        "T2_ms": {"1.5T": V(46, "PRIMARY", "dB04 Table 2 46+/-6 (human in vivo); St05 46+/-6", None, (40, 55)),
+                  "3T": V(34, "PRIMARY", "dB04 Table 2 34+/-4; St05 42+/-3", None, (30, 45))},
         "ADC": V(1.39, "PRIMARY", "Luc08 Table 4: 1.39+/-0.2 (b up to 800); EJR20 1.65+/-0.44; MRM-web 0.6-1.1", "um2/ms", (1.0, 1.7)),
     },
     components={
@@ -395,12 +404,12 @@ add(key="liver", organ="liver", tissue="parenchyma (normal iron, no steatosis)",
 
 add(key="spleen", organ="spleen", tissue="splenic parenchyma",
     properties={
-        "water_content": V(0.77, "RECALLED", "spleen ~ 76-79 % water; RK PD 90", "g/g", (0.74, 0.80)),
+        "water_content": V(0.787, "PRIMARY", "Woo86 Table I spleen 78.7 %", "g/g", (0.76, 0.80)),
         "pd_relative_csf": V(0.90, "TERTIARY", "RK"),
-        "T1_ms": {"1.5T": V(1050, "RECALLED", "~1000-1100 at 1.5 T; not opened", None, (950, 1150)),
-                  "3T": V(1328, "SECONDARY", "dB04 1328+/-31", None, (1250, 1400))},
-        "T2_ms": {"1.5T": V(75, "RECALLED", "~70-80 at 1.5 T; not opened", None, (65, 85)),
-                  "3T": V(61, "SECONDARY", "dB04 61+/-9", None, (52, 70))},
+        "T1_ms": {"1.5T": V(1057, "PRIMARY", "dB04 Table 1 1057+/-42", None, (1000, 1100)),
+                  "3T": V(1328, "PRIMARY", "dB04 Table 1 1328+/-31", None, (1250, 1400))},
+        "T2_ms": {"1.5T": V(79, "PRIMARY", "dB04 Table 2 79+/-15", None, (65, 95)),
+                  "3T": V(61, "PRIMARY", "dB04 Table 2 61+/-9", None, (52, 70))},
         "ADC": V(0.85, "SECONDARY", "EJR20 0.85 (SD anomalous); Yam99 IVIM D 0.80; MRM-web n/a", "um2/ms", (0.7, 1.0)),
     },
     components={"T2": {"kernel": "t2_cpmg", "field_T": 1.5, "status": "THEORY",
@@ -417,12 +426,12 @@ add(key="spleen", organ="spleen", tissue="splenic parenchyma",
 
 add(key="kidney_cortex", organ="kidney", tissue="renal cortex",
     properties={
-        "water_content": V(0.80, "RECALLED", "kidney ~ 78-82 % water; RK PD 95", "g/g", (0.76, 0.83)),
+        "water_content": V(0.77, "PRIMARY", "Woo86 Table I kidney 2: 76.6 % (whole kidney; compositions 1-3: 72.3 / 76.6 / 80.5 %)", "g/g", (0.723, 0.805)),
         "pd_relative_csf": V(0.95, "TERTIARY", "RK"),
-        "T1_ms": {"1.5T": V(690, "SECONDARY", "St05 (rat whole kidney 690+/-30); in vivo human cortex ~ 950 (RECALLED)", None, (690, 1000)),
-                  "3T": V(1142, "SECONDARY", "dB04 cortex 1142+/-154; St05 rat whole 1194+/-27", None, (1000, 1250))},
-        "T2_ms": {"1.5T": V(55, "SECONDARY", "St05 rat whole kidney 55+/-3; human cortex at 1.5 T ~ 80-90 (RECALLED)", None, (55, 95)),
-                  "3T": V(76, "SECONDARY", "dB04 cortex 76+/-7", None, (65, 85))},
+        "T1_ms": {"1.5T": V(966, "PRIMARY", "dB04 Table 1 cortex 966+/-58 (human in vivo); St05 rat whole kidney 690+/-30", None, (690, 1000)),
+                  "3T": V(1142, "PRIMARY", "dB04 Table 1 cortex 1142+/-154; St05 rat whole 1194+/-27", None, (1000, 1250))},
+        "T2_ms": {"1.5T": V(87, "PRIMARY", "dB04 Table 2 cortex 87+/-4 (human in vivo); St05 rat whole kidney 55+/-3", None, (55, 95)),
+                  "3T": V(76, "PRIMARY", "dB04 Table 2 cortex 76+/-7", None, (65, 85))},
         "ADC": V(2.0, "SECONDARY", "vBa17 cortex D 2.04+/-0.08 (bi-exp); Fil15 D 1.7, ADC MRM-web 1.5-2.5", "um2/ms", (1.7, 2.3)),
     },
     components={
@@ -446,12 +455,12 @@ add(key="kidney_cortex", organ="kidney", tissue="renal cortex",
 
 add(key="kidney_medulla", organ="kidney", tissue="renal medulla",
     properties={
-        "water_content": V(0.82, "RECALLED", "medulla slightly wetter than cortex; not opened", "g/g", (0.78, 0.85)),
+        "water_content": V(0.80, "THEORY", "Woo86 gives whole kidney only (72.3-80.5 %); medulla placed at the wet end", "g/g", (0.77, 0.83)),
         "pd_relative_csf": V(0.95, "TERTIARY", "RK (kidney)"),
-        "T1_ms": {"1.5T": V(1200, "RECALLED", "human medulla at 1.5 T ~ 1200-1400; not opened", None, (1100, 1450)),
-                  "3T": V(1545, "SECONDARY", "dB04 medulla 1545+/-142", None, (1400, 1700))},
-        "T2_ms": {"1.5T": V(90, "RECALLED", "~85-100 at 1.5 T; not opened", None, (80, 110)),
-                  "3T": V(81, "SECONDARY", "dB04 medulla 81+/-8", None, (70, 90))},
+        "T1_ms": {"1.5T": V(1412, "PRIMARY", "dB04 Table 1 medulla 1412+/-58", None, (1300, 1500)),
+                  "3T": V(1545, "PRIMARY", "dB04 Table 1 medulla 1545+/-142", None, (1400, 1700))},
+        "T2_ms": {"1.5T": V(85, "PRIMARY", "dB04 Table 2 medulla 85+/-11", None, (75, 100)),
+                  "3T": V(81, "PRIMARY", "dB04 Table 2 medulla 81+/-8", None, (70, 90))},
         "ADC": V(1.93, "SECONDARY", "vBa17 medulla D 1.93+/-0.08; MRM-web 1.8-2.2", "um2/ms", (1.8, 2.2)),
     },
     components={"T2": {"kernel": "t2_cpmg", "field_T": 3.0, "status": "THEORY",
@@ -472,12 +481,12 @@ add(key="kidney_medulla", organ="kidney", tissue="renal medulla",
 
 add(key="pancreas", organ="pancreas", tissue="pancreatic parenchyma",
     properties={
-        "water_content": V(0.72, "RECALLED", "~ 70-75 % water; fat infiltration increases with age; not opened", "g/g", (0.65, 0.78)),
+        "water_content": V(0.733, "PRIMARY", "Woo86 Table I pancreas 73.3 % (lipid 12.8 %); fat infiltration increases with age", "g/g", (0.65, 0.78)),
         "pd_relative_csf": V(0.85, "RECALLED", "", None, (0.8, 0.9)),
-        "T1_ms": {"1.5T": V(580, "RECALLED", "~ 550-650 at 1.5 T; not opened", None, (500, 700)),
-                  "3T": V(725, "SECONDARY", "dB04 725+/-71", None, (650, 800))},
-        "T2_ms": {"1.5T": V(50, "RECALLED", "~ 45-55 at 1.5 T; not opened", None, (40, 60)),
-                  "3T": V(43, "SECONDARY", "dB04 43+/-7", None, (36, 50))},
+        "T1_ms": {"1.5T": V(584, "PRIMARY", "dB04 Table 1 584+/-14", None, (550, 650)),
+                  "3T": V(725, "PRIMARY", "dB04 Table 1 725+/-71", None, (650, 800))},
+        "T2_ms": {"1.5T": V(46, "PRIMARY", "dB04 Table 2 46+/-6", None, (40, 55)),
+                  "3T": V(43, "PRIMARY", "dB04 Table 2 43+/-7", None, (36, 50))},
         "ADC": V(1.86, "SECONDARY", "Ser24 ADC 1.86 (1.66-2.06); Mayer 2021 D 1.5", "um2/ms", (1.5, 2.1)),
     },
     components={"T2": {"kernel": "t2_cpmg", "field_T": 3.0, "status": "THEORY",
@@ -502,12 +511,12 @@ add(key="pancreas", organ="pancreas", tissue="pancreatic parenchyma",
 # ==============================================================================================
 add(key="prostate_pz", organ="prostate", tissue="peripheral zone, normal",
     properties={
-        "water_content": V(0.80, "RECALLED", "glandular tissue with abundant luminal fluid; not opened", "g/g", (0.75, 0.85)),
+        "water_content": V(0.833, "PRIMARY", "Woo86 Table I prostate 83.3 % (whole gland)", "g/g", (0.78, 0.86)),
         "pd_relative_csf": V(0.85, "RECALLED", "", None, (0.8, 0.95)),
-        "T1_ms": {"1.5T": V(1300, "RECALLED", "~1200-1400 at 1.5 T; not opened", None, (1100, 1500)),
-                  "3T": V(1597, "SECONDARY", "dB04 whole gland 1597+/-42; Boj17 1400-1700", None, (1400, 1700))},
-        "T2_ms": {"1.5T": V(110, "RECALLED", "PZ ~ 100-130 at 1.5 T (higher than whole gland); not opened", None, (90, 140)),
-                  "3T": V(74, "SECONDARY", "dB04 whole gland 74+/-9 (PZ alone is longer, ~ 100-120 RECALLED)", None, (70, 130))},
+        "T1_ms": {"1.5T": V(1317, "PRIMARY", "dB04 Table 1 whole gland 1317+/-85", None, (1200, 1450)),
+                  "3T": V(1597, "PRIMARY", "dB04 Table 1 whole gland 1597+/-42; Boj17 1400-1700", None, (1400, 1700))},
+        "T2_ms": {"1.5T": V(88, "PRIMARY", "dB04 Table 2 whole gland 88 (SD reported as 0); PZ alone is longer, ~ 100-130 (RECALLED)", None, (85, 140)),
+                  "3T": V(74, "PRIMARY", "dB04 Table 2 whole gland 74+/-9 (PZ alone is longer, ~ 100-120 RECALLED)", None, (70, 130))},
         "ADC": V(1.6, "TERTIARY", "MRM-web prostate 1.4-1.8", "um2/ms", (1.4, 1.9)),
     },
     components={"T2": {"kernel": "t2_cpmg", "field_T": 3.0, "status": "RECALLED",
@@ -524,7 +533,7 @@ add(key="prostate_pz", organ="prostate", tissue="peripheral zone, normal",
 
 add(key="breast_fibroglandular", organ="breast", tissue="fibroglandular tissue (with fat partial volume)",
     properties={
-        "water_content": V(0.60, "RECALLED", "fibroglandular ~ 0.7-0.8; voxels mix with fat", "g/g", (0.4, 0.8)),
+        "water_content": V(0.51, "PRIMARY", "Woo86 Table I mammary gland 2: 51.4 % (compositions 1-3: 30.2 / 51.4 / 72.6 % water with 56.2 / 30.9 / 5.6 % lipid — fatty / mixed / glandular)", "g/g", (0.30, 0.73)),
         "pd_relative_csf": V(0.8, "RECALLED", "", None, (0.7, 0.95)),
         "T1_ms": {"1.5T": V(1266, "SECONDARY", "RP06 via Keenan 2016: fibroglandular 1266+/-82; fat 296+/-13", None, (1100, 1400)),
                   "3T": V(1445, "SECONDARY", "RP06 via Keenan/Boj17: 1445+/-93; fat 367+/-8", None, (1300, 1550))},
@@ -534,7 +543,7 @@ add(key="breast_fibroglandular", organ="breast", tissue="fibroglandular tissue (
     },
     components={"T2": {"kernel": "t2_cpmg", "field_T": 1.5, "status": "SECONDARY",
                        "list": [C("fibroglandular water", 0.6, 57.0, "SECONDARY", "RP06 57.5 (1.5 T)", (45, 70)),
-                                C("fat (methylene)", 0.4, 110.0, "SECONDARY", "RP06 breast fat T2 53 (short, spin-echo w/ J-coupling); Han03 subcutaneous fat 165 (1.5 T); dB04 68 (3 T) — CPMG fat T2 is sequence-dependent", (53, 165))],
+                                C("fat (methylene)", 0.4, 110.0, "SECONDARY", "RP06 breast fat T2 53 (short, spin-echo w/ J-coupling); Gold04 subcutaneous fat 165 (1.5 T, T2-prep); dB04 58 / 68 (SSFSE, 1.5 / 3 T) — CPMG fat T2 is sequence-dependent", (53, 165))],
                        "functional": "fat fraction (1 - mass below 80 ms)", "functional_threshold": 80.0,
                        "typical_acquisition": CPMG_REF,
                        "note": "fat T2 under CPMG depends on echo spacing (J-coupling); Dixon is the right tool — a deliberate 'wrong tool' row like marrow"}},
@@ -545,6 +554,81 @@ add(key="breast_fibroglandular", organ="breast", tissue="fibroglandular tissue (
     sources=["RP06", "Han03", "dB04"])
 
 # ==============================================================================================
+# ADIPOSE TISSUE (added v2.1)
+# ==============================================================================================
+add(key="adipose_tissue", organ="adipose", tissue="subcutaneous white adipose tissue",
+    properties={
+        "water_content": V(0.21, "PRIMARY", "Woo86 Table I adipose tissue 2: 21.2 % (compositions 1-3: 30.5 / 21.2 / 11.4 % water with 61.4 / 74.1 / 87.3 % lipid)", "g/g", (0.114, 0.305)),
+        "pd_relative_csf": V(0.95, "TERTIARY", "RK fat 90-100 (water + lipid protons both visible; lipid proton density per gram ~ 0.9 of water's)", None, (0.85, 1.0)),
+        "T1_ms": {"1.5T": V(288, "PRIMARY", "Gold04 Table subcutaneous fat 288+/-8 (marrow fat 288+/-5); dB04 Table 1 343+/-37", None, (280, 380)),
+                  "3T": V(371, "PRIMARY", "Gold04 371+/-8 (marrow fat 365+/-9); dB04 382+/-13; Boj17 review 346-450 across IR methods", None, (346, 450))},
+        "T2_ms": {"1.5T": V(165, "PRIMARY", "Gold04 T2-prep 165+/-6; dB04 SSFSE multi-TE 58+/-4 — the spread is the sequence dependence of fat T2 (J-coupling, Hen92), not disagreement", None, (58, 165)),
+                  "3T": V(133, "PRIMARY", "Gold04 T2-prep 133+/-4; dB04 SSFSE 68+/-4; Boj17 Table 2a: 41 (single SE) to 154 (16-echo CPMG) and 371 (hybrid SE) by sequence", None, (41, 371))},
+        "ADC": V(0.15, "RECALLED", "triglyceride self-diffusion is ~ 10x slower than water; fat ADC 0.05-0.3 reported in Dixon-suppressed and fat-only DWI; not opened", "um2/ms", (0.05, 0.3)),
+    },
+    components={"T2": {"kernel": "t2_cpmg", "field_T": 1.5, "status": "THEORY",
+                       "list": [C("adipocyte / interstitial water", 0.10, 40.0, "THEORY", "Woo86 water 11-31 % by mass -> ~ 8-25 % of visible protons; T2 of the water fraction of adipose tissue not reached; placed at 30-60 ms", (30, 60)),
+                                C("triglyceride protons (methylene-dominated, J-coupled)", 0.90, 140.0, "SECONDARY", "Gold04 bulk T2-prep 165 (1.5 T) / 133 (3 T); Boj17 CPMG-type values 103-154 at 3 T; fraction from Woo86 composition 2 converted to proton fraction (~ 0.9)", (100, 165))],
+                       "functional": "water fraction (mass below 75 ms)", "functional_threshold": 75.0,
+                       "typical_acquisition": CPMG_REF,
+                       "note": "fat is not an exponential family under CPMG: homonuclear J-coupling makes the methylene decay depend on echo spacing (41 ms single SE vs 120-165 ms short-spacing CPMG), and the six-line chemical-shift spectrum (Ham11) makes chemical-shift-encoded (Dixon/IDEAL) modelling the correct tool — a deliberate misspecification row, and the source of the fat partial-volume pool in marrow, breast, pancreas and muscle"}},
+    theory={"pools": ["adipocyte triglyceride: methylene (CH2)n, ~ 70 % of lipid protons", "other triglyceride resonances (methyl, olefinic, alpha/beta-carboxyl, glycerol, diallylic) ~ 30 % — the six-peak model",
+                      "adipocyte cytoplasmic water (thin rim around the lipid droplet)", "interstitial / stromal water and capillary blood", "collagenous septa (short T2, invisible at clinical TE)"],
+            "n_pools": 5, "exchange": "Lipid and water protons do not exchange; the lipid resonances are separated by chemical shift (up to ~ 5 ppm), not by relaxation, and their CPMG decay is modulated by J-coupling so the apparent fat T2 depends on echo spacing and refocusing quality (Hen92).",
+            "n_apparent_T2": 2, "n_resolvable_clinical_T2": 1,
+            "rationale": "A ~ 90/10 lipid/water mixture whose dominant component is not a fixed exponential: the right model is chemical-shift-encoded with a single fat T2*, and any multi-exponential T2 fit is misspecified by construction. In the harness this row tests the model-misspecification axis (charter §6.1), not K; PDFF is its functional."},
+    sources=["Woo86", "Gold04", "dB04", "Boj17", "Hen92", "Ham11"])
+
+# ==============================================================================================
+# FAT CONTENT (added v2.1) — two numbers per entry, because they are not the same quantity:
+#   lipid_mass_fraction : chemical lipid by mass (Woodard & White 1986 Table I, PRIMARY). Includes membrane
+#                         phospholipid and cholesterol, which have T2 < 1 ms and are invisible to water-fat imaging.
+#   pdff                : MR proton-density fat fraction = mobile triglyceride protons / all MR-visible protons,
+#                         the quantity Dixon/IDEAL/MRS measure and the clinical steatosis biomarker.
+# Pathology axis note (charter §6.1): hepatic steatosis is graded on PDFF (Szc05 normal < 5.56 %; Tang13 grade
+# thresholds ~ 6.4 / 17.4 / 22.1 %); pancreatic, muscular and myocardial fat rise with obesity and age; marrow FF
+# rises with age and falls with infiltration. Pathological variants are not entries yet (dictionary §6).
+# ==============================================================================================
+FAT = {
+    "brain_wm":            (V(0.181, "PRIMARY", "Woo86 WM lipid 18.1 % (assumed 50 % sphingomyelin, 25 % cerebroside, 25 % cholesterol — membrane lipid)", "g/g"),
+                            V(0.0, "THEORY", "membrane lipid is MR-invisible at TE >= 1 ms; water-fat decomposition of normal brain returns PDFF ~ 0", None, (0.0, 0.01))),
+    "brain_gm":            (V(0.053, "PRIMARY", "Woo86 GM lipid 5.3 % (membrane lipid)", "g/g"),
+                            V(0.0, "THEORY", "as WM: membrane lipid invisible; PDFF ~ 0", None, (0.0, 0.01))),
+    "csf":                 (V(0.0, "PRIMARY", "Woo86 CSF: no lipid", "g/g"), V(0.0, "PRIMARY", "no lipid", None)),
+    "spinal_cord_wm":      (V(0.18, "THEORY", "as brain WM (Woo86 18.1 %)", "g/g"), V(0.0, "THEORY", "as brain WM", None, (0.0, 0.01))),
+    "skeletal_muscle":     (V(0.042, "PRIMARY", "Woo86 skeletal muscle 2: 4.2 % (compositions 1-3: 6.8 / 4.2 / 1.6 %)", "g/g", (0.016, 0.068)),
+                            V(0.03, "RECALLED", "PDFF-lit: healthy thigh/calf muscle PDFF ~ 1-5 % (intra- plus extramyocellular lipid); rises to 10-50 % in dystrophy and sarcopenia", None, (0.01, 0.05))),
+    "articular_cartilage": (V(0.0, "PRIMARY", "Woo86 cartilage: no lipid column (11 % chondroitin sulphate)", "g/g"), V(0.0, "THEORY", "no mobile lipid", None)),
+    "achilles_tendon":     (V(0.01, "PRIMARY", "Woo86 connective tissue lipid 1.0 %", "g/g"), V(0.0, "THEORY", "no mobile lipid in tendon proper; peritendinous fat is partial volume", None, (0.0, 0.02))),
+    "cortical_bone":       (V(0.0, "PRIMARY", "Woo86 cortical bone: no lipid column (58 % mineral ash)", "g/g"),
+                            V(0.02, "THEORY", "Haversian/Volkmann canals carry marrow fat; UTE water-fat studies report a small fat signal fraction in cortical bone; not opened", None, (0.0, 0.10))),
+    "bone_marrow_vertebral": (V(0.60, "PRIMARY", "Woo86 red marrow 39.7 %, yellow marrow 80.4 % lipid; adult lumbar marrow is a mixture", "g/g", (0.397, 0.804)),
+                            V(0.33, "PRIMARY", "LeS16 Table 1: FF 33+/-8 % over L1-L5 at 1.5 T, rising ~ 2 % per vertebra L1->L5 and with age", None, (0.25, 0.41))),
+    "myocardium":          (V(0.062, "PRIMARY", "Woo86 heart 2: 6.2 % (compositions 1-3: 10.0 / 6.2 / 2.4 %; includes epicardial fat in the gross tissue)", "g/g", (0.024, 0.10)),
+                            V(0.01, "RECALLED", "PDFF-lit / Dallas Heart Study MRS: myocardial triglyceride ~ 0.5-1.5 % in lean subjects, higher in obesity and diabetes", None, (0.003, 0.03))),
+    "blood_arterial":      (V(0.006, "PRIMARY", "Woo86 whole blood lipid 0.6 % (plasma 0.7 %)", "g/g"), V(0.0, "THEORY", "plasma lipoprotein lipid is not resolved as a fat signal fraction at clinical resolution", None, (0.0, 0.01))),
+    "liver":               (V(0.046, "PRIMARY", "Woo86 liver 2: 4.6 % (compositions 1-3: 7.8 / 4.6 / 1.5 %; membrane plus triglyceride)", "g/g", (0.015, 0.078)),
+                            V(0.03, "RECALLED", "Szc05: hepatic triglyceride by MRS, 95th percentile of the low-risk population 5.56 % (the steatosis cut-off); typical healthy PDFF 1-5 %; Tang13 grades 1-3 above ~ 6.4 / 17.4 / 22.1 %", None, (0.01, 0.056))),
+    "spleen":              (V(0.018, "PRIMARY", "Woo86 spleen lipid 1.8 %", "g/g"), V(0.01, "RECALLED", "PDFF-lit: splenic PDFF ~ 0-2 % (used as the in-body zero-fat reference in some PDFF pipelines)", None, (0.0, 0.03))),
+    "kidney_cortex":       (V(0.048, "PRIMARY", "Woo86 kidney 2: 4.8 % (compositions 1-3: 6.9 / 4.8 / 2.8 %; whole kidney)", "g/g", (0.028, 0.069)),
+                            V(0.02, "RECALLED", "PDFF-lit: renal parenchymal PDFF ~ 1-3 % excluding sinus fat; rises in diabetic nephropathy", None, (0.0, 0.05))),
+    "kidney_medulla":      (V(0.048, "PRIMARY", "Woo86 whole kidney (no cortex/medulla split)", "g/g", (0.028, 0.069)),
+                            V(0.02, "RECALLED", "as cortex (PDFF-lit)", None, (0.0, 0.05))),
+    "pancreas":            (V(0.128, "PRIMARY", "Woo86 pancreas lipid 12.8 % (interlobular fat included in the gross organ)", "g/g"),
+                            V(0.05, "RECALLED", "PDFF-lit: pancreatic PDFF ~ 2-10 % in healthy adults, strongly age- and BMI-dependent; > 10 % often taken as fatty pancreas", None, (0.02, 0.15))),
+    "prostate_pz":         (V(0.012, "PRIMARY", "Woo86 prostate lipid 1.2 %", "g/g"), V(0.0, "THEORY", "no mobile lipid in the gland; periprostatic fat is partial volume", None, (0.0, 0.02))),
+    "breast_fibroglandular": (V(0.309, "PRIMARY", "Woo86 mammary gland 2: 30.9 % (compositions 1-3: 56.2 / 30.9 / 5.6 % — fatty / mixed / glandular)", "g/g", (0.056, 0.562)),
+                            V(0.30, "RECALLED", "PDFF-lit: fibroglandular ROIs 10-40 % by partial volume; whole-breast PDFF 60-90 % depending on density category", None, (0.10, 0.60))),
+    "adipose_tissue":      (V(0.741, "PRIMARY", "Woo86 adipose tissue 2: 74.1 % (compositions 1-3: 61.4 / 74.1 / 87.3 %)", "g/g", (0.614, 0.873)),
+                            V(0.90, "RECALLED", "PDFF-lit: subcutaneous adipose PDFF ~ 85-95 % (the in-body ~ 100 % reference); visceral slightly lower", None, (0.80, 0.97))),
+}
+for _e in ENTRIES:
+    _lm, _pdff = FAT[_e["key"]]
+    _e["properties"]["lipid_mass_fraction"] = _lm
+    _e["properties"]["pdff"] = _pdff
+del _e, _lm, _pdff
+
+# ==============================================================================================
 CHANGELOG = [
     "2026-09-07 v1: 13 entries, all RECALLED (first draft).",
     "2026-09-07 v2: restructured (properties: water/PD, T1, T2 at 1.5 and 3 T, ADC; components per modality; theory block); "
@@ -553,4 +637,11 @@ CHANGELOG = [
     "Labadie 2014 (abstract), Luciani 2008 (PRIMARY table), van Baalen 2017, Filli 2015, Serafin 2024, Mayer 2021, McGill 2015, "
     "Mazzoli 2021, Oros-Peusquens 2019; liver, spleen, kidney cortex/medulla, pancreas, marrow, blood, CSF added; "
     "abdominal T2 splits are THEORY (no multi-component study reached) and say so.",
+    "2026-09-09 v2.1: adipose tissue added (19 entries); lipid mass fraction (Woodard & White 1986 Table I, PRIMARY) and "
+    "PDFF added to every entry as two distinct quantities; Woodard & White 1986, de Bazelaire 2004 (Tables 1-2), Gold 2004 "
+    "(Tables) and Le Ster 2016 (Table 1) read from the PDFs in literature/ — water contents and the abdominal/pelvic T1/T2 "
+    "columns moved to PRIMARY, 1.5 T columns filled for spleen, kidney, pancreas, prostate and liver; fat T2 recorded as "
+    "sequence-dependent (J-coupling) with both the T2-prep and the SSFSE values; hepatic steatosis and the other fat "
+    "pathologies noted under the pathology axis (not entries yet). The abdominal multi-component T2 splits remain THEORY: "
+    "measuring them is recorded as a potential future research project (register E3), not current focus.",
 ]

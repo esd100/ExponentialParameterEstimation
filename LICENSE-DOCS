@@ -1,0 +1,39 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+===========================================================
+
+The documents and data of this repository — everything under `docs/`
+(including `docs/project/`, the tissue and organ dictionary document
+`mexp-harness/docs/tissue-dictionary.md`, the Phase 0 findings and status
+notes), the dictionary data files (`mexp-harness/data/tissue_dictionary.json`
+and the data module `mexp-harness/mexp/tissue_data.py` insofar as it is a
+compilation of literature values), the results tables under
+`mexp-harness/results/`, `CITATION.cff` and this file — are licensed under the
+Creative Commons Attribution 4.0 International License.
+
+Copyright 2026 Eric Diaz.
+
+You are free to share (copy and redistribute the material in any medium or
+format) and adapt (remix, transform, and build upon the material) for any
+purpose, even commercially, under the following terms: you must give
+appropriate credit (cite the repository and, for dictionary values, the
+primary sources named in each record), provide a link to the license, and
+indicate if changes were made.
+
+To view a copy of this license, visit
+    https://creativecommons.org/licenses/by/4.0/
+or read the legal code at
+    https://creativecommons.org/licenses/by/4.0/legalcode
+
+Suggested attribution: "Exponential Parameter Estimation project — tissue and
+organ dictionary / project documents, E. Diaz, 2026, CC BY 4.0,
+<repository URL>."
+
+Scope notes
+-----------
+* The software (the `mexp` package, its tests and scripts) is licensed
+  separately under the Apache License, Version 2.0 — see `LICENSE`.
+* The `literature/` folder is git-ignored and contains copyrighted
+  publications for private study; nothing in it is covered by either license.
+* Individual numbers in the dictionary are facts drawn from the cited papers;
+  the license covers this compilation, its structure, provenance annotations
+  and prose, not the underlying facts.

@@ -82,3 +82,29 @@ def test_covering_window_approaches_continuum_count(k):
     n_num = C.effective_rank(C.singular_spectrum(A), snr)
     n_bbp = C.bbp_count(gamma, snr)
     assert abs(n_num - n_bbp) <= 1.5
+
+
+# --- Istratov & Vyvenko 1999 Table I (after Bertero, Boccacci & Pike 1982), read from the PDF 2026-09-09 ------
+
+def test_istratov_vyvenko_infinite_domain_column_is_the_printed_closed_form():
+    """eqs (12)-(13): delta = exp(pi / w_max), cosh(pi w_max) = pi SNR^2 -> 2.44 / 1.88 / 1.63 at SNR 1e2 / 1e3 / 1e4.
+    The factor pi inside the arccosh is what distinguishes their printed form from the harness's relative criterion."""
+    for snr in (1e2, 1e3, 1e4):
+        assert round(C.r_min(snr, "istratov"), 2) == C.ISTRATOV_TABLE_I[(snr, None)]
+        assert C.r_min(snr, "istratov") < C.r_min(snr, "arccosh") < C.r_min(snr, "charter")
+    # the three conventions agree to first order: the differences are O(ln pi) and O(ln 2) in the denominator
+    assert abs(np.log(C.r_min(1e2, "arccosh")) / np.log(C.r_min(1e2, "istratov")) - np.arccosh(np.pi * 1e4) / np.arccosh(1e4)) < 1e-12
+    assert 1.25 < C.k_max(30.0, 100.0, "istratov") - C.k_max(30.0, 100.0, "arccosh") + 1.0 < 1.5   # 0.4 for Gamma 30
+
+
+def test_finite_domain_columns_reproduce_from_the_harness_svd(k):
+    """Table I finite-domain columns (b0/a0 = 5: 1.74 / 1.45 / 1.32; = 2: 1.44 / 1.27 / 1.20) via their eq. (14)
+    delta = (b0/a0)^(1/M), with M the harness's own count of singular values above 1/SNR for a T-grid spanning
+    exactly b0/a0 under a covering, densely sampled time window.  Integer M against their interpolated M: within 0.07."""
+    from mexp.design import log_spaced
+    for gamma in (2.0, 5.0):
+        A = C.discretized_operator(k, log_spaced(2000, 1e-3, 30 * gamma), C.log_grid(1.0, gamma, 400))
+        s = C.singular_spectrum(A)
+        for snr in (1e2, 1e3, 1e4):
+            M = C.effective_rank(s, snr)
+            assert abs(gamma ** (1.0 / M) - C.ISTRATOV_TABLE_I[(snr, gamma)]) < 0.07, (gamma, snr, M)

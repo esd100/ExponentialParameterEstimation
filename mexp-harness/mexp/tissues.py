@@ -1,10 +1,10 @@
 """
-Tissue and organ dictionary — API over `mexp.tissue_data` (charter §1.2, §4, §6.1; v2).
+Tissue and organ dictionary — API over `mexp.tissue_data` (charter §1.2, §4, §6.1; v2.1).
 
 Why this exists: the §1.2 falsifiable threshold depends on the amplitude vector
 more than on anything else, and one myelin-like split is not the body.  The
 dictionary carries, per tissue, the measured bulk MR properties (water content /
-relative PD, T1 and T2 at 1.5 T and 3 T, ADC), the multi-component structure per
+relative PD, T1 and T2 at 1.5 T and 3 T, ADC, lipid mass fraction and PDFF), the multi-component structure per
 modality (T2 components for the CPMG kernel; T1 components; diffusion
 compartments), the clinical functional of that structure, a typical
 acquisition, and a *theory* block: the physical water pools a voxel of the
@@ -190,13 +190,13 @@ def status_summary() -> dict[str, int]:
 
 def to_json_dict() -> dict:
     return {
-        "schema_version": "2.0",
+        "schema_version": "2.1",
         "generated_from": "mexp.tissue_data",
         "status_legend": {
             "PRIMARY": "read from the original paper's own table/text", "SECONDARY": "abstract / review table / same-author conference abstract / mirrored PDF",
             "TERTIARY": "textbook or website tabulation without a specific primary", "RECALLED": "from memory of the named sources; not opened",
             "THEORY": "derived working configuration, not a measurement"},
-        "units": {"times": "ms", "diffusivity": "um^2/ms (= 1e-3 mm^2/s)", "water_content": "mass fraction", "pd_relative_csf": "CSF = 1"},
+        "units": {"times": "ms", "diffusivity": "um^2/ms (= 1e-3 mm^2/s)", "water_content": "mass fraction", "lipid_mass_fraction": "mass fraction (chemical lipid, Woodard & White 1986)", "pdff": "fraction of MR-visible protons (proton-density fat fraction)", "pd_relative_csf": "CSF = 1"},
         "sources": tissue_data.SRC,
         "entries": tissue_data.ENTRIES,
         "changelog": tissue_data.CHANGELOG,

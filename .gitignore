@@ -9,3 +9,6 @@ _to_delete/
 literature/*
 !literature/README.md
 appliedanalysisLanczos/
+
+# Eric's own copies of delivered files (duplicates of docs/project and mexp-harness/docs); not part of the repository
+Claude outputs/

@@ -227,17 +227,33 @@ def resolution_ratio_from_count(dynamic_range: float, n: float) -> float:
     return float(dynamic_range ** (1.0 / max(n, 1e-12)))
 
 
-# --- the charter §1.2 (v0.7) closed forms, with both constant conventions ---------------
+# --- the charter §1.2 closed forms, with the three constant conventions ------------------
+#
+# Istratov & Vyvenko 1999 (Rev. Sci. Instrum. 70:1233, read from the PDF 2026-09-09) print, after Bertero,
+# Boccacci & Pike 1982, eqs (12)-(13):  delta = lambda_i / lambda_{i+1} = exp(pi / w_max)  with  cosh(pi w_max) = pi SNR^2,
+# and Table I (infinite domain): 2.44 / 1.88 / 1.63 at SNR 10^2 / 10^3 / 10^4.  SNR is an amplitude ratio there (their
+# text: "for SNR = 100 the measurement time should be at least 4.6 tau, since exp(4.6) ~ 100"; averaging K transients
+# improves SNR by K^1/2).  The factor pi is |Gamma(1/2)|^2, i.e. the squared leading singular value of the Laplace transform
+# in its natural normalisation: their criterion is the *absolute* singular value sigma(w) >= 1/SNR.  The harness's
+# 'arccosh' form is the *relative* criterion sigma(w)/sigma(0) >= 1/SNR, which is what a discretised (arbitrarily normalised)
+# operator can test; it differs from the printed form by ln(pi) ~ 1.14 in the denominator (2.71 vs 2.44 at SNR 100).
+# Both share the large-SNR limit exp(pi^2 / (2 ln SNR)) ('charter', the v0.7 form).
+
+R_MIN_CONVENTIONS = ("istratov", "arccosh", "charter")
+
 
 def r_min(snr: float, convention: str = "arccosh") -> float:
     """Minimum resolvable ratio of adjacent time constants.
 
-    'charter'  exp(pi^2 / (2 ln SNR))          = exp(pi^2 / ln SNR^2)      (charter v0.7 §1.2, Istratov & Vyvenko form)
-    'arccosh'  exp(pi^2 / arccosh(SNR^2))      ~ exp(pi^2 / ln(2 SNR^2))   (from the Mellin gain sqrt(pi/cosh(pi w)) directly)
+    'istratov'  exp(pi^2 / arccosh(pi SNR^2))    Istratov & Vyvenko 1999 eqs (12)-(13) as printed (after Bertero et al. 1982);
+                                                  reproduces their Table I: 2.44 / 1.88 / 1.63 at SNR 1e2 / 1e3 / 1e4
+    'arccosh'   exp(pi^2 / arccosh(SNR^2))       relative criterion sigma_i / sigma_1 >= 1/SNR (what the harness's SVD tests)
+    'charter'   exp(pi^2 / (2 ln SNR))           common large-SNR limit (charter v0.7 §1.2 form)
 
-    The two differ by the O(ln 2) term the charter flags: at SNR 100 they give 2.92 and 2.71.
-    SNR is an amplitude ratio in both."""
+    At SNR 100 the three give 2.44, 2.71, 2.92; at SNR 1000: 1.88, 2.00, 2.04.  SNR is an amplitude ratio in all three."""
     snr = float(snr)
+    if convention == "istratov":
+        return float(np.exp(np.pi**2 / np.arccosh(np.pi * snr**2)))
     if convention == "charter":
         return float(np.exp(np.pi**2 / (2.0 * np.log(snr))))
     if convention == "arccosh":
@@ -245,14 +261,31 @@ def r_min(snr: float, convention: str = "arccosh") -> float:
     raise ValueError(convention)
 
 
+# Istratov & Vyvenko 1999 Table I (after Bertero et al. 1982): resolution limit delta = tau_i / tau_{i+1}
+# by amplitude SNR (rows) and solution-domain ratio lambda_max/lambda_min (columns: infinite, 5, 2).
+# The infinite-domain column is r_min(snr, "istratov") exactly; the finite-domain columns come from the
+# finite-interval singular values (their eq. 14, delta = (b0/a0)^(1/M) with M the count above 1/SNR) and are
+# reproduced by the harness's own SVD of a finite T-grid under a covering window to the integer-M granularity
+# (tests/test_conditioning.py).
+ISTRATOV_TABLE_I = {
+    (1e2, None): 2.44, (1e2, 5.0): 1.74, (1e2, 2.0): 1.44,
+    (1e3, None): 1.88, (1e3, 5.0): 1.45, (1e3, 2.0): 1.27,
+    (1e4, None): 1.63, (1e4, 5.0): 1.32, (1e4, 2.0): 1.20,
+}
+
+
 def k_max(dynamic_range: float, snr: float, convention: str = "arccosh") -> float:
     """Recoverable count over a T-range of ratio Gamma at the separability threshold.
 
-    'charter'  1 + ln Gamma / ln R_min = 1 + 2 ln SNR ln Gamma / pi^2   (charter v0.7 §1.2 heuristic)
-    'arccosh'  (ln Gamma / pi^2) arccosh(SNR^2) + 1                      (Szego count plus the O(1) edge term measured in Phase 0)
+    'istratov'  (ln Gamma / pi^2) arccosh(pi SNR^2) + 1     I&V eqs (13)-(14) count, plus the O(1) edge term
+    'arccosh'   (ln Gamma / pi^2) arccosh(SNR^2) + 1        Szego count plus the O(1) edge term measured in Phase 0
+    'charter'   1 + ln Gamma / ln R_min = 1 + 2 ln SNR ln Gamma / pi^2   (charter v0.7 §1.2 heuristic)
 
-    Gamma must be the *in-window* range: min(T_max/T_min, t_max/t_min) (Phase 0 finding)."""
+    Gamma must be the *in-window* range: min(T_max/T_min, t_max/t_min) (Phase 0 finding).  The 'istratov' and 'arccosh'
+    counts differ by (ln pi / pi^2) ln Gamma, i.e. by 0.4-0.8 for Gamma in 30-1000 — inside the +/-1.5 the charter states."""
     L = np.log(float(dynamic_range))
+    if convention == "istratov":
+        return float(L / np.pi**2 * np.arccosh(np.pi * float(snr) ** 2) + 1.0)
     if convention == "charter":
         return float(1.0 + 2.0 * np.log(float(snr)) * L / np.pi**2)
     if convention == "arccosh":
