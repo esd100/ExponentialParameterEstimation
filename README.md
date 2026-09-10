@@ -39,10 +39,11 @@ disagree, the higher version number wins and the other is brought up to date bef
 ```
 cd mexp-harness
 pip install -e ".[dev]"
-pytest                                        # 71 tests
+pytest                                        # 80 tests
 python scripts/phase0_conditioning.py         # SVD / Picard / truncation sweep
 python scripts/phase0_threshold.py            # charter §1.2 threshold at the reference configuration
-python scripts/phase0_threshold_tissues.py    # the same clauses over the tissue dictionary
+python scripts/phase0_threshold_tissues.py    # the same clauses over the tissue dictionary (three labels, incl. SD ≤ |Δ|/3)
+python scripts/phase0_crlb_map.py             # CRLB map: SNR and window at which each dictionary row crosses the labels
 python scripts/export_tissue_dictionary.py    # regenerate data/tissue_dictionary.json
 python scripts/render_tissue_dictionary_doc.py # regenerate docs/tissue-dictionary.md
 ```

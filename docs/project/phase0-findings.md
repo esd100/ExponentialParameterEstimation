@@ -71,6 +71,26 @@ S_ref = Σ|a| (`mexp.crlb.sigma_from_*` convert).
 > singular values and §3.3 measures. (6) The lean-organ PDFF ranges could not be moved: no water–fat paper is among the 57 PDFs;
 > the reads are listed (`literature-requests.md` #58–#66). Status counts 23 / 17 / 1 / 1 / 14; 71 tests.
 
+> **Revision 6 addendum (2026-09-10 — water–fat pass, dictionary v2.3, the third label, the CRLB map; charter v0.15).** Only what
+> changes a Phase 0 measurement is repeated here; the reads are in `bibliography.md` v0.6 and `claude/changelog.md`. (1) **A third
+> estimability label exists and can disagree with the second.** 'Clinically estimable' = SD(functional) ≤ |Δ|/3 with Δ the dictionary's
+> recorded normal-to-disease change (schema 2.3). At Sabouri's 64 × 25 ms train the malignant-PZ row (LWF 0.10 ± 0.012) fails the 10 %
+> label and passes the clinical one (|Δ|/3 = 0.047): precision relative to the disease value and precision relative to the decision are
+> different quantities, and the per-tissue label is the one the clinic uses. No v0.14 label was reversed. (2) **The CRLB map turns the
+> labels into crossings** (`results/crlb_map.md`): white matter's MWF crosses |Δ|/3 = 0.020 at first-echo SNR ≈ 360 (free K = 3) or ≈ 190
+> (CSF-like T2 fixed) on 32 × 10 ms, and at no echo count at SNR 100 (the bound saturates at 0.031–0.033 for N ≥ 128 — the 15 ms component is
+> carried by the first few echoes, so the window does not help it); the prostate crosses at N = 48 (SNR 100) or SNR ≈ 220 / 160 (normal /
+> cancer, N = 32); the venous-filled muscle at SNR ≈ 110 / N = 48; the steatotic rows at SNR ≈ 900 / 340 and never by window. (3) **Where
+> the σ nuisance costs something.** §6 above found the joint-σ cost < 2 % at 32 echoes; the map confirms that for every row whose signal
+> stays above the floor and finds 6–10 % (with a 16–37 % magnitude-arm cost over the phase-corrected arm) for the steatotic-liver rows,
+> whose 36 ms water component decays into the floor inside the 320 ms window — the §3.2 degeneracy in a physical row, and the first
+> case the analytic work of §10 step 6 should be checked against. (4) **The fat axis is the T2 kernel's negative control.** Water 36 ms /
+> fat 75 ms (Bydder 2008 Table II) is a ratio-2 pair; the fat-fraction bound is 0.34 (PDFF 10 %) / 0.29 (25 %) at SNR 100 against grade
+> steps of 0.05–0.11, while chemical-shift encoding measures the same fractions to ± 0.01–0.02 (Yokoo 2011, Armstrong 2018). (5) The
+> complex arm is not in the map: for the real T2 kernel its FIM equals the real arm's; the value of phase is a T2* question. (6) A
+> first run of the map fixed the wrong component in the constrained rows (0-based `T2k` labels read as 1-based); caught against the
+> threshold table's 0.038 and locked by `tests/test_crlb_map.py`. 80 tests. Dictionary counts 32 / 17 / 1 / 1 / 16 over 24 entries.
+
 ## 0. What v0.7 changed for this work, and what was redone
 
 | v0.7 item | Consequence | Done |

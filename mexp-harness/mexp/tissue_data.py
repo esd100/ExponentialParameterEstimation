@@ -22,6 +22,19 @@ MR-visible protons; relative proton density with CSF = 1.  Fields: "1.5T" / "3T"
 (other fields noted in `note`).  Component fractions are signal fractions at the
 reference point and sum to 1 within each component list.
 
+Schema 2.3 (pathology axis, charter section 10 step 8c/8e) adds two fields to every entry:
+
+    condition      {"name": "normal" | <disease state>, "kind": "normal" | "pathology" | "physiological",
+                    "base": <key of the normal entry this row varies>, "operating_point": <text>}
+    clinical_delta {"functional": <name>, "normal_value", "disease_value", "delta" (= disease - normal),
+                    "kind", "status", "source", "note"}  or None when no change is on record.
+
+`clinical_delta` is what the third estimability label of results/threshold_tissues.md uses:
+a row is 'clinically estimable' when the CRLB SD of its functional is <= |delta| / 3, i.e. the
+normal-to-disease change is a 3-sigma event in a single measurement (charter section 1.2, v0.14).
+Pathology rows are built with `variant()` and inherit the bulk properties of their base entry
+except where overridden; their component sets and theory blocks are their own.
+
 Sources are cited by short key; the full records live in docs/project/bibliography.md
 and the per-tissue discussion in docs/project/tissue-dictionary.md.  Verification
 history is in the per-value `status` and the module CHANGELOG at the bottom.
@@ -43,6 +56,16 @@ def C(name, fraction, value, status, source, range=None, note=""):
     if range is not None: d["range"] = list(range)
     if note: d["note"] = note
     return d
+
+
+def D(functional, normal_value, disease_value, status, source, kind="pathology", note=""):
+    """clinical_delta record: the normal-to-disease change of the entry's functional."""
+    return {"functional": functional, "normal_value": normal_value, "disease_value": disease_value,
+            "delta": round(disease_value - normal_value, 6), "kind": kind, "status": status, "source": source,
+            "note": note}
+
+
+NORMAL = {"name": "normal", "kind": "normal", "base": None, "operating_point": ""}
 
 
 CPMG_REF = {"n_echoes": 32, "dTE_ms": 10.0, "first_echo_snr": 100.0}
@@ -94,17 +117,47 @@ SRC = {
     "EJR20": "Egypt J Radiol Nucl Med 2020 doi 10.1186/s43055-020-00212-3 (liver/spleen ADC controls; spleen SD anomalous)",
     "Ber83": "Bernardino et al. 1983 AJR 141:1203 (ex vivo biexponential liver T2; abstract, no values)",
     "Tas24": "Tasbihi et al. 2024 MRM 91:2532 (rat kidney biexponential T2 as tubule-volume surrogate; abstract)",
-    "Szc05": "Szczepaniak et al. 2005 Am J Physiol Endocrinol Metab 288:E462 (Dallas Heart Study: hepatic triglyceride 95th percentile 5.56 % by MRS; not opened)",
-    "Tang13": "Tang et al. 2013 Radiology 267:422 (MRI-PDFF vs histologic steatosis grade thresholds ~ 6.4 / 17.4 / 22.1 %; not opened)",
+    "Szc05": "Szczepaniak et al. 2005 Am J Physiol Endocrinol Metab 288:E462 (read 2026-09-10: Dallas Heart Study, 2,349 participants, 1.5 T PRESS TR 3 s / TE 25 ms, 27 cm3 voxel, HTGC = methylene / (methylene + water) with fixed T2 correction (water 50, fat 60 ms); low-risk subgroup n = 345: median 1.9 %, 90th percentile 4.3 %, 95th percentile 5.56 % = the steatosis cut-off; whole cohort median 4.69 % (5th/25th/75th/95th 0.99 / 2.74 / 8.56 / 22.86 %, range 0-47.5 %); CV 8.5 % on repeat)",
+    "Tang13": "Tang, Tan, Sun et al. 2013 Radiology 267:422 (NASH CRN ancillary study; the ORIGIN of the >= 90 %-specificity MRI-PDFF thresholds 6.4 / 17.4 / 22.1 % for steatosis grades >= 1 / >= 2 / 3; not opened - quoted from Tang15's introduction and Table 3, which cite it as reference 46)",
+    "Tang15": "Tang, Desai, Hamilton et al. 2015 Radiology 274:416 (read 2026-09-10: independent VALIDATION cohort, 89 adults with known or suspected NAFLD, 3 T magnitude-based low-flip-angle multiecho GRE with T2* correction and multipeak modelling; mean PDFF 15.2 +/- 8.4 % (1.2-37.5), grades 0/1/2/3 = 6/39/30/14; Table 3: the Tang13 thresholds 6.4 / 17.4 / 22.1 % give sensitivity 86 / 64 / 71 % and specificity 83 / 96 / 92 %; Table 4: cohort-derived thresholds 6.9 / 16.4 / 23.5 %, AUC 0.961 / 0.947 / 0.921; r = 0.87 against the near-continuous steatosis score)",
+    "Sch15": "Schwimmer et al. 2015 Hepatology 61:1887 (read 2026-09-10: 174 children, 3 T magnitude-based PDFF vs histology; Table 1 mean PDFF by grade 2.6 +/- 2.2 / 9.2 +/- 5.8 / 15.1 +/- 6.8 / 26.8 +/- 8.2 % for grades 0-3 (n = 24 / 50 / 50 / 50); correlation 0.725; Table 2: published grade-0-vs-1 thresholds 1.8 / 5.5 / 6.4 / 9.0 % give sensitivity 98 / 74 / 68 / 42 %, specificity 54 / 88 / 96 / 96 %, AUROC 0.76 / 0.81 / 0.82 / 0.69; the paper proposes NO grade cut-offs of its own)",
+    "Yok11": "Yokoo et al. 2011 Radiology 258:749 (read 2026-09-10: 163 subjects at 3 T; STEAM MRS TR 3.5 s, TE 10-30 ms as the reference; 2D SPGR 10 deg, TR 125-270 ms, six echoes 1.15-6.90 ms; spectroscopic FF 0.004-0.445 (mean 0.097); six-echo T2*-corrected multifrequency method: slope 0.9821, intercept -0.0007 against MRS, classification accuracy 94.5-96.3 % at FF thresholds 0.04-0.10; five-peak weights 0.09 / 0.70 / 0.12 / 0.04 / 0.05 at 0.9 / 1.3 / 2.1 / 4.2 / 5.3 ppm)",
+    "Ham11": "Hamilton et al. 2011 NMR Biomed 24:784 (read 2026-09-10: 3 T STEAM TR 3.5 s, TE 10 / 15 / 20 / 25 / 30 ms, 121 subjects with known or suspected NAFLD, 20 mm voxel; Table 3, the liver fat spectrum as percent of total fat signal: 5.3 ppm 4.7 (5.29: 3.7, 5.19: 1.0), 4.2 ppm 3.9, 2.75 ppm 0.6, 2.1 ppm 12.0 (2.24: 5.8, 2.02: 6.2), 1.3 ppm 70.0 (1.60: 5.8, 1.30: 64.2), 0.9 ppm 8.8; 8.6 % of the fat signal lies under the water peak; in vivo T2 at 3 T: water 23 ms, 2.75 ppm 51, 2.1 ppm 52, 1.3 ppm 62, 0.9 ppm 83 ms; mean liver triglyceride CL 17.45, ndb 1.92, nmidb 0.32; mean FF 0.107 (0.004-0.443))",
+    "Byd08": "Bydder et al. 2008 Magn Reson Imaging 26:347 (read 2026-09-10: 1.5 T; STEAM 10 mm voxel, TR 3 s, TE 20-70 ms in 10 ms steps; 21 subjects with fatty liver aged 8-66; Table II, T2-corrected peak areas relative to CH2 and peak T2: water (4.7-4.9 ppm) area 10.6 +/- 8.0, T2 36.2 +/- 4.9 ms; CH2 1.2-1.3 ppm 74.8 +/- 19.2 ms; 2.1-2.2 ppm area 0.18 +/- 0.14, T2 45.8 +/- 29.8 ms; 0.8-0.9 ppm area 0.29 +/- 0.12, T2 62 +/- 163 ms; Intralipid phantom: water 802.9, CH2 51.7 ms; expected liver T1 water 490 / fat 260 ms and T2* ~ 30 / ~ 10 ms; multi-echo GRE TE 2.3-36.8 ms, TR 122 ms, flip 10-90 deg; model (v) (independent water/fat T2*) most accurate, error 2.4 %; fat's short apparent T2* (~ 12 ms) at short TE is spectral broadening, not relaxation)",
+    "Ree11": "Reeder, Cruite, Hamilton & Sirlin 2011 JMRI 34:729 (read 2026-09-10: review; Table 1 reproduces Ham11's spectrum; Table 2 taxonomy of MRS and MRI fat-quantification techniques by the confounders addressed - T1 bias, T2 / T2* decay, spectral complexity, noise bias, eddy currents - only methods addressing all of them yield PDFF; magnitude-based methods have a 0-50 % dynamic range; histologic grades 0-3 = < 5 / 5-33 / 34-66 / >= 67 % of hepatocytes; the 5.56 % cut-off attributed to Szc05)",
+    "Yu08": "Yu et al. 2008 MRM 60:1122 (read 2026-09-10: multipeak IDEAL with simultaneous R2*; Table 1 precalibrated six-peak relative amplitudes (peanut oil, 16-echo) 0.62 / 0.15 / 0.10 / 0.06 / 0.03 / 0.04 at 420 / 318 / -94 / 472 / 234 / 46 Hz from water at 3 T, self-calibrated liver three-peak 0.72-0.76 / 0.16-0.20 / 0.08; a single-peak fat model overestimates R2* in fat (subcutaneous T2* 10 -> 26 ms with the multipeak model) and in fatty liver (patient with 30 %+ fat: T2* 15 -> 22 ms))",
+    "Liu07": "Liu et al. 2007 MRM 58:354 (read 2026-09-10: IDEAL-SPGR fat quantification; T1 bias with T1 water 586 / fat 343 ms at 1.5 T (from dB04): 4 % error at 5 deg, 29-45 % rise over 5-30 deg at TR 10 ms; fat-fraction noise minimised at 12 deg; dual-flip-angle (5 / 29 deg) removes the T1 bias; magnitude discrimination or phase-constrained reconstruction reduces the noise-floor bias of the fat-only magnitude image at low fat fractions from 4-15 % to < 1 %)",
+    "Her12": "Hernando, Hines, Yu & Reeder 2012 MRM 67:638 (read 2026-09-10: 1.5 T six-echo SPGR; eddy-current phase errors on the first echo of single-shot monopolar readouts bias complex fitting by ~ 5 % absolute at low fat fractions; mixed magnitude/complex fitting discards the first echo's phase and keeps the rest - unbiased against MRS (slope not different from 1, intercept from 0) without the SNR penalty of magnitude fitting; 104 liver data sets from 52 patients; six-peak model at 1.5 T: 217.2 / 166.1 / 242.7 / -38.3 / 25.6 / 124.6 Hz)",
+    "Idi15": "Idilman et al. 2015 Abdom Imaging 40:1512 (read 2026-09-10: 41 biopsy-proven NAFLD patients, median age 47, 1.5 T IDEAL-IQ; mean MRI-PDFF liver 18.7 +/- 10 % (median 16.6, 3.3-42.8), pancreas 5.7 +/- 5.6 % (median 4.0, 0.3-32.8; head / body / tail 4.6 / 5.7 / 6.6; diabetics 12.2 +/- 12 vs 4.8 +/- 3.5), renal cortex 1.7 +/- 1.4 % (median 1.3, 0.1-7.6), renal sinus 51 +/- 15.5 %, T12 / L1 vertebral body 43.2 +/- 9.5 / 43.5 +/- 10.2 %; liver PDFF vs histological steatosis rs 0.874)",
+    "Kuhn15": "Kuehn et al. 2015 Radiology 276:129 (read 2026-09-10: SHIP population study, 1,367 volunteers (1,241 analysed), median age 50, 1.5 T three-echo 3D GRE (TE 2.4 / 4.8 / 9.6 ms, TR 11 ms) confounder-corrected PDFF; mean pancreatic PDFF 4.4 % unadjusted (head 4.6, body 4.9, tail 3.9 %; 95 % CI 4.2-5.0 / 4.5-5.3 / 3.5-4.3), adjusted 4.46 % (4.16-4.76); no difference between normal glucose tolerance 4.44, prediabetes 4.48 and type 2 diabetes 4.62 %; rises with BMI and age)",
+    "Gug23": "Guglielmo et al. 2023 RadioGraphics 43:e220181 (read 2026-09-10: multi-society practical guide; Table 4 PDFF grades < 6 / 6-17 / 17-22 / > 22 % = normal / mild / moderate / severe, adapted from Tang15 (their ref. 43); PDFF reported to the nearest integer, field-independent; subcutaneous fat PDFF 80-100 %, typically 93-96 %; Table 6 liver R2* by iron grade: normal < 75 s-1 at 1.5 T, < 136 s-1 at 3 T (LIC < 1.8 mg/g); LIC = 0.02603 R2* - 0.16 at 1.5 T, 0.01349 R2* - 0.03 at 3 T)",
+    "Arm18": "Armstrong et al. 2018 MRM 79:370 (read 2026-09-10: free-breathing 3D stack-of-radial PDFF / R2* at 3 T, 11 healthy subjects; six echoes 1.23-7.38 ms, TR 8.85 ms, flip 5 deg; 3D gridding with linear density compensation and adaptive coil combination, seven-peak fat model at 0.97 / 1.37 / 1.66 / 2.10 / 2.32 / 2.84 / 5.38 ppm, single effective R2*, magnitude discrimination; Table 2 liver PDFF vs breath-hold Cartesian: mean difference 0.6-0.8 %, limits of agreement +/- 5-5.7 %, vs MRS 0.75-0.97 % and +/- 9.7-10.5 %, rho 0.987-0.997; radial R = 1-3)",
+    "Hu11": "Hu, Goran & Nayak 2011 InTech ch. 11 (read 2026-09-10: review of abdominal adiposity and organ-fat MRI methods; Table 1 is a methods summary and Table 2 a segmentation-reproducibility table - it carries NO multi-organ table of baseline fat fractions; two pancreas examples at 11 % and 5.1 % FF; muscle, myocardium and spleen PDFF cannot be moved from it)",
     "Hen92": "Henkelman, Hardy, Bishop, Poon & Plewes 1992 JMRI 2:533 ('Why fat is bright in RARE and fast spin-echo imaging': J-coupling makes fat T2 echo-spacing dependent; not opened)",
-    "Ham11": "Hamilton et al. 2011 NMR Biomed 24:784 (six-peak triglyceride spectrum model for fat quantification; not opened)",
-    "PDFF-lit": "PDFF ranges for lean organs from the water-fat imaging literature (Reeder/Hu/Yokoo reviews; muscle, myocardium, pancreas, kidney; not opened - none of the 57 PDFs in literature/ is a water-fat paper for these organs; see literature-requests.md priority 1b)",
+    "PDFF-lit": "PDFF ranges for lean organs from the water-fat imaging literature, not opened: after the 2026-09-10 water-fat pass this covers only muscle, myocardium, spleen and breast - Hu11 carries no organ table, so Grimm 2018 (thigh-muscle PDFF) and Szczepaniak 2003 (myocardial triglyceride) are re-requested in literature-requests.md; the liver, pancreas, kidney and adipose PDFFs now rest on Szc05, Kuhn15 / Idi15, Idi15 and Gug23",
 }
 
 ENTRIES = []
 
 def add(**e):
+    e.setdefault("condition", dict(NORMAL))
+    e.setdefault("clinical_delta", None)
     ENTRIES.append(e)
+
+
+def variant(base_key, key, tissue, condition, clinical_delta, components, theory, sources, property_overrides=None):
+    """A pathology row: bulk properties inherited from `base_key` (deep-copied) except `property_overrides`;
+    its own component sets, theory block and sources. `condition["base"]` is set to `base_key`."""
+    import copy
+    base = next(x for x in ENTRIES if x["key"] == base_key)
+    props = copy.deepcopy(base["properties"])
+    for k, v in (property_overrides or {}).items():
+        props[k] = v
+    cond = dict(condition)
+    cond.setdefault("kind", "pathology")
+    cond["base"] = base_key
+    ENTRIES.append({"key": key, "organ": base["organ"], "tissue": tissue, "properties": props, "components": components,
+                    "theory": theory, "sources": list(sources), "condition": cond, "clinical_delta": clinical_delta})
 
 # ==============================================================================================
 # BRAIN
@@ -146,7 +199,10 @@ add(key="brain_wm", organ="brain", tissue="white matter",
         "exchange": "Myelin water exchanges with intra/extra-axonal water on ~100-300 ms (intermediate on the T2 scale, fast on the T1 scale -> multi-component T1 is exchange-attenuated); intra- and extra-axonal water exchange slowly (~0.5-2 s) but have nearly equal T2 and coalesce; glial water is unresolved.",
         "n_apparent_T2": 3, "n_resolvable_clinical_T2": 2,
         "rationale": "Seven physical pools reduce to three apparent T2 components (myelin, IE, CSF) because IE-scale pools share T2 within the exchange-averaged tolerance; at clinical SNR two are resolvable, and the third (CSF) is unpinned by a 320 ms window. On the T1 axis exchange leaves only a weak short component (8 % at 3 T, rising with field). Whi97 also finds the IE peak split into two broad peaks near 80 and 150-600 ms in the most myelinated structures (posterior internal capsules 88 / 12 %, splenium 93 / 7 %) and notes that components differing by less than a factor of three cannot be separated - the resolution limit of charter section 1.2 in the primary's own words."},
-    sources=["MacK94", "Whi97", "Lau07", "St05", "Wri08", "Roo07", "OP19", "Lab14", "Pra12", "SM25"])
+    sources=["MacK94", "Whi97", "Lau07", "St05", "Wri08", "Roo07", "OP19", "Lab14", "Pra12", "SM25"],
+    clinical_delta=D("myelin water fraction (mass below 40 ms)", 0.113, 0.0525, "PRIMARY",
+                     "MacK94: MWF in 34 lesions of four MS patients 6.4 / 5.8 / 4.7 / 4.1 % (SE 0.6-1.1 %; 95 % CI 0-13 %), mean 5.25 %, against the dictionary's normal WM 0.113 (Whi97 structure average); within MacK94's own protocol the change is 15.6 % -> ~ 5 %, i.e. -0.10",
+                     note="delta = -0.061 on the dictionary values (-0.10 within MacK94); the MS-lesion row `brain_wm_ms_lesion` is the disease operating point"))
 
 add(key="brain_gm", organ="brain", tissue="cortical grey matter",
     properties={
@@ -208,7 +264,10 @@ add(key="spinal_cord_wm", organ="spinal cord", tissue="cervical cord white matte
     theory={"pools": ["myelin water (denser than brain WM)", "intra-axonal", "extra-axonal", "glial", "blood", "CSF partial volume (large: small structure)", "non-aqueous"],
             "n_pools": 7, "exchange": "as brain WM", "n_apparent_T2": 3, "n_resolvable_clinical_T2": 2,
             "rationale": "Same pool structure as brain WM with a larger myelin fraction (0.26-0.33, MacM11), which is why the MWF is the easy myelin case, and a larger CSF contaminant, which is why the long component matters more."},
-    sources=["MacM11", "MacM07", "St05"])
+    sources=["MacM11", "MacM07", "St05"],
+    clinical_delta=D("myelin water fraction (mass below 40 ms)", 0.296, 0.2655, "PRIMARY",
+                     "MacM11 Table 3: older adults (51-75 y) MWF 0.274 dorsal / 0.257 lateral (mean 0.2655) against 0.306 / 0.284 (0.296) at 21-30 y",
+                     kind="physiological", note="an age effect, not a disease: no cord-lesion MWF primary is on hand; delta = -0.031"))
 
 # ==============================================================================================
 # MUSCULOSKELETAL
@@ -242,7 +301,10 @@ add(key="skeletal_muscle", organ="musculoskeletal", tissue="skeletal muscle (cal
             "n_pools": 6, "exchange": "Intracellular sub-pools exchange on ms-tens of ms and are only separable at very high SNR (Saab99's 1000-echo, SNR 3500 data); Ara14's exchange modelling puts the intracellular residence time near 1 s and the intravascular one at 0.3-3 s, i.e. slow on the T2 scale, so the long component is vascular (not interstitial) water and the interstitial T2 (~ 37 ms) is close to the intracellular one.",
             "n_apparent_T2": 4, "n_resolvable_clinical_T2": 2,
             "rationale": "Saab et al. needed SNR ~3500 and 1.2 ms echoes to see four components; Araujo et al. at 3 T with 2 ms spacing see two (92 / 8 % at 32 / 159 ms); a clinical 32 x 10 ms train sees the ~30 ms intracellular pool and, at best, the ~120-160 ms vascular/extracellular one (the oedema marker). St05 Fig. 1 shows three peaks in mouse muscle at 3 T without tabulating them."},
-    sources=["Saab99", "Ara14", "St05", "Gold04", "dB04", "Maz21"])
+    sources=["Saab99", "Ara14", "St05", "Gold04", "dB04", "Maz21"],
+    clinical_delta=D("extracellular fraction (1 - mass below 60 ms)", 0.080, 0.142, "PRIMARY",
+                     "Ara14 Table 1: the long (vascular) fraction rises from 8.0 +/- 2.4 % (free perfusion) to 14.2 % under venous filling in the same subjects and protocol (3 T, ISIS-CPMG); Saab99's extracellular 11.3 % at 1.89 T is this row's own value",
+                     kind="physiological", note="venous filling is the measured surrogate for the oedema / extracellular-expansion pathologies; delta = +0.062 is a paired within-protocol change, the row's own functional value is Saab99's 0.118"))
 
 add(key="articular_cartilage", organ="knee", tissue="articular (hyaline) cartilage",
     properties={
@@ -385,8 +447,8 @@ add(key="liver", organ="liver", tissue="parenchyma (normal iron, no steatosis)",
         "pd_relative_csf": V(0.90, "TERTIARY", "RK"),
         "T1_ms": {"1.5T": V(586, "PRIMARY", "dB04 Table 1 586+/-39 (human in vivo); St05 Table 1 mouse 576+/-30", None, (550, 620)),
                   "3T": V(809, "PRIMARY", "dB04 Table 1 809+/-71; St05 Table 1 812+/-64", None, (750, 870))},
-        "T2_ms": {"1.5T": V(46, "PRIMARY", "dB04 Table 2 46+/-6 (human in vivo); St05 Table 1 46+/-6", None, (40, 55)),
-                  "3T": V(34, "PRIMARY", "dB04 Table 2 34+/-4; St05 Table 1 42+/-3 (CPMG TE 1 ms)", None, (30, 45))},
+        "T2_ms": {"1.5T": V(46, "PRIMARY", "dB04 Table 2 46+/-6 (human in vivo); St05 Table 1 46+/-6; water peak by STEAM MRS in 21 fatty livers 36.2+/-4.9 (Byd08 Table II; fat CH2 74.8+/-19.2)", None, (36, 55)),
+                  "3T": V(34, "PRIMARY", "dB04 Table 2 34+/-4; St05 Table 1 42+/-3 (CPMG TE 1 ms); water peak by STEAM MRS in NAFLD 23 (Ham11 Table 3; fat CH2 62), Guiu et al. via Ham11 27 / 60", None, (23, 45))},
         "ADC": V(1.39, "PRIMARY", "Luc08 Table 4: 1.39+/-0.2 (b up to 800); EJR20 1.65+/-0.44; MRM-web 0.6-1.1", "um2/ms", (1.0, 1.7)),
     },
     components={
@@ -395,7 +457,7 @@ add(key="liver", organ="liver", tissue="parenchyma (normal iron, no steatosis)",
                         C("sinusoidal blood / bile", 0.22, 150.0, "THEORY", "vascular fraction from IVIM f (0.22-0.27); T2 of partially deoxygenated blood 100-200 ms", (100, 250))],
                "functional": "vascular/long-T2 fraction (1 - mass below 90 ms)", "functional_threshold": 90.0,
                "typical_acquisition": {"n_echoes": 16, "dTE_ms": 8.0, "first_echo_snr": 60.0},
-               "note": "no in vivo multi-component liver T2 study reached (Ber83 ex vivo biexponential, no values); the split is a working configuration from IVIM and bulk T2"},
+               "note": "no in vivo multi-component liver T2 study reached (Ber83 ex vivo biexponential, no values); the split is a working configuration from IVIM and bulk T2. The steatotic variants (`liver_steatosis_pdff10`, `_pdff25`) carry the measured water / fat T2 pair instead (Byd08 Table II) and drop this vascular tail"},
         "diffusion": {"kernel": "diffusion_ivim", "field_T": 1.5, "status": "PRIMARY",
                "list": [C("tissue diffusion D", 0.73, 1.10, "PRIMARY", "Luc08 Table 4: D 1.10+/-0.7, f 27.0+/-5.3 %; Li17 pooled D 1.09, f 22.4 %; Yam99 D 0.72", (0.9, 1.3)),
                         C("pseudo-diffusion D*", 0.27, 79.1, "PRIMARY", "Luc08: D* 79.1+/-18.1; Li17 pooled 70.6", (50, 100))],
@@ -535,7 +597,10 @@ add(key="prostate_pz", organ="prostate", tissue="peripheral zone, normal",
             "n_pools": 4, "exchange": "Lumen-epithelium exchange is slow relative to the large T2 difference (ratio ~ 6), so two components persist; stroma and epithelium share T2 and coalesce. Cancer replaces lumen with cells -> LWF falls (0.24 -> 0.10 in PZ). Sab17 JMRI attributes the LWF-vs-histology slope of 0.45 partly to lumen-epithelium water exchange and partly to 2D-area vs 3D-volume and fixation shrinkage.",
             "n_apparent_T2": 2, "n_resolvable_clinical_T2": 2,
             "rationale": "Well-separated (ratio ~ 6), both fractions large: the easy case, and the positive control for every estimator; the malignant PZ variant (LWF 0.10 at 81 / 548 ms) is the pathology-axis row for this organ."},
-    sources=["Sab17", "dB04", "Boj17"])
+    sources=["Sab17", "dB04", "Boj17"],
+    clinical_delta=D("luminal water fraction (1 - mass below 200 ms)", 0.24, 0.10, "PRIMARY",
+                     "Sab17 Radiology Table 2: LWF 0.24 +/- 0.09 in nonmalignant PZ against 0.10 +/- 0.05 in malignant PZ (same protocol, 18 patients); JMRI Table 3 medians 0.20 vs 0.07",
+                     note="delta = -0.14; the disease operating point is `prostate_pz_cancer`"))
 
 add(key="breast_fibroglandular", organ="breast", tissue="fibroglandular tissue (with fat partial volume)",
     properties={
@@ -591,9 +656,13 @@ add(key="adipose_tissue", organ="adipose", tissue="subcutaneous white adipose ti
 #                         phospholipid and cholesterol, which have T2 < 1 ms and are invisible to water-fat imaging.
 #   pdff                : MR proton-density fat fraction = mobile triglyceride protons / all MR-visible protons,
 #                         the quantity Dixon/IDEAL/MRS measure and the clinical steatosis biomarker.
-# Pathology axis note (charter §6.1): hepatic steatosis is graded on PDFF (Szc05 normal < 5.56 %; Tang13 grade
-# thresholds ~ 6.4 / 17.4 / 22.1 %); pancreatic, muscular and myocardial fat rise with obesity and age; marrow FF
-# rises with age and falls with infiltration. Pathological variants are not entries yet (dictionary §6).
+# Pathology axis (charter §6.1, §10 step 8e): hepatic steatosis is graded on PDFF - normal < 5.56 % (Szc05, read),
+# grade thresholds 6.4 / 17.4 / 22.1 % (origin Tang13, validated by Tang15 - read - and rounded to 6 / 17 / 22 % by Gug23);
+# pancreatic, muscular and myocardial fat rise with obesity and age; marrow FF rises with age and falls with infiltration.
+# v2.3: the steatotic-liver rows at PDFF 10 % and 25 % are entries (below, built with variant()).
+# Status after the 2026-09-10 water-fat pass: liver (Szc05), pancreas (Kuhn15, Idi15), kidney cortex (Idi15), marrow
+# (LeS16) and adipose (Gug23, SECONDARY) are read; muscle, myocardium, spleen and breast stay RECALLED because Hu11
+# carries no organ table (Grimm 2018 and Szczepaniak 2003 re-requested).
 # ==============================================================================================
 FAT = {
     "brain_wm":            (V(0.181, "PRIMARY", "Woo86 WM lipid 18.1 % (assumed 50 % sphingomyelin, 25 % cerebroside, 25 % cholesterol — membrane lipid)", "g/g"),
@@ -603,36 +672,146 @@ FAT = {
     "csf":                 (V(0.0, "PRIMARY", "Woo86 CSF: no lipid", "g/g"), V(0.0, "PRIMARY", "no lipid", None)),
     "spinal_cord_wm":      (V(0.18, "THEORY", "as brain WM (Woo86 18.1 %)", "g/g"), V(0.0, "THEORY", "as brain WM", None, (0.0, 0.01))),
     "skeletal_muscle":     (V(0.042, "PRIMARY", "Woo86 skeletal muscle 2: 4.2 % (compositions 1-3: 6.8 / 4.2 / 1.6 %)", "g/g", (0.016, 0.068)),
-                            V(0.03, "RECALLED", "PDFF-lit: healthy thigh/calf muscle PDFF ~ 1-5 % (intra- plus extramyocellular lipid); rises to 10-50 % in dystrophy and sarcopenia", None, (0.01, 0.05))),
+                            V(0.03, "RECALLED", "PDFF-lit: healthy thigh/calf muscle PDFF ~ 1-5 % (intra- plus extramyocellular lipid); rises to 10-50 % in dystrophy and sarcopenia. Hu11 read 2026-09-10: no organ table - Grimm 2018 re-requested", None, (0.01, 0.05))),
     "articular_cartilage": (V(0.0, "PRIMARY", "Woo86 cartilage: no lipid column (11 % chondroitin sulphate)", "g/g"), V(0.0, "THEORY", "no mobile lipid", None)),
     "achilles_tendon":     (V(0.01, "PRIMARY", "Woo86 connective tissue lipid 1.0 %", "g/g"), V(0.0, "THEORY", "no mobile lipid in tendon proper; peritendinous fat is partial volume", None, (0.0, 0.02))),
     "cortical_bone":       (V(0.0, "PRIMARY", "Woo86 cortical bone: no lipid column (58 % mineral ash)", "g/g"),
                             V(0.02, "THEORY", "Haversian/Volkmann canals carry marrow fat; UTE water-fat studies report a small fat signal fraction in cortical bone; not opened", None, (0.0, 0.10))),
     "bone_marrow_vertebral": (V(0.60, "PRIMARY", "Woo86 red marrow 39.7 %, yellow marrow 80.4 % lipid; adult lumbar marrow is a mixture", "g/g", (0.397, 0.804)),
-                            V(0.33, "PRIMARY", "LeS16 Table 1: FF 33+/-8 % over L1-L5 at 1.5 T, rising ~ 2 % per vertebra L1->L5 and with age", None, (0.25, 0.41))),
+                            V(0.33, "PRIMARY", "LeS16 Table 1: FF 33+/-8 % over L1-L5 at 1.5 T (n = 8 healthy), rising ~ 2 % per vertebra L1->L5 and with age; Idi15 T12 / L1 43.2+/-9.5 / 43.5+/-10.2 % in NAFLD patients of median age 47 (PRIMARY, a different population)", None, (0.25, 0.44))),
     "myocardium":          (V(0.062, "PRIMARY", "Woo86 heart 2: 6.2 % (compositions 1-3: 10.0 / 6.2 / 2.4 %; includes epicardial fat in the gross tissue)", "g/g", (0.024, 0.10)),
-                            V(0.01, "RECALLED", "PDFF-lit / Dallas Heart Study MRS: myocardial triglyceride ~ 0.5-1.5 % in lean subjects, higher in obesity and diabetes", None, (0.003, 0.03))),
+                            V(0.01, "RECALLED", "PDFF-lit / Dallas Heart Study MRS: myocardial triglyceride ~ 0.5-1.5 % in lean subjects, higher in obesity and diabetes. Hu11 read 2026-09-10: no organ table - Szczepaniak 2003 re-requested", None, (0.003, 0.03))),
     "blood_arterial":      (V(0.006, "PRIMARY", "Woo86 whole blood lipid 0.6 % (plasma 0.7 %)", "g/g"), V(0.0, "THEORY", "plasma lipoprotein lipid is not resolved as a fat signal fraction at clinical resolution", None, (0.0, 0.01))),
     "liver":               (V(0.046, "PRIMARY", "Woo86 liver 2: 4.6 % (compositions 1-3: 7.8 / 4.6 / 1.5 %; membrane plus triglyceride)", "g/g", (0.015, 0.078)),
-                            V(0.03, "RECALLED", "Szc05: hepatic triglyceride by MRS, 95th percentile of the low-risk population 5.56 % (the steatosis cut-off); typical healthy PDFF 1-5 %; Tang13 grades 1-3 above ~ 6.4 / 17.4 / 22.1 %", None, (0.01, 0.056))),
-    "spleen":              (V(0.018, "PRIMARY", "Woo86 spleen lipid 1.8 %", "g/g"), V(0.01, "RECALLED", "PDFF-lit: splenic PDFF ~ 0-2 % (used as the in-body zero-fat reference in some PDFF pipelines)", None, (0.0, 0.03))),
+                            V(0.019, "PRIMARY", "Szc05 (read): low-risk subgroup of the Dallas Heart Study (n = 345) median HTGC 1.9 %, 90th / 95th percentile 4.3 / 5.56 % - the 95th percentile is the steatosis cut-off; the whole cohort (n = 2,287) median 4.69 %, 5th-95th 0.99-22.86 %. HTGC is methylene / (methylene + water) with a fixed T2 correction, i.e. a signal fat fraction that the field quotes as the PDFF cut-off (Ree11). Steatosis grades on MRI-PDFF: 6.4 / 17.4 / 22.1 % (Tang13 origin; Tang15 validation; Gug23 rounds to 6 / 17 / 22 %)", None, (0.0, 0.0556))),
+    "spleen":              (V(0.018, "PRIMARY", "Woo86 spleen lipid 1.8 %", "g/g"), V(0.01, "RECALLED", "PDFF-lit: splenic PDFF ~ 0-2 % (used as the in-body zero-fat reference in some PDFF pipelines). Hu11 read 2026-09-10: no organ table; no spleen-PDFF primary on hand", None, (0.0, 0.03))),
     "kidney_cortex":       (V(0.048, "PRIMARY", "Woo86 kidney 2: 4.8 % (compositions 1-3: 6.9 / 4.8 / 2.8 %; whole kidney)", "g/g", (0.028, 0.069)),
-                            V(0.02, "RECALLED", "PDFF-lit: renal parenchymal PDFF ~ 1-3 % excluding sinus fat; rises in diabetic nephropathy", None, (0.0, 0.05))),
+                            V(0.017, "PRIMARY", "Idi15 (read): renal cortex MRI-PDFF 1.7 +/- 1.4 % (median 1.3 %, range 0.1-7.6 %) in 41 NAFLD patients at 1.5 T IDEAL-IQ, uncorrelated with liver fat; renal sinus fat 51 +/- 15.5 % is excluded", None, (0.001, 0.076))),
     "kidney_medulla":      (V(0.048, "PRIMARY", "Woo86 whole kidney (no cortex/medulla split)", "g/g", (0.028, 0.069)),
-                            V(0.02, "RECALLED", "as cortex (PDFF-lit)", None, (0.0, 0.05))),
+                            V(0.017, "THEORY", "as cortex: Idi15 measured the cortex only; no medullary PDFF on hand", None, (0.001, 0.076))),
     "pancreas":            (V(0.128, "PRIMARY", "Woo86 pancreas lipid 12.8 % (interlobular fat included in the gross organ)", "g/g"),
-                            V(0.05, "RECALLED", "PDFF-lit: pancreatic PDFF ~ 2-10 % in healthy adults, strongly age- and BMI-dependent; > 10 % often taken as fatty pancreas", None, (0.02, 0.15))),
+                            V(0.044, "PRIMARY", "Kuhn15 (read): SHIP general population, n = 1,241, mean pancreatic PDFF 4.4 % (head 4.6, body 4.9, tail 3.9; adjusted 4.46 %, 95 % CI 4.16-4.76), no dependence on glucose tolerance, rising with BMI and age; Idi15 in NAFLD: 5.7 +/- 5.6 % (median 4.0, 0.3-32.8), 12.2 % in diabetics", None, (0.01, 0.12))),
     "prostate_pz":         (V(0.012, "PRIMARY", "Woo86 prostate lipid 1.2 %", "g/g"), V(0.0, "THEORY", "no mobile lipid in the gland; periprostatic fat is partial volume", None, (0.0, 0.02))),
     "breast_fibroglandular": (V(0.309, "PRIMARY", "Woo86 mammary gland 2: 30.9 % (compositions 1-3: 56.2 / 30.9 / 5.6 % — fatty / mixed / glandular)", "g/g", (0.056, 0.562)),
                             V(0.30, "RECALLED", "PDFF-lit: fibroglandular ROIs 10-40 % by partial volume; whole-breast PDFF 60-90 % depending on density category", None, (0.10, 0.60))),
     "adipose_tissue":      (V(0.741, "PRIMARY", "Woo86 adipose tissue 2: 74.1 % (compositions 1-3: 61.4 / 74.1 / 87.3 %)", "g/g", (0.614, 0.873)),
-                            V(0.90, "RECALLED", "PDFF-lit: subcutaneous adipose PDFF ~ 85-95 % (the in-body ~ 100 % reference); visceral slightly lower", None, (0.80, 0.97))),
+                            V(0.94, "SECONDARY", "Gug23 (practical guide, read): subcutaneous fat PDFF 80-100 %, typically 93-96 % - the in-body reference used to check ROI scaling; visceral slightly lower (RECALLED)", None, (0.80, 1.0))),
 }
 for _e in ENTRIES:
     _lm, _pdff = FAT[_e["key"]]
     _e["properties"]["lipid_mass_fraction"] = _lm
     _e["properties"]["pdff"] = _pdff
 del _e, _lm, _pdff
+
+# ==============================================================================================
+# PATHOLOGY AXIS (v2.3, charter §10 step 8c/8e) — one disease operating point per organ where a primary supplies it.
+# Rows inherit the bulk properties of their base entry (deep copy) except the overrides given; component sets are their own.
+# ==============================================================================================
+_STEATOSIS_T2_NOTE = ("water and fat T2 are Byd08 Table II (STEAM at 1.5 T in 21 fatty livers: water 36.2 +/- 4.9 ms, CH2 74.8 +/- 19.2 ms); the "
+                      "fractions are the row's operating point (PDFF by construction: fat protons / all visible protons at TE = 0). The fat pool is "
+                      "chemically shifted (Ham11 six-peak spectrum, 70 % at 1.3 ppm) and J-coupled, so under a CPMG train its apparent T2 depends on echo "
+                      "spacing (Hen92) and its true signal is a multi-frequency, not a mono-exponential, decay: this row is scored under the T2 kernel it is "
+                      "known to violate, like the adipose row, and its functional (fat fraction from T2 alone) is the wrong-tool functional; PDFF is what "
+                      "chemical-shift-encoded imaging measures with slope ~ 1 against MRS (Yok11, Arm18). The normal row's THEORY vascular tail is not carried: "
+                      "the STEAM primaries see one water T2 in fatty liver, and the question this row asks is fat against water at ratio ~ 2")
+
+variant("liver", "liver_steatosis_pdff10", "parenchyma, hepatic steatosis at PDFF 10 % (histologic grade 1)",
+    condition={"name": "hepatic steatosis, grade 1", "kind": "pathology",
+               "operating_point": "PDFF 0.10: inside the grade-1 band 6.4-17.4 % (Tang13 thresholds, Tang15 validation, Gug23 6-17 %); Sch15 grade-1 mean 9.2 +/- 5.8 %"},
+    clinical_delta=D("fat fraction (1 - mass below 55 ms)", 0.019, 0.10, "PRIMARY",
+                     "normal: Szc05 low-risk median 1.9 % (cut-off 5.56 %); disease: the row's operating point, the grade-1 band of Tang13 / Tang15 and Sch15's grade-1 mean",
+                     note="delta = +0.081 from normal; the grade steps around this point are 6.4 -> 17.4 % (0.11 wide), so grading needs SD < ~ 0.02-0.04 as well"),
+    components={"T2": {"kernel": "t2_cpmg", "field_T": 1.5, "status": "PRIMARY",
+                       "list": [C("liver water (hepatocellular + sinusoidal, one STEAM peak)", 0.90, 36.2, "PRIMARY", "Byd08 Table II water peak T2 36.2 +/- 4.9 ms (1.5 T STEAM, TE 20-70 ms, 21 fatty livers); dB04 bulk 46 in normal liver; the fraction is 1 - PDFF", (31, 46)),
+                                C("triglyceride protons (methylene-dominated, chemically shifted, J-coupled)", 0.10, 74.8, "PRIMARY", "Byd08 Table II CH2 (1.2-1.3 ppm) T2 74.8 +/- 19.2 ms at 1.5 T; Ham11 62 ms at 3 T; fraction = PDFF 0.10 (operating point)", (56, 94))],
+                       "functional": "fat fraction (1 - mass below 55 ms)", "functional_threshold": 55.0,
+                       "typical_acquisition": {"n_echoes": 16, "dTE_ms": 8.0, "first_echo_snr": 60.0},
+                       "note": _STEATOSIS_T2_NOTE}},
+    theory={"pools": ["hepatocyte cytoplasmic water", "sinusoidal blood (partially exchange-averaged into the water peak)", "bile", "intracellular triglyceride droplets (macro- and microvesicular; 10 % of visible protons here)",
+                      "non-aqueous protons"],
+            "n_pools": 5, "exchange": "Water pools exchange as in the normal row; the triglyceride pool does not exchange with water and is separated by chemical shift (3.4 ppm), not by relaxation; its CPMG decay is J-modulated.",
+            "n_apparent_T2": 2, "n_resolvable_clinical_T2": 1,
+            "rationale": "Ratio ~ 2 between water (36 ms) and fat (75 ms) with a 10 % minor fraction: at the resolvability floor of charter section 1.2 (delta ~ 2.4-2.7 at SNR 100) and misspecified for a pure-exponential kernel - the fat axis's first pathological row, expected to fail on T2 and to be the case chemical-shift encoding solves."},
+    sources=["Byd08", "Ham11", "Szc05", "Tang13", "Tang15", "Sch15", "Gug23", "Yok11", "Hen92", "dB04"],
+    property_overrides={"pdff": V(0.10, "PRIMARY", "operating point: histologic grade 1 (Tang13 6.4-17.4 %, Tang15 Table 3 validation; Sch15 grade-1 mean 9.2 +/- 5.8 %; Gug23 6-17 %)", None, (0.064, 0.174)),
+                        "water_content": V(0.68, "THEORY", "Woo86 liver 74.5 % water reduced by a 10 % triglyceride pool by volume (~ 0.9 g/ml): a working value", "g/g", (0.65, 0.72))})
+
+variant("liver", "liver_steatosis_pdff25", "parenchyma, hepatic steatosis at PDFF 25 % (histologic grade 3)",
+    condition={"name": "hepatic steatosis, grade 3", "kind": "pathology",
+               "operating_point": "PDFF 0.25: above the grade-3 threshold 22.1 % (Tang13 / Tang15; Gug23 > 22 %); Sch15 grade-3 mean 26.8 +/- 8.2 %; Tang15 cohort maximum 37.5 %, Szc05 cohort maximum 47.5 %"},
+    clinical_delta=D("fat fraction (1 - mass below 55 ms)", 0.019, 0.25, "PRIMARY",
+                     "normal: Szc05 low-risk median 1.9 %; disease: the row's operating point above Tang13's 22.1 % grade-3 threshold, near Sch15's grade-3 mean 26.8 %",
+                     note="delta = +0.231 from normal; the nearest grade step is 17.4 -> 22.1 % (0.047 wide), so grade-2-vs-3 classification needs SD < ~ 0.016"),
+    components={"T2": {"kernel": "t2_cpmg", "field_T": 1.5, "status": "PRIMARY",
+                       "list": [C("liver water (hepatocellular + sinusoidal, one STEAM peak)", 0.75, 36.2, "PRIMARY", "Byd08 Table II water peak T2 36.2 +/- 4.9 ms; the fraction is 1 - PDFF", (31, 46)),
+                                C("triglyceride protons (methylene-dominated, chemically shifted, J-coupled)", 0.25, 74.8, "PRIMARY", "Byd08 Table II CH2 T2 74.8 +/- 19.2 ms; fraction = PDFF 0.25 (operating point)", (56, 94))],
+                       "functional": "fat fraction (1 - mass below 55 ms)", "functional_threshold": 55.0,
+                       "typical_acquisition": {"n_echoes": 16, "dTE_ms": 8.0, "first_echo_snr": 60.0},
+                       "note": _STEATOSIS_T2_NOTE}},
+    theory={"pools": ["hepatocyte cytoplasmic water", "sinusoidal blood (partially exchange-averaged into the water peak)", "bile", "intracellular triglyceride droplets (25 % of visible protons here)", "non-aqueous protons"],
+            "n_pools": 5, "exchange": "as the grade-1 row; at this fat load the water signal is also T2*-shortened around droplets (Byd08 expected T2* ~ 30 ms water / ~ 10 ms fat at 1.5 T), which the CPMG kernel does not see but a GRE-based method must model.",
+            "n_apparent_T2": 2, "n_resolvable_clinical_T2": 1,
+            "rationale": "Same ratio ~ 2 as the grade-1 row with a 25 % minor fraction: the fraction is large enough for the CRLB to say something at high SNR, which makes the pair of rows a fraction sweep at fixed ratio - the fat-axis counterpart of the 20/80 vector of charter section 1.2."},
+    sources=["Byd08", "Ham11", "Szc05", "Tang13", "Tang15", "Sch15", "Gug23", "Yok11", "Hen92", "dB04"],
+    property_overrides={"pdff": V(0.25, "PRIMARY", "operating point: histologic grade 3 (Tang13 > 22.1 %, Tang15 Table 3 validation; Sch15 grade-3 mean 26.8 +/- 8.2 %; Gug23 > 22 %)", None, (0.221, 0.475)),
+                        "water_content": V(0.58, "THEORY", "Woo86 liver 74.5 % water reduced by a 25 % triglyceride pool by volume: a working value", "g/g", (0.52, 0.65))})
+
+variant("prostate_pz", "prostate_pz_cancer", "peripheral zone, prostate cancer (malignant PZ)",
+    condition={"name": "prostate cancer, peripheral zone", "kind": "pathology",
+               "operating_point": "Sab17 Radiology Table 2 malignant PZ (18 patients, 378 ROIs): LWF 0.10 +/- 0.05 at T2short 81 +/- 21 / T2long 548 +/- 188 ms, gmT2 94 +/- 27, Ncomp 1.81; JMRI Table 3 medians 72 / 507 ms, LWF 0.07 (higher Gleason grades become mono-exponential)"},
+    clinical_delta=D("luminal water fraction (1 - mass below 200 ms)", 0.24, 0.10, "PRIMARY",
+                     "Sab17 Radiology Table 2: 0.24 +/- 0.09 nonmalignant vs 0.10 +/- 0.05 malignant PZ, same protocol; LWF vs Gleason score rho -0.78",
+                     note="delta = -0.14; histological luminal area 27.2 % -> 11.6 % (JMRI Table 2)"),
+    components={"T2": {"kernel": "t2_cpmg", "field_T": 3.0, "status": "PRIMARY",
+                       "list": [C("epithelial / stromal water", 0.90, 81.0, "PRIMARY", "Sab17 Radiology Table 2 malignant PZ T2short 81 +/- 21 ms; JMRI median 72", (60, 102)),
+                                C("luminal water", 0.10, 548.0, "PRIMARY", "Sab17 Radiology Table 2 malignant PZ T2long 548 +/- 188 ms, LWF 0.10 +/- 0.05; JMRI median 507, LWF 0.07", (360, 736), "fraction range ~ 0.03-0.15")],
+                       "functional": "luminal water fraction (1 - mass below 200 ms)", "functional_threshold": 200.0,
+                       "typical_acquisition": {"n_echoes": 64, "dTE_ms": 25.0, "first_echo_snr": 100.0},
+                       "note": "the disease operating point of the strongest clinically validated two-component case: the ratio (~ 6.8) is unchanged, the minor fraction falls from 0.24 to 0.10 - a pure amplitude-vector change, which is exactly what charter section 1.2 found decides estimability; Sab17's 64 x 25 ms train and SNR ~ 100 are carried"}},
+    theory={"pools": ["residual glandular lumen fluid (11.6 % of section area by histology)", "tumour epithelial cell water (crowded, replaces lumen)", "stromal water", "vascular blood"],
+            "n_pools": 4, "exchange": "as the normal row; cancer replaces lumen with cells, so the slowly exchanging luminal pool shrinks and the two-component structure fades toward mono-exponential (Ncomp 1.81; higher grades ~ 1).",
+            "n_apparent_T2": 2, "n_resolvable_clinical_T2": 2,
+            "rationale": "Well-separated but with a 10 % minor fraction: the harness's test of whether a functional (LWF) stays estimable when its value halves at fixed ratio and window - the decision the clinical test (LWF cut-off between 0.10 and 0.24) actually needs."},
+    sources=["Sab17", "dB04", "Boj17"])
+
+variant("skeletal_muscle", "skeletal_muscle_venous_filling", "skeletal muscle (soleus) under venous filling - oedema surrogate",
+    condition={"name": "venous filling (vascular compartment expanded)", "kind": "physiological",
+               "operating_point": "Ara14 Table 1 vascular-filling state (thigh cuff at venous pressure), 3 T ISIS-CPMG fat-saturated, n = 8: 85.8 / 14.2 % at 32.6 / 181 ms, against 92.0 / 8.0 % at 32.1 / 159 ms with free perfusion and 94.6 / 5.4 % at 31.7 / 139 ms when drained"},
+    clinical_delta=D("extracellular / vascular fraction (1 - mass below 60 ms)", 0.080, 0.142, "PRIMARY",
+                     "Ara14 Table 1: long fraction 8.0 +/- 2.4 % (free perfusion) -> 14.2 % (venous filling), paired within-protocol",
+                     kind="physiological", note="delta = +0.062; the measured surrogate for the oedema / extracellular-expansion pathologies (inflammatory myopathy, denervation) for which no multi-component primary is on hand"),
+    components={"T2": {"kernel": "t2_cpmg", "field_T": 3.0, "status": "PRIMARY",
+                       "list": [C("intracellular + interstitial water", 0.858, 32.6, "PRIMARY", "Ara14 Table 1 venous filling: 85.8 % at 32.6 ms (free perfusion 92.0 % at 32.1 +/- 0.4 ms)", (30, 35)),
+                                C("vascular water (expanded)", 0.142, 181.0, "PRIMARY", "Ara14 Table 1 venous filling: 14.2 % at 181 ms (free perfusion 8.0 +/- 2.4 % at 159 +/- 25 ms); three-site exchange model assigns this pool to venous blood (T2 fixed at 186 ms in the model)", (139, 206), "rises with venous filling, oedema, exercise")],
+                       "functional": "extracellular / vascular fraction (1 - mass below 60 ms)", "functional_threshold": 60.0,
+                       "typical_acquisition": CPMG_REF,
+                       "note": "Ara14's own protocol is 1000 echoes x 1 ms (even echoes used, 2 ms effective) in a 52 cm3 ISIS voxel at 3 T with fat saturation; its SNR is not tabulated, so the reference train is carried as the typical acquisition and the 3 T two-component description is the row. The normal row (Saab99 at 1.89 T) has four components and a 10 ms first echo sees three; this variant is the K = 2 clinical picture at 3 T, which is why it is also the right comparator for the normal muscle Delta"}},
+    theory={"pools": ["myofibrillar + sarcoplasmic water (one 32 ms peak at 2 ms spacing)", "interstitial water (T2 ~ 36-41 ms in the exchange model, merged)", "venous / capillary blood (expanded to ~ 14 % of the signal)", "macromolecule-bound water (filtered by the ISIS pulses)", "intramuscular fat (saturated)"],
+            "n_pools": 5, "exchange": "Ara14's three-site two-exchange model: intracellular residence ~ 1 s, vascular residence 0.3-3 s - slow on the T2 scale, so the vascular pool survives as its own component and its fraction tracks blood volume.",
+            "n_apparent_T2": 2, "n_resolvable_clinical_T2": 2,
+            "rationale": "Ratio ~ 5.5 with the minor fraction at 14 %: the pair of muscle rows (8 % -> 14 % at fixed ratio) asks whether a 6-point change in a vascular / extracellular fraction is a 3-sigma event at clinical SNR - the oedema question in bound units."},
+    sources=["Ara14", "Saab99", "St05", "Gold04"])
+
+variant("brain_wm", "brain_wm_ms_lesion", "white matter, chronic multiple-sclerosis lesion (demyelinated)",
+    condition={"name": "multiple sclerosis lesion (chronic, demyelinated)", "kind": "pathology",
+               "operating_point": "MacK94: 95 volumes from 34 lesions in four MS patients, MWF 6.4 / 5.8 / 4.7 / 4.1 % per patient (SE 0.6-1.1 %), 95 % CI 0-13 %; lesions show >= 10 % more water and an elevated T2 than normal-appearing WM (Fig. 5-6); the row takes the four-patient mean 5.25 %"},
+    clinical_delta=D("myelin water fraction (mass below 40 ms)", 0.113, 0.0525, "PRIMARY",
+                     "MacK94 lesion MWF (mean of four patients, 5.25 %) against the dictionary's normal WM 0.113 (Whi97); within MacK94 15.6 % -> ~ 5 %",
+                     note="delta = -0.061 (dictionary values), -0.10 within MacK94"),
+    components={"T2": {"kernel": "t2_cpmg", "field_T": 1.5, "status": "PRIMARY",
+                       "list": [C("myelin water (residual)", 0.0525, 15.0, "PRIMARY", "MacK94: lesion MWF 4.1-6.4 % by patient (10-55 ms window, 32 x 15 ms at 1.5 T); T2 taken at the normal row's 15 ms", (10, 20), "fraction range 0.0-0.13 (95 % CI)"),
+                                C("intra/extracellular water (oedematous, gliotic)", 0.9275, 100.0, "THEORY", "MacK94 plots lesion T2 distributions with an elevated IE peak and >= 10 % more water but does not tabulate the lesion IE T2; placed at 100 ms (85-150) against 77 ms in normal WM (Whi97) as a working value", (85, 150)),
+                                C("free/CSF-like water", 0.02, 2000.0, "THEORY", "as the normal row (partial volume; periventricular lesions have more)", (1000, 2500))],
+                       "functional": "myelin water fraction (mass below 40 ms)", "functional_threshold": 40.0,
+                       "typical_acquisition": CPMG_REF,
+                       "note": "the MS-lesion row keeps the normal row's three-component structure so that the two are compared like for like; only the myelin fraction rests on the primary (MacK94), the lesion IE T2 is a working value (THEORY) until a primary tabulates it. With MWF ~ 5 % the row sits with grey matter (3.1 %) below the ~ 5 % floor that the normal-WM evaluation found - the question is whether 'demyelinated' is distinguishable from 'normal' at SNR 100, i.e. whether SD(MWF) <= 0.02"}},
+    theory={"pools": ["residual myelin water (~ 5 % of water)", "intra-axonal water (axons partly preserved)", "expanded extracellular / oedematous water", "gliotic (astrocytic) water", "blood", "CSF partial volume", "non-aqueous protons (reduced: myelin lipid lost)"],
+            "n_pools": 7, "exchange": "as normal WM; with the myelin sheath gone the residual short pool is small and the IE pool is larger and slower (more free water), so the apparent structure moves toward K = 1 with a long tail.",
+            "n_apparent_T2": 3, "n_resolvable_clinical_T2": 1,
+            "rationale": "The disease operating point of the myelin case: the MWF falls by a factor ~ 2-3 to the level where the normal-WM evaluation already found minor components unestimable, so the clinical question - is this lesion demyelinated - is a detection problem on the functional (SD <= |Delta| / 3 = 0.02), not a component-resolution problem."},
+    sources=["MacK94", "Whi97", "Lau07", "St05"],
+    property_overrides={"water_content": V(0.78, "THEORY", "MacK94: lesions show at least a 10 % increase in water content over normal WM (0.708 g/ml, Whi97): 0.71 x 1.1", "g/g", (0.75, 0.85)),
+                        "lipid_mass_fraction": V(0.10, "THEORY", "myelin lipid lost with demyelination; Woo86 WM 18.1 % is the normal value; no lesion composition primary on hand", "g/g", (0.05, 0.18))})
 
 # ==============================================================================================
 CHANGELOG = [
@@ -663,4 +842,20 @@ CHANGELOG = [
     "cartilage note; Prasloski 2012 (EPG stimulated-echo correction, simulated WM truth 15 / 75 / 10 %) to the WM note. Stanisz 2005 "
     "Table 1 re-read from the publisher PDF: every St05 value moves to PRIMARY unchanged. PDFF ranges for the lean organs stay "
     "RECALLED: none of the 57 PDFs on hand is a water-fat paper for those organs (requests added to literature-requests.md).",
+    "2026-09-10 v2.3 (water-fat pass and pathology axis, charter section 10 step 8c/8e): the fifteen water-fat papers of "
+    "literature-requests.md #58-#72 read from literature/. Schema: `condition` and `clinical_delta` on every entry; pathology rows "
+    "built with variant() inherit their base row's bulk properties. Five variants added (24 entries): steatotic liver at PDFF 10 % "
+    "(grade 1) and 25 % (grade 3) with the water / fat T2 pair of Bydder 2008 Table II (36.2 / 74.8 ms at 1.5 T, PRIMARY) and the "
+    "grade calibration of Tang 2013 (origin) / Tang 2015 (validation) / Schwimmer 2015 (per-grade means) / Guglielmo 2023 (6 / 17 / "
+    "22 %); malignant prostate PZ (Sabouri 2017 Table 2: LWF 0.10 at 81 / 548 ms); venous-filled skeletal muscle (Araujo 2014 Table 1: "
+    "14.2 % at 181 ms, the oedema surrogate); MS-lesion white matter (MacKay 1994: MWF 4.1-6.4 %, IE T2 a THEORY working value). "
+    "clinical_delta on the normal rows where a primary gives the change: WM (MWF 0.113 -> 0.0525), cord (age, 0.296 -> 0.2655), "
+    "muscle (0.080 -> 0.142, Araujo paired states), prostate (0.24 -> 0.10). PDFF column: liver -> PRIMARY (Szczepaniak 2005 read: "
+    "low-risk median 1.9 %, 95th percentile 5.56 %), pancreas -> PRIMARY (Kuehn 2015 4.4 %; Idilman 2015 5.7 % in NAFLD), kidney "
+    "cortex -> PRIMARY (Idilman 2015 1.7 %), medulla -> THEORY (as cortex), adipose -> SECONDARY (Guglielmo 2023 93-96 %); muscle, "
+    "myocardium, spleen and breast stay RECALLED because Hu 2011 carries no organ table (Grimm 2018 and Szczepaniak 2003 "
+    "re-requested). Liver bulk-T2 sources gain the STEAM water / fat T2 at both fields (Bydder 2008, Hamilton 2011). Correction to the "
+    "v2.1/v2.2 note text: the 6.4 / 17.4 / 22.1 % grade thresholds originate in Tang 2013 (NASH CRN) and are validated, not proposed, "
+    "in Tang 2015; Schwimmer 2015 proposes no grade cut-offs (the 5.3 / 14.5 / 22.1 % attributed to it in literature-requests v4 are "
+    "not in the paper).",
 ]

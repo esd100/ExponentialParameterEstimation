@@ -1,50 +1,60 @@
 # §1.2 threshold over the tissue dictionary
 
-Rician CRLB with σ known, first-echo SNR as stated; components below the first echo dropped and fractions renormalised. 'K estimable' = every visible T2 under 25% relative SD; 'functional estimable' = the entry's clinical functional under 10% relative SD (delta method). The status column is the provenance of the component set (`mexp/tissue_data.py`): PRIMARY / SECONDARY are read from the literature this project opened; THEORY rows are working configurations for organs with no multi-component study reached (abdominal T2 splits); RECALLED rows are from memory. Rows marked THEORY or RECALLED shape the question, they do not settle it.
+Rician CRLB with σ known, first-echo SNR as stated; components below the first echo dropped and fractions renormalised. 'K estimable' = every visible T2 under 25% relative SD; 'functional estimable' = the entry's clinical functional under 10% relative SD (delta method); 'clinically estimable' (dictionary v2.3, charter v0.15) = the functional's SD ≤ |Δ|/3 with Δ the normal-to-disease change the dictionary records for that functional (its `clinical_delta`; '—' where no change is on record), i.e. the change is a 3σ event in one measurement. The status column is the provenance of the component set (`mexp/tissue_data.py`): PRIMARY / SECONDARY are read from the literature this project opened; THEORY rows are working configurations for organs with no multi-component study reached (abdominal T2 splits); RECALLED rows are from memory. Rows marked THEORY or RECALLED shape the question, they do not settle it. Disease rows (pathology axis) are marked with their condition.
 
 ## Reference acquisition: 32 echoes × 10 ms, first-echo SNR 100
 
-| tissue | status | visible K (of K) | composition (fraction @ T2 ms) | rel SD of T2 (%) | rel SD of fractions (%) | functional | value | SD (abs) | rel SD (%) | K estimable | functional estimable |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| white matter (brain) | PRIMARY | 3 (of 3) | 0.11@15, 0.87@77, 0.02@2000 | 111, 20, 2452 | 64, 5, 436 | myelin water fraction (mass below 40 ms) | 0.113 | 0.074 | 65 | no | no |
-| cortical grey matter (brain) | PRIMARY | 3 (of 3) | 0.03@15, 0.94@80, 0.03@2000 | 410, 20, 1821 | 230, 5, 330 | myelin water fraction (mass below 40 ms) | 0.031 | 0.072 | 231 | no | no |
-| cerebrospinal fluid (ventricular) (brain) | TERTIARY | 1 (of 1) | 1.00@2000 | 4 | 0 | T2 (mono-exponential) | — | — | — | yes | — |
-| cervical cord white matter (lateral/dorsal columns) (spinal cord) | PRIMARY | 3 (of 3) | 0.30@20, 0.67@100, 0.03@2000 | 43, 47, 3309 | 38, 14, 688 | myelin water fraction (mass below 40 ms) | 0.296 | 0.117 | 40 | no | no |
-| skeletal muscle (calf / forearm / paravertebral) (musculoskeletal) | PRIMARY | 3 (of 4) | 0.33@20.8, 0.54@38.9, 0.13@114.3 | 206, 188, 106 | 662, 346, 279 | extracellular fraction (1 - mass below 60 ms) | 0.133 | 0.369 | 277 | no | no |
-| articular (hyaline) cartilage (knee) | PRIMARY | 2 (of 3) | 0.15@25.2, 0.85@96.3 | 40, 3 | 26, 6 | short/intermediate fraction (mass below 45 ms) | 0.155 | 0.041 | 26 | no | no |
-| vertebral (red / haematopoietic) bone marrow (bone) | SECONDARY | 2 (of 2) | 0.67@45, 0.33@130 | 11, 15 | 14, 31 | fat fraction (1 - mass below 75 ms) | 0.330 | 0.099 | 30 | yes | no |
-| left-ventricular myocardium (heart) | SECONDARY | 1 (of 1) | 1.00@48 | 1 | 1 | T2 (mono-exponential) | — | — | — | yes | — |
-| arterial blood (Hct ~ 0.42, Y ~ 0.98) (vascular) | SECONDARY | 1 (of 1) | 1.00@250 | 1 | 0 | T2 (mono-exponential; oxygenation via Luz-Meiboom) | — | — | — | yes | — |
-| parenchyma (normal iron, no steatosis) (liver) | THEORY | 2 (of 2) | 0.78@42, 0.22@150 | 7, 17 | 7, 27 | vascular/long-T2 fraction (1 - mass below 90 ms) | 0.220 | 0.059 | 27 | yes | no |
-| splenic parenchyma (spleen) | THEORY | 2 (of 2) | 0.65@65, 0.35@130 | 27, 42 | 66, 125 | blood/long-T2 fraction (1 - mass below 95 ms) | 0.350 | 0.436 | 125 | no | no |
-| renal cortex (kidney) | THEORY | 2 (of 2) | 0.75@70, 0.25@200 | 15, 40 | 23, 71 | tubular/vascular long-T2 fraction (1 - mass below 120 ms) | 0.250 | 0.176 | 70 | no | no |
-| renal medulla (kidney) | THEORY | 2 (of 2) | 0.70@75, 0.30@220 | 16, 37 | 26, 63 | luminal/vascular long-T2 fraction (1 - mass below 120 ms) | 0.300 | 0.187 | 62 | no | no |
-| pancreatic parenchyma (pancreas) | THEORY | 2 (of 2) | 0.78@45, 0.22@160 | 8, 18 | 7, 30 | vascular/long-T2 fraction (1 - mass below 90 ms) | 0.220 | 0.063 | 29 | yes | no |
-| peripheral zone, normal (prostate) | PRIMARY | 2 (of 2) | 0.76@90, 0.24@545 | 12, 65 | 13, 44 | luminal water fraction (1 - mass below 200 ms) | 0.240 | 0.105 | 44 | no | no |
-| fibroglandular tissue (with fat partial volume) (breast) | SECONDARY | 2 (of 2) | 0.60@57, 0.40@110 | 29, 34 | 72, 110 | fat fraction (1 - mass below 80 ms) | 0.400 | 0.437 | 109 | no | no |
-| subcutaneous white adipose tissue (adipose) | THEORY | 2 (of 2) | 0.10@40, 0.90@140 | 66, 4 | 60, 7 | water fraction (mass below 75 ms) | 0.100 | 0.060 | 60 | no | no |
+| tissue | status | visible K (of K) | composition (fraction @ T2 ms) | rel SD of T2 (%) | rel SD of fractions (%) | functional | value | SD (abs) | rel SD (%) | Δ (clinical) | K estimable | functional estimable | clinically estimable (SD ≤ \|Δ\|/3) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| white matter (brain) | PRIMARY | 3 (of 3) | 0.11@15, 0.87@77, 0.02@2000 | 111, 20, 2452 | 64, 5, 436 | myelin water fraction (mass below 40 ms) | 0.113 | 0.074 | 65 | -0.060 | no | no | no |
+| cortical grey matter (brain) | PRIMARY | 3 (of 3) | 0.03@15, 0.94@80, 0.03@2000 | 410, 20, 1821 | 230, 5, 330 | myelin water fraction (mass below 40 ms) | 0.031 | 0.072 | 231 | — | no | no | — |
+| cerebrospinal fluid (ventricular) (brain) | TERTIARY | 1 (of 1) | 1.00@2000 | 4 | 0 | T2 (mono-exponential) | — | — | — | — | yes | — | — |
+| cervical cord white matter (lateral/dorsal columns) (spinal cord) | PRIMARY | 3 (of 3) | 0.30@20, 0.67@100, 0.03@2000 | 43, 47, 3309 | 38, 14, 688 | myelin water fraction (mass below 40 ms) | 0.296 | 0.117 | 40 | -0.030 | no | no | no |
+| skeletal muscle (calf / forearm / paravertebral) (musculoskeletal) | PRIMARY | 3 (of 4) | 0.33@20.8, 0.54@38.9, 0.13@114.3 | 206, 188, 106 | 662, 346, 279 | extracellular fraction (1 - mass below 60 ms) | 0.133 | 0.369 | 277 | +0.062 | no | no | no |
+| articular (hyaline) cartilage (knee) | PRIMARY | 2 (of 3) | 0.15@25.2, 0.85@96.3 | 40, 3 | 26, 6 | short/intermediate fraction (mass below 45 ms) | 0.155 | 0.041 | 26 | — | no | no | — |
+| vertebral (red / haematopoietic) bone marrow (bone) | SECONDARY | 2 (of 2) | 0.67@45, 0.33@130 | 11, 15 | 14, 31 | fat fraction (1 - mass below 75 ms) | 0.330 | 0.099 | 30 | — | yes | no | — |
+| left-ventricular myocardium (heart) | SECONDARY | 1 (of 1) | 1.00@48 | 1 | 1 | T2 (mono-exponential) | — | — | — | — | yes | — | — |
+| arterial blood (Hct ~ 0.42, Y ~ 0.98) (vascular) | SECONDARY | 1 (of 1) | 1.00@250 | 1 | 0 | T2 (mono-exponential; oxygenation via Luz-Meiboom) | — | — | — | — | yes | — | — |
+| parenchyma (normal iron, no steatosis) (liver) | THEORY | 2 (of 2) | 0.78@42, 0.22@150 | 7, 17 | 7, 27 | vascular/long-T2 fraction (1 - mass below 90 ms) | 0.220 | 0.059 | 27 | — | yes | no | — |
+| splenic parenchyma (spleen) | THEORY | 2 (of 2) | 0.65@65, 0.35@130 | 27, 42 | 66, 125 | blood/long-T2 fraction (1 - mass below 95 ms) | 0.350 | 0.436 | 125 | — | no | no | — |
+| renal cortex (kidney) | THEORY | 2 (of 2) | 0.75@70, 0.25@200 | 15, 40 | 23, 71 | tubular/vascular long-T2 fraction (1 - mass below 120 ms) | 0.250 | 0.176 | 70 | — | no | no | — |
+| renal medulla (kidney) | THEORY | 2 (of 2) | 0.70@75, 0.30@220 | 16, 37 | 26, 63 | luminal/vascular long-T2 fraction (1 - mass below 120 ms) | 0.300 | 0.187 | 62 | — | no | no | — |
+| pancreatic parenchyma (pancreas) | THEORY | 2 (of 2) | 0.78@45, 0.22@160 | 8, 18 | 7, 30 | vascular/long-T2 fraction (1 - mass below 90 ms) | 0.220 | 0.063 | 29 | — | yes | no | — |
+| peripheral zone, normal (prostate) | PRIMARY | 2 (of 2) | 0.76@90, 0.24@545 | 12, 65 | 13, 44 | luminal water fraction (1 - mass below 200 ms) | 0.240 | 0.105 | 44 | -0.140 | no | no | no |
+| fibroglandular tissue (with fat partial volume) (breast) | SECONDARY | 2 (of 2) | 0.60@57, 0.40@110 | 29, 34 | 72, 110 | fat fraction (1 - mass below 80 ms) | 0.400 | 0.437 | 109 | — | no | no | — |
+| subcutaneous white adipose tissue (adipose) | THEORY | 2 (of 2) | 0.10@40, 0.90@140 | 66, 4 | 60, 7 | water fraction (mass below 75 ms) | 0.100 | 0.060 | 60 | — | no | no | — |
+| parenchyma, hepatic steatosis at PDFF 10 % (histologic grade 1) (liver) — *hepatic steatosis, grade 1* | PRIMARY | 2 (of 2) | 0.90@36.2, 0.10@74.8 | 17, 114 | 37, 340 | fat fraction (1 - mass below 55 ms) | 0.100 | 0.339 | 339 | +0.081 | no | no | no |
+| parenchyma, hepatic steatosis at PDFF 25 % (histologic grade 3) (liver) — *hepatic steatosis, grade 3* | PRIMARY | 2 (of 2) | 0.75@36.2, 0.25@74.8 | 19, 39 | 38, 118 | fat fraction (1 - mass below 55 ms) | 0.250 | 0.293 | 117 | +0.231 | no | no | no |
+| peripheral zone, prostate cancer (malignant PZ) (prostate) — *prostate cancer, peripheral zone* | PRIMARY | 2 (of 2) | 0.90@81, 0.10@548 | 8, 122 | 8, 77 | luminal water fraction (1 - mass below 200 ms) | 0.100 | 0.077 | 77 | -0.140 | no | no | no |
+| skeletal muscle (soleus) under venous filling - oedema surrogate (musculoskeletal) — *venous filling (vascular compartment expanded)* | PRIMARY | 2 (of 2) | 0.86@32.6, 0.14@181 | 5, 15 | 2, 17 | extracellular / vascular fraction (1 - mass below 60 ms) | 0.142 | 0.023 | 17 | +0.062 | yes | no | no |
+| white matter, chronic multiple-sclerosis lesion (demyelinated) (brain) — *multiple sclerosis lesion (chronic, demyelinated)* | PRIMARY | 3 (of 3) | 0.05@15, 0.93@100, 0.02@2000 | 219, 26, 4231 | 108, 12, 859 | myelin water fraction (mass below 40 ms) | 0.052 | 0.057 | 108 | -0.060 | no | no | no |
 
 ## Entry-specific typical acquisition
 
-| tissue | status | visible K (of K) | composition (fraction @ T2 ms) | rel SD of T2 (%) | rel SD of fractions (%) | functional | value | SD (abs) | rel SD (%) | K estimable | functional estimable |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| white matter (brain) (32×10 ms, SNR 100) | PRIMARY | 3 (of 3) | 0.11@15, 0.87@77, 0.02@2000 | 111, 20, 2452 | 64, 5, 436 | myelin water fraction (mass below 40 ms) | 0.113 | 0.074 | 65 | no | no |
-| cortical grey matter (brain) (32×10 ms, SNR 100) | PRIMARY | 3 (of 3) | 0.03@15, 0.94@80, 0.03@2000 | 410, 20, 1821 | 230, 5, 330 | myelin water fraction (mass below 40 ms) | 0.031 | 0.072 | 231 | no | no |
-| cerebrospinal fluid (ventricular) (brain) (32×10 ms, SNR 100) | TERTIARY | 1 (of 1) | 1.00@2000 | 4 | 0 | T2 (mono-exponential) | — | — | — | yes | — |
-| cervical cord white matter (lateral/dorsal columns) (spinal cord) (32×10 ms, SNR 100) | PRIMARY | 3 (of 3) | 0.30@20, 0.67@100, 0.03@2000 | 43, 47, 3309 | 38, 14, 688 | myelin water fraction (mass below 40 ms) | 0.296 | 0.117 | 40 | no | no |
-| skeletal muscle (calf / forearm / paravertebral) (musculoskeletal) (32×10 ms, SNR 100) | PRIMARY | 3 (of 4) | 0.33@20.8, 0.54@38.9, 0.13@114.3 | 206, 188, 106 | 662, 346, 279 | extracellular fraction (1 - mass below 60 ms) | 0.133 | 0.369 | 277 | no | no |
-| articular (hyaline) cartilage (knee) (32×6 ms, SNR 100) | PRIMARY | 2 (of 3) | 0.15@25.2, 0.85@96.3 | 40, 5 | 34, 7 | short/intermediate fraction (mass below 45 ms) | 0.155 | 0.053 | 34 | no | no |
-| vertebral (red / haematopoietic) bone marrow (bone) (32×10 ms, SNR 100) | SECONDARY | 2 (of 2) | 0.67@45, 0.33@130 | 11, 15 | 14, 31 | fat fraction (1 - mass below 75 ms) | 0.330 | 0.099 | 30 | yes | no |
-| left-ventricular myocardium (heart) (8×12 ms, SNR 60) | SECONDARY | 1 (of 1) | 1.00@48 | 3 | 2 | T2 (mono-exponential) | — | — | — | yes | — |
-| arterial blood (Hct ~ 0.42, Y ~ 0.98) (vascular) (32×10 ms, SNR 60) | SECONDARY | 1 (of 1) | 1.00@250 | 2 | 1 | T2 (mono-exponential; oxygenation via Luz-Meiboom) | — | — | — | yes | — |
-| parenchyma (normal iron, no steatosis) (liver) (16×8 ms, SNR 60) | THEORY | 2 (of 2) | 0.78@42, 0.22@150 | 47, 223 | 73, 268 | vascular/long-T2 fraction (1 - mass below 90 ms) | 0.220 | 0.586 | 266 | no | no |
-| splenic parenchyma (spleen) (16×8 ms, SNR 60) | THEORY | 2 (of 2) | 0.65@65, 0.35@130 | 275, 644 | 858, 1599 | blood/long-T2 fraction (1 - mass below 95 ms) | 0.350 | 5.590 | 1597 | no | no |
-| renal cortex (kidney) (16×8 ms, SNR 60) | THEORY | 2 (of 2) | 0.75@70, 0.25@200 | 164, 796 | 369, 1115 | tubular/vascular long-T2 fraction (1 - mass below 120 ms) | 0.250 | 2.783 | 1113 | no | no |
-| renal medulla (kidney) (16×8 ms, SNR 50) | THEORY | 2 (of 2) | 0.70@75, 0.30@220 | 240, 953 | 541, 1269 | luminal/vascular long-T2 fraction (1 - mass below 120 ms) | 0.300 | 3.799 | 1266 | no | no |
-| pancreatic parenchyma (pancreas) (16×8 ms, SNR 50) | THEORY | 2 (of 2) | 0.78@45, 0.22@160 | 64, 319 | 104, 378 | vascular/long-T2 fraction (1 - mass below 90 ms) | 0.220 | 0.826 | 375 | no | no |
-| peripheral zone, normal (prostate) (64×25 ms, SNR 100) | PRIMARY | 2 (of 2) | 0.76@90, 0.24@545 | 4, 5 | 2, 6 | luminal water fraction (1 - mass below 200 ms) | 0.240 | 0.013 | 5 | yes | yes |
-| fibroglandular tissue (with fat partial volume) (breast) (32×10 ms, SNR 100) | SECONDARY | 2 (of 2) | 0.60@57, 0.40@110 | 29, 34 | 72, 110 | fat fraction (1 - mass below 80 ms) | 0.400 | 0.437 | 109 | no | no |
-| subcutaneous white adipose tissue (adipose) (32×10 ms, SNR 100) | THEORY | 2 (of 2) | 0.10@40, 0.90@140 | 66, 4 | 60, 7 | water fraction (mass below 75 ms) | 0.100 | 0.060 | 60 | no | no |
+| tissue | status | visible K (of K) | composition (fraction @ T2 ms) | rel SD of T2 (%) | rel SD of fractions (%) | functional | value | SD (abs) | rel SD (%) | Δ (clinical) | K estimable | functional estimable | clinically estimable (SD ≤ \|Δ\|/3) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| white matter (brain) (32×10 ms, SNR 100) | PRIMARY | 3 (of 3) | 0.11@15, 0.87@77, 0.02@2000 | 111, 20, 2452 | 64, 5, 436 | myelin water fraction (mass below 40 ms) | 0.113 | 0.074 | 65 | -0.060 | no | no | no |
+| cortical grey matter (brain) (32×10 ms, SNR 100) | PRIMARY | 3 (of 3) | 0.03@15, 0.94@80, 0.03@2000 | 410, 20, 1821 | 230, 5, 330 | myelin water fraction (mass below 40 ms) | 0.031 | 0.072 | 231 | — | no | no | — |
+| cerebrospinal fluid (ventricular) (brain) (32×10 ms, SNR 100) | TERTIARY | 1 (of 1) | 1.00@2000 | 4 | 0 | T2 (mono-exponential) | — | — | — | — | yes | — | — |
+| cervical cord white matter (lateral/dorsal columns) (spinal cord) (32×10 ms, SNR 100) | PRIMARY | 3 (of 3) | 0.30@20, 0.67@100, 0.03@2000 | 43, 47, 3309 | 38, 14, 688 | myelin water fraction (mass below 40 ms) | 0.296 | 0.117 | 40 | -0.030 | no | no | no |
+| skeletal muscle (calf / forearm / paravertebral) (musculoskeletal) (32×10 ms, SNR 100) | PRIMARY | 3 (of 4) | 0.33@20.8, 0.54@38.9, 0.13@114.3 | 206, 188, 106 | 662, 346, 279 | extracellular fraction (1 - mass below 60 ms) | 0.133 | 0.369 | 277 | +0.062 | no | no | no |
+| articular (hyaline) cartilage (knee) (32×6 ms, SNR 100) | PRIMARY | 2 (of 3) | 0.15@25.2, 0.85@96.3 | 40, 5 | 34, 7 | short/intermediate fraction (mass below 45 ms) | 0.155 | 0.053 | 34 | — | no | no | — |
+| vertebral (red / haematopoietic) bone marrow (bone) (32×10 ms, SNR 100) | SECONDARY | 2 (of 2) | 0.67@45, 0.33@130 | 11, 15 | 14, 31 | fat fraction (1 - mass below 75 ms) | 0.330 | 0.099 | 30 | — | yes | no | — |
+| left-ventricular myocardium (heart) (8×12 ms, SNR 60) | SECONDARY | 1 (of 1) | 1.00@48 | 3 | 2 | T2 (mono-exponential) | — | — | — | — | yes | — | — |
+| arterial blood (Hct ~ 0.42, Y ~ 0.98) (vascular) (32×10 ms, SNR 60) | SECONDARY | 1 (of 1) | 1.00@250 | 2 | 1 | T2 (mono-exponential; oxygenation via Luz-Meiboom) | — | — | — | — | yes | — | — |
+| parenchyma (normal iron, no steatosis) (liver) (16×8 ms, SNR 60) | THEORY | 2 (of 2) | 0.78@42, 0.22@150 | 47, 223 | 73, 268 | vascular/long-T2 fraction (1 - mass below 90 ms) | 0.220 | 0.586 | 266 | — | no | no | — |
+| splenic parenchyma (spleen) (16×8 ms, SNR 60) | THEORY | 2 (of 2) | 0.65@65, 0.35@130 | 275, 644 | 858, 1599 | blood/long-T2 fraction (1 - mass below 95 ms) | 0.350 | 5.590 | 1597 | — | no | no | — |
+| renal cortex (kidney) (16×8 ms, SNR 60) | THEORY | 2 (of 2) | 0.75@70, 0.25@200 | 164, 796 | 369, 1115 | tubular/vascular long-T2 fraction (1 - mass below 120 ms) | 0.250 | 2.783 | 1113 | — | no | no | — |
+| renal medulla (kidney) (16×8 ms, SNR 50) | THEORY | 2 (of 2) | 0.70@75, 0.30@220 | 240, 953 | 541, 1269 | luminal/vascular long-T2 fraction (1 - mass below 120 ms) | 0.300 | 3.799 | 1266 | — | no | no | — |
+| pancreatic parenchyma (pancreas) (16×8 ms, SNR 50) | THEORY | 2 (of 2) | 0.78@45, 0.22@160 | 64, 319 | 104, 378 | vascular/long-T2 fraction (1 - mass below 90 ms) | 0.220 | 0.826 | 375 | — | no | no | — |
+| peripheral zone, normal (prostate) (64×25 ms, SNR 100) | PRIMARY | 2 (of 2) | 0.76@90, 0.24@545 | 4, 5 | 2, 6 | luminal water fraction (1 - mass below 200 ms) | 0.240 | 0.013 | 5 | -0.140 | yes | yes | yes |
+| fibroglandular tissue (with fat partial volume) (breast) (32×10 ms, SNR 100) | SECONDARY | 2 (of 2) | 0.60@57, 0.40@110 | 29, 34 | 72, 110 | fat fraction (1 - mass below 80 ms) | 0.400 | 0.437 | 109 | — | no | no | — |
+| subcutaneous white adipose tissue (adipose) (32×10 ms, SNR 100) | THEORY | 2 (of 2) | 0.10@40, 0.90@140 | 66, 4 | 60, 7 | water fraction (mass below 75 ms) | 0.100 | 0.060 | 60 | — | no | no | — |
+| parenchyma, hepatic steatosis at PDFF 10 % (histologic grade 1) (liver) — *hepatic steatosis, grade 1* (16×8 ms, SNR 60) | PRIMARY | 2 (of 2) | 0.90@36.2, 0.10@74.8 | 63, 545 | 159, 1449 | fat fraction (1 - mass below 55 ms) | 0.100 | 1.447 | 1447 | +0.081 | no | no | no |
+| parenchyma, hepatic steatosis at PDFF 25 % (histologic grade 3) (liver) — *hepatic steatosis, grade 3* (16×8 ms, SNR 60) | PRIMARY | 2 (of 2) | 0.75@36.2, 0.25@74.8 | 77, 221 | 193, 587 | fat fraction (1 - mass below 55 ms) | 0.250 | 1.463 | 585 | +0.231 | no | no | no |
+| peripheral zone, prostate cancer (malignant PZ) (prostate) — *prostate cancer, peripheral zone* (64×25 ms, SNR 100) | PRIMARY | 2 (of 2) | 0.90@81, 0.10@548 | 3, 11 | 1, 12 | luminal water fraction (1 - mass below 200 ms) | 0.100 | 0.012 | 12 | -0.140 | yes | no | yes |
+| skeletal muscle (soleus) under venous filling - oedema surrogate (musculoskeletal) — *venous filling (vascular compartment expanded)* (32×10 ms, SNR 100) | PRIMARY | 2 (of 2) | 0.86@32.6, 0.14@181 | 5, 15 | 2, 17 | extracellular / vascular fraction (1 - mass below 60 ms) | 0.142 | 0.023 | 17 | +0.062 | yes | no | no |
+| white matter, chronic multiple-sclerosis lesion (demyelinated) (brain) — *multiple sclerosis lesion (chronic, demyelinated)* (32×10 ms, SNR 100) | PRIMARY | 3 (of 3) | 0.05@15, 0.93@100, 0.02@2000 | 219, 26, 4231 | 108, 12, 859 | myelin water fraction (mass below 40 ms) | 0.052 | 0.057 | 108 | -0.060 | no | no | no |
 
 ## Myelin-type functional under three parameterisations (32 × 10 ms)
 
@@ -52,12 +62,22 @@ Rician CRLB with σ known, first-echo SNR as stated; components below the first 
 |---|---|---|---|---|---|---|
 | white matter | 100 | 0.11 | 0.074 | 0.038 | 0.030 | 60 |
 | white matter | 300 | 0.11 | 0.024 | 0.013 | 0.010 | 20 |
+| white matter, chronic multiple-sclerosis lesion (demyelinated) | 100 | 0.05 | 0.057 | 0.034 | 0.032 | 115 |
+| white matter, chronic multiple-sclerosis lesion (demyelinated) | 300 | 0.05 | 0.019 | 0.011 | 0.011 | 38 |
 | cortical grey matter | 100 | 0.03 | 0.072 | 0.039 | 0.033 | 219 |
 | cortical grey matter | 300 | 0.03 | 0.024 | 0.013 | 0.011 | 73 |
 | cervical cord white matter (lateral/dorsal columns) | 100 | 0.30 | 0.117 | 0.045 | 0.024 | 18 |
 | cervical cord white matter (lateral/dorsal columns) | 300 | 0.30 | 0.039 | 0.015 | 0.008 | 6 |
 
-## Reading (dictionary v2.2 — the priority-1 primaries applied; class changes against v2.1 are marked)
+## Reading (dictionary v2.3 — the pathology axis and the third label; the v2.2 reading follows)
+
+- **The third label answers a different question from the second, and the prostate shows it.** 'Functional estimable' asks for 10 % relative precision; 'clinically estimable' asks whether the recorded normal-to-disease change Δ is a 3σ event. At Sabouri's 64 × 25 ms train the malignant-PZ row (LWF 0.10 ± 0.012) fails the 10 % criterion (12 % relative) and passes the clinical one (|Δ|/3 = 0.047): the decision the clinic makes — is the LWF 0.24 or 0.10 — is determined to 4σ at both operating points, although the disease-state value itself is not known to 10 %. At the reference 32 × 10 ms train both prostate rows fail all three labels (SD 0.105 / 0.077), the window rule again.
+- **Myelin: detecting demyelination needs SNR ~300 or a constrained long component, at the bound.** Δ(MWF) = −0.06 (0.113 → 0.05) sets |Δ|/3 = 0.020; the free K = 3 bound is 0.074 (normal) / 0.057 (lesion) at SNR 100 and 0.024 / 0.019 at SNR 300; with the long component fixed or dropped it is 0.030–0.038 at SNR 100 and 0.010–0.013 at SNR 300. So 'this voxel is demyelinated' is a single-measurement 3σ statement at SNR 300 with the CSF-like component constrained, and not at SNR 100 under any parameterisation — which is the operating point myelin water imaging in fact uses (3D acquisitions, SNR 300, Prasloski 2012; MacKay 1994 reported lesion MWF as averages over 95 volumes). The cord's age change (Δ = −0.03, |Δ|/3 = 0.010) is a 3σ event only at SNR 300 with the long component dropped (0.008).
+- **Muscle: the oedema surrogate is marginal at SNR 100, K-estimable, and not functional-estimable.** Araujo 2014's venous-filled state (0.142 at 181 ms against 0.858 at 32.6 ms, ratio 5.5) is 'K estimable' (5 / 15 % on the T2s) but the vascular fraction's SD of 0.023 misses both the 10 % criterion (17 %) and |Δ|/3 = 0.021 by a hair — a 6-point rise in a vascular/extracellular fraction is a 2.7σ event at SNR 100 on a 32 × 10 ms train. The normal Saab 1999 row, evaluated as three visible components, is nowhere near (SD 0.37): the K = 2 description at 3 T is the clinical picture and the one the Δ should be read against.
+- **Steatosis on the T2 axis fails as it should.** Water 36 ms against fat 75 ms (Bydder 2008 Table II) is a ratio-2 pair at the resolvability floor; the fat fraction's bound is 0.34 at PDFF 10 % and 0.29 at 25 % at the reference train (and > 1 at the 16 × 8 ms abdominal train), against |Δ|/3 of 0.027 and 0.077 and grade steps of 0.05–0.11. The rows are the fat axis's negative control: the same fractions are measured to ± 0.01–0.02 by chemical-shift encoding (Yokoo 2011 slope 0.98; Armstrong 2018 limits of agreement ± 5 %), which is the 'change the question' move of charter §1.3 in the field's own practice — separate by frequency, not by relaxation. Whether a joint chemical-shift + T2 kernel recovers them is a question for the complex T2* kernel, not this one.
+- **Provenance of the axis.** The steatotic rows' T2 pair, the malignant PZ, the venous-filled muscle and the lesion MWF are PRIMARY (Bydder 2008, Sabouri 2017, Araujo 2014, MacKay 1994); the lesion IE T2 is a THEORY working value (MacKay plots it, does not tabulate it). Four normal rows carry a measured Δ; the liver, spleen, kidney and pancreas rows carry none on the T2 axis because their functional is the THEORY vascular tail.
+
+### The v2.2 reading (unchanged)
 
 - At the reference acquisition no myelin-type entry is 'estimable' by either criterion under a free K = 3 model: the free long component (2000 ms, unpinned by a 320 ms window) roughly doubles the bound on the myelin water fraction (white matter: 0.074 free vs 0.038 with the long T2 fixed vs 0.030 with it dropped, at SNR 100, for the Whittall 1997 MWF of 0.113). With the long component fixed or dropped the white-matter MWF bound is about ±0.03 (1σ) at SNR 100 and ±0.01 at SNR 300 — the familiar experience that myelin water imaging needs high SNR or averaging, now as a bound. **Class change (cord):** with MacMillan 2011's MWF 0.296 and IE T2 100 ms the cervical cord under the K = 2 model is estimable at SNR 100 on both criteria (myelin T2 18 % relative, MWF 0.296 ± 0.024, i.e. 8 %), where the v2.1 numbers (0.23 at 20 ms, IE 75 ms) gave 29 % and 18 %; it stays unestimable under the free K = 3 model.
 - The functional is better determined than the parameters (white matter MWF ~27 % relative vs myelin T2 60 % in the K = 2 model at SNR 100): a first sighting of charter Phase 3's 'estimate functionals, not spectra', at the level of the bound.

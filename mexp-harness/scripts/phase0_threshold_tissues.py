@@ -1,5 +1,5 @@
 """
-The charter §1.2 threshold, evaluated over the tissue dictionary (charter v0.10).
+The charter §1.2 threshold, evaluated over the tissue dictionary (charter v0.10; labels defined v0.14; third label v0.15).
 
 For every T2-kernel entry in mexp.tissues, at (i) the reference acquisition
 (32 x 10 ms, first-echo SNR 100) and (ii) the entry's typical acquisition,
@@ -7,6 +7,13 @@ compute the Rician (sigma known) CRLB for the visible components and the
 delta-method bound on the entry's clinical functional.  Components below the
 first echo are dropped and the fractions renormalised (the harness does not
 pretend to see a 3 ms component with a 10 ms first echo).
+
+Three labels per row (charter §1.2, v0.14-v0.15):
+  'K estimable'          every visible T2 under 25 % relative SD;
+  'functional estimable' the clinical functional under 10 % relative SD;
+  'clinically estimable' the functional's SD <= |Delta| / 3, with Delta the normal-to-disease change the
+                         dictionary records for that functional (`clinical_delta`, schema 2.3) - '—' when
+                         no change is on record.
 
 No noise realisation is drawn.  Output: results/threshold_tissues.md
 """
@@ -48,30 +55,38 @@ def evaluate(e: TS.ComponentSet, n: int, dte: float, snr: float):
 lines = ["# §1.2 threshold over the tissue dictionary", "",
          "Rician CRLB with σ known, first-echo SNR as stated; components below the first echo dropped and fractions renormalised. "
          f"'K estimable' = every visible T2 under {K_OK:.0%} relative SD; 'functional estimable' = the entry's clinical "
-         f"functional under {F_OK:.0%} relative SD (delta method). The status column is the provenance of the component "
+         f"functional under {F_OK:.0%} relative SD (delta method); 'clinically estimable' (dictionary v2.3, charter v0.15) = the "
+         "functional's SD ≤ |Δ|/3 with Δ the normal-to-disease change the dictionary records for that functional (its `clinical_delta`; "
+         "'—' where no change is on record), i.e. the change is a 3σ event in one measurement. The status column is the provenance of the component "
          "set (`mexp/tissue_data.py`): PRIMARY / SECONDARY are read from the literature this project opened; THEORY rows are "
          "working configurations for organs with no multi-component study reached (abdominal T2 splits); RECALLED rows are "
-         "from memory. Rows marked THEORY or RECALLED shape the question, they do not settle it.", ""]
+         "from memory. Rows marked THEORY or RECALLED shape the question, they do not settle it. Disease rows (pathology axis) are "
+         "marked with their condition.", ""]
 
 for label, acq_of in (("Reference acquisition: 32 echoes × 10 ms, first-echo SNR 100", lambda e: (32, 10.0, 100.0)),
                       ("Entry-specific typical acquisition", lambda e: (int(e.typical_acquisition["n_echoes"]),
                                                                         float(e.typical_acquisition["dTE_ms"]),
                                                                         float(e.typical_acquisition["first_echo_snr"])))):
     lines += [f"## {label}", "",
-              "| tissue | status | visible K (of K) | composition (fraction @ T2 ms) | rel SD of T2 (%) | rel SD of fractions (%) | functional | value | SD (abs) | rel SD (%) | K estimable | functional estimable |",
-              "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+              "| tissue | status | visible K (of K) | composition (fraction @ T2 ms) | rel SD of T2 (%) | rel SD of fractions (%) | functional | value | SD (abs) | rel SD (%) | Δ (clinical) | K estimable | functional estimable | clinically estimable (SD ≤ \\|Δ\\|/3) |",
+              "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for e in TS.entries(kernel="t2_cpmg"):
         n, dte, snr = acq_of(e)
         th, relT, rela, f_true, f_sd = evaluate(e, n, dte, snr)
+        entry = TS.get(e.tissue_key)
+        delta = entry.delta()
         comp = ", ".join(f"{a:.2f}@{t:g}" for a, t in zip(th.amplitudes, th.nonlinear[:, 0]))
         acq = "" if label.startswith("Reference") else f" ({n}×{dte:g} ms, SNR {snr:g})"
         k_ok = "yes" if np.all(relT < K_OK) else "no"
+        d_txt = "—" if delta is None else f"{delta:+.3f}"
         if f_sd is None:
-            f_cells = f"{e.functional} | — | — | — | {k_ok} | —"
+            f_cells = f"{e.functional} | — | — | — | {d_txt} | {k_ok} | — | —"
         else:
             frel = f_sd / f_true if f_true > 0 else np.inf
-            f_cells = f"{e.functional} | {f_true:.3f} | {f_sd:.3f} | {100*frel:.0f} | {k_ok} | {'yes' if frel < F_OK else 'no'}"
-        lines.append(f"| {e.tissue} ({e.organ}){acq} | {e.status.value} | {th.K} (of {e.K}) | {comp} | "
+            c_ok = "—" if delta is None else ("yes" if f_sd <= abs(delta) / 3 else "no")
+            f_cells = f"{e.functional} | {f_true:.3f} | {f_sd:.3f} | {100*frel:.0f} | {d_txt} | {k_ok} | {'yes' if frel < F_OK else 'no'} | {c_ok}"
+        name = f"{e.tissue} ({e.organ})" + (f" — *{entry.condition['name']}*" if entry.is_pathology else "")
+        lines.append(f"| {name}{acq} | {e.status.value} | {th.K} (of {e.K}) | {comp} | "
                      f"{', '.join(f'{100*v:.0f}' for v in relT)} | {', '.join(f'{100*v:.0f}' for v in rela)} | {f_cells} |")
     lines.append("")
 
@@ -80,7 +95,7 @@ lines += ["## Myelin-type functional under three parameterisations (32 × 10 ms)
           "| tissue | SNR | MWF | SD, free K = 3 | SD, long T2 fixed | SD, long component dropped (K = 2) | myelin T2 rel SD in the K = 2 model (%) |",
           "|---|---|---|---|---|---|---|"]
 from mexp.params import Theta
-for key in ("brain_wm", "brain_gm", "spinal_cord_wm"):
+for key in ("brain_wm", "brain_wm_ms_lesion", "brain_gm", "spinal_cord_wm"):
     e = TS.get(key).T2
     th3 = e.theta()
     a2 = th3.amplitudes[:2] / th3.amplitudes[:2].sum()
@@ -101,7 +116,36 @@ for key in ("brain_wm", "brain_gm", "spinal_cord_wm"):
         lines.append(f"| {e.tissue} | {snr} | {th3.amplitudes[0]:.2f} | {sd_free:.3f} | {sd_fix:.3f} | {sd_2:.3f} | {relT0:.0f} |")
 lines.append("")
 
-lines += ["## Reading (dictionary v2.2 — the priority-1 primaries applied; class changes against v2.1 are marked)", "",
+lines += ["## Reading (dictionary v2.3 — the pathology axis and the third label; the v2.2 reading follows)", "",
+          "- **The third label answers a different question from the second, and the prostate shows it.** 'Functional estimable' asks for "
+          "10 % relative precision; 'clinically estimable' asks whether the recorded normal-to-disease change Δ is a 3σ event. At Sabouri's "
+          "64 × 25 ms train the malignant-PZ row (LWF 0.10 ± 0.012) fails the 10 % criterion (12 % relative) and passes the clinical one "
+          "(|Δ|/3 = 0.047): the decision the clinic makes — is the LWF 0.24 or 0.10 — is determined to 4σ at both operating points, "
+          "although the disease-state value itself is not known to 10 %. At the reference 32 × 10 ms train both prostate rows fail all "
+          "three labels (SD 0.105 / 0.077), the window rule again.",
+          "- **Myelin: detecting demyelination needs SNR ~300 or a constrained long component, at the bound.** Δ(MWF) = −0.06 (0.113 → 0.05) "
+          "sets |Δ|/3 = 0.020; the free K = 3 bound is 0.074 (normal) / 0.057 (lesion) at SNR 100 and 0.024 / 0.019 at SNR 300; with the long "
+          "component fixed or dropped it is 0.030–0.038 at SNR 100 and 0.010–0.013 at SNR 300. So 'this voxel is demyelinated' is a "
+          "single-measurement 3σ statement at SNR 300 with the CSF-like component constrained, and not at SNR 100 under any "
+          "parameterisation — which is the operating point myelin water imaging in fact uses (3D acquisitions, SNR 300, Prasloski 2012; "
+          "MacKay 1994 reported lesion MWF as averages over 95 volumes). The cord's age change (Δ = −0.03, |Δ|/3 = 0.010) is a 3σ event only "
+          "at SNR 300 with the long component dropped (0.008).",
+          "- **Muscle: the oedema surrogate is marginal at SNR 100, K-estimable, and not functional-estimable.** Araujo 2014's venous-filled "
+          "state (0.142 at 181 ms against 0.858 at 32.6 ms, ratio 5.5) is 'K estimable' (5 / 15 % on the T2s) but the vascular fraction's "
+          "SD of 0.023 misses both the 10 % criterion (17 %) and |Δ|/3 = 0.021 by a hair — a 6-point rise in a vascular/extracellular "
+          "fraction is a 2.7σ event at SNR 100 on a 32 × 10 ms train. The normal Saab 1999 row, evaluated as three visible components, is "
+          "nowhere near (SD 0.37): the K = 2 description at 3 T is the clinical picture and the one the Δ should be read against.",
+          "- **Steatosis on the T2 axis fails as it should.** Water 36 ms against fat 75 ms (Bydder 2008 Table II) is a ratio-2 pair at the "
+          "resolvability floor; the fat fraction's bound is 0.34 at PDFF 10 % and 0.29 at 25 % at the reference train (and > 1 at the 16 × 8 ms "
+          "abdominal train), against |Δ|/3 of 0.027 and 0.077 and grade steps of 0.05–0.11. The rows are the fat axis's negative control: "
+          "the same fractions are measured to ± 0.01–0.02 by chemical-shift encoding (Yokoo 2011 slope 0.98; Armstrong 2018 limits of "
+          "agreement ± 5 %), which is the 'change the question' move of charter §1.3 in the field's own practice — separate by frequency, "
+          "not by relaxation. Whether a joint chemical-shift + T2 kernel recovers them is a question for the complex T2* kernel, not this one.",
+          "- **Provenance of the axis.** The steatotic rows' T2 pair, the malignant PZ, the venous-filled muscle and the lesion MWF are "
+          "PRIMARY (Bydder 2008, Sabouri 2017, Araujo 2014, MacKay 1994); the lesion IE T2 is a THEORY working value (MacKay plots it, does "
+          "not tabulate it). Four normal rows carry a measured Δ; the liver, spleen, kidney and pancreas rows carry none on the T2 axis because "
+          "their functional is the THEORY vascular tail.",
+          "", "### The v2.2 reading (unchanged)", "",
           "- At the reference acquisition no myelin-type entry is 'estimable' by either criterion under a free K = 3 model: the "
           "free long component (2000 ms, unpinned by a 320 ms window) roughly doubles the bound on the myelin water fraction "
           "(white matter: 0.074 free vs 0.038 with the long T2 fixed vs 0.030 with it dropped, at SNR 100, for the Whittall 1997 "

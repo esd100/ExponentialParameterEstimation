@@ -1,5 +1,5 @@
 """
-Tissue and organ dictionary — API over `mexp.tissue_data` (charter §1.2, §4, §6.1; v2.2).
+Tissue and organ dictionary — API over `mexp.tissue_data` (charter §1.2, §4, §6.1; v2.3).
 
 Why this exists: the §1.2 falsifiable threshold depends on the amplitude vector
 more than on anything else, and one myelin-like split is not the body.  The
@@ -12,12 +12,19 @@ tissue contains, their exchange regime, and hence how many components are
 apparent, documented and resolvable.  Every number has a provenance status
 (see `mexp.tissue_data`).
 
+Schema 2.3 adds the pathology axis: every entry carries `condition` (normal, or the
+disease / physiological state it represents, with the key of its base row) and
+`clinical_delta` (the normal-to-disease change of the entry's functional, or None),
+which the third estimability label — SD ≤ |Δ|/3 — is evaluated against.
+
 Usage:
     from mexp import tissues as TS
     for view in TS.entries(kernel="t2_cpmg"):    # one view per (tissue, T2 component set)
         theta = view.theta(min_value=10.0)       # drop components below the first echo
     TS.get("liver").properties["T1_ms"]["3T"]    # bulk property records
     TS.get("liver").theory["n_pools"]
+    TS.get("liver_steatosis_pdff10").condition   # {"name": ..., "kind": "pathology", "base": "liver", ...}
+    TS.pathology_entries()                        # the variant rows only
 
 `scripts/export_tissue_dictionary.py` writes data/tissue_dictionary.json.
 """
@@ -103,9 +110,23 @@ class TissueEntry:
     component_sets: Mapping[str, ComponentSet]     # keyed by modality: "T2", "T1", "diffusion"
     theory: Mapping[str, Any]
     sources: tuple[str, ...]
+    condition: Mapping[str, Any] = None            # schema 2.3: {"name", "kind", "base", "operating_point"}
+    clinical_delta: Mapping[str, Any] | None = None  # schema 2.3: normal-to-disease change of the functional
 
     def for_modality(self, modality: str) -> ComponentSet:
         return self.component_sets[modality]
+
+    @property
+    def is_pathology(self) -> bool:
+        return bool(self.condition) and self.condition.get("kind") != "normal"
+
+    @property
+    def base_key(self) -> str | None:
+        return self.condition.get("base") if self.condition else None
+
+    def delta(self) -> float | None:
+        """The clinical change Δ of the entry's functional (disease − normal), or None if no change is on record."""
+        return None if self.clinical_delta is None else float(self.clinical_delta["delta"])
 
     @property
     def T2(self) -> ComponentSet | None:
@@ -147,7 +168,14 @@ def _build() -> dict[str, TissueEntry]:
                                           Provenance(cs["status"]), cs.get("note", ""))
         if e["key"] in reg:
             raise ValueError(f"duplicate tissue key {e['key']}")
-        reg[e["key"]] = TissueEntry(e["key"], e["organ"], e["tissue"], e["properties"], sets, e["theory"], tuple(e["sources"]))
+        cond = e.get("condition") or dict(tissue_data.NORMAL)
+        if cond.get("kind") != "normal":
+            if cond.get("base") not in reg:
+                raise ValueError(f"{e['key']}: pathology row must name an existing base entry, got {cond.get('base')!r}")
+        cd = e.get("clinical_delta")
+        if cd is not None and abs(cd["disease_value"] - cd["normal_value"] - cd["delta"]) > 1e-6:
+            raise ValueError(f"{e['key']}: clinical_delta is inconsistent")
+        reg[e["key"]] = TissueEntry(e["key"], e["organ"], e["tissue"], e["properties"], sets, e["theory"], tuple(e["sources"]), cond, cd)
     return reg
 
 
@@ -164,6 +192,20 @@ def keys() -> list[str]:
 
 def all_entries() -> list[TissueEntry]:
     return list(_REG.values())
+
+
+def normal_entries() -> list[TissueEntry]:
+    return [e for e in _REG.values() if not e.is_pathology]
+
+
+def pathology_entries() -> list[TissueEntry]:
+    """The variant rows of the pathology axis (schema 2.3), each with a `base_key`."""
+    return [e for e in _REG.values() if e.is_pathology]
+
+
+def base_of(key: str) -> TissueEntry:
+    e = _REG[key]
+    return _REG[e.base_key] if e.is_pathology else e
 
 
 def entries(kernel: str | None = None, modality: str | None = None) -> list[ComponentSet]:
@@ -190,8 +232,10 @@ def status_summary() -> dict[str, int]:
 
 def to_json_dict() -> dict:
     return {
-        "schema_version": "2.2",
+        "schema_version": "2.3",
         "generated_from": "mexp.tissue_data",
+        "schema_notes": {"condition": "normal, or the disease / physiological state the row represents, with the key of its base (normal) row and the operating point taken",
+                         "clinical_delta": "normal-to-disease change of the row's functional (delta = disease_value - normal_value) with its provenance; None when no change is on record. The third estimability label ('clinically estimable') is SD(functional) <= |delta| / 3"},
         "status_legend": {
             "PRIMARY": "read from the original paper's own table/text", "SECONDARY": "abstract / review table / same-author conference abstract / mirrored PDF",
             "TERTIARY": "textbook or website tabulation without a specific primary", "RECALLED": "from memory of the named sources; not opened",

@@ -1,0 +1,734 @@
+axis,tissue_key,condition,constrained,n_echoes,dTE_ms,snr,noise,sigma_joint,max_relSD_T2,functional,functional_value,functional_SD,delta
+snr,brain_wm,normal,0,32,10.0,20.0,rician,0,151.0799786869121,myelin water fraction (mass below 40 ms),0.113,0.4051191738267931,-0.0605
+snr,brain_wm,normal,0,32,10.0,30.0,rician,0,90.46210752813633,myelin water fraction (mass below 40 ms),0.113,0.2567585641578279,-0.0605
+snr,brain_wm,normal,0,32,10.0,50.0,rician,0,50.49977923370425,myelin water fraction (mass below 40 ms),0.113,0.14919554173776567,-0.0605
+snr,brain_wm,normal,0,32,10.0,70.0,rician,0,35.353737430767396,myelin water fraction (mass below 40 ms),0.113,0.10564349835605182,-0.0605
+snr,brain_wm,normal,0,32,10.0,100.0,rician,0,24.519553083149347,myelin water fraction (mass below 40 ms),0.113,0.07365052595371915,-0.0605
+snr,brain_wm,normal,0,32,10.0,150.0,rician,0,16.274280059066072,myelin water fraction (mass below 40 ms),0.113,0.04900398407591898,-0.0605
+snr,brain_wm,normal,0,32,10.0,200.0,rician,0,12.187628036823321,myelin water fraction (mass below 40 ms),0.113,0.03672866089368066,-0.0605
+snr,brain_wm,normal,0,32,10.0,300.0,rician,0,8.116626824190929,myelin water fraction (mass below 40 ms),0.113,0.02447436503833488,-0.0605
+snr,brain_wm,normal,0,32,10.0,500.0,rician,0,4.867405455467659,myelin water fraction (mass below 40 ms),0.113,0.014681146380657963,-0.0605
+snr,brain_wm,normal,0,32,10.0,700.0,rician,0,3.476214595502743,myelin water fraction (mass below 40 ms),0.113,0.010485852394699069,-0.0605
+snr,brain_wm,normal,0,32,10.0,1000.0,rician,0,2.4331632244895607,myelin water fraction (mass below 40 ms),0.113,0.007339843851156928,-0.0605
+snr,brain_wm,normal,0,32,10.0,1500.0,rician,0,1.6220423284618934,myelin water fraction (mass below 40 ms),0.113,0.004893139328221744,-0.0605
+snr,brain_wm,normal,0,32,10.0,2000.0,rician,0,1.2165142997948726,myelin water fraction (mass below 40 ms),0.113,0.003669830903453232,-0.0605
+snr,brain_wm,normal,0,32,10.0,3000.0,rician,0,0.8110012266408416,myelin water fraction (mass below 40 ms),0.113,0.0024465427024933156,-0.0605
+snr,brain_wm,normal,1,32,10.0,20.0,rician,0,4.009015933207498,myelin water fraction (mass below 40 ms),0.113,0.20304734686198406,-0.0605
+snr,brain_wm,normal,1,32,10.0,30.0,rician,0,2.6080875472757428,myelin water fraction (mass below 40 ms),0.113,0.13060849836336205,-0.0605
+snr,brain_wm,normal,1,32,10.0,50.0,rician,0,1.5405029728815989,myelin water fraction (mass below 40 ms),0.113,0.07663090437476577,-0.0605
+snr,brain_wm,normal,1,32,10.0,70.0,rician,0,1.0956711454090637,myelin water fraction (mass below 40 ms),0.113,0.05441089519755096,-0.0605
+snr,brain_wm,normal,1,32,10.0,100.0,rician,0,0.7654552305614787,myelin water fraction (mass below 40 ms),0.113,0.037983605895897714,-0.0605
+snr,brain_wm,normal,1,32,10.0,150.0,rician,0,0.5098160263460083,myelin water fraction (mass below 40 ms),0.113,0.02528908596122909,-0.0605
+snr,brain_wm,normal,1,32,10.0,200.0,rician,0,0.3822388510769877,myelin water fraction (mass below 40 ms),0.113,0.01895841380314233,-0.0605
+snr,brain_wm,normal,1,32,10.0,300.0,rician,0,0.25476812254153447,myelin water fraction (mass below 40 ms),0.113,0.012635005498603294,-0.0605
+snr,brain_wm,normal,1,32,10.0,500.0,rician,0,0.15284328450007484,myelin water fraction (mass below 40 ms),0.113,0.00757980547928755,-0.0605
+snr,brain_wm,normal,1,32,10.0,700.0,rician,0,0.1091703265098362,myelin water fraction (mass below 40 ms),0.113,0.005413912011202726,-0.0605
+snr,brain_wm,normal,1,32,10.0,1000.0,rician,0,0.07641794789477933,myelin water fraction (mass below 40 ms),0.113,0.003789651223651092,-0.0605
+snr,brain_wm,normal,1,32,10.0,1500.0,rician,0,0.05094484318204769,myelin water fraction (mass below 40 ms),0.113,0.0025264031470329197,-0.0605
+snr,brain_wm,normal,1,32,10.0,2000.0,rician,0,0.03820851287766192,myelin water fraction (mass below 40 ms),0.113,0.0018947942249497914,-0.0605
+snr,brain_wm,normal,1,32,10.0,3000.0,rician,0,0.025472285017365988,myelin water fraction (mass below 40 ms),0.113,0.001263192276576962,-0.0605
+snr,brain_gm,normal,0,32,10.0,20.0,rician,0,104.18505366327628,myelin water fraction (mass below 40 ms),0.031,0.3800728050887918,
+snr,brain_gm,normal,0,32,10.0,30.0,rician,0,64.34006194359814,myelin water fraction (mass below 40 ms),0.031,0.24465166787975007,
+snr,brain_gm,normal,0,32,10.0,50.0,rician,0,36.98062217236813,myelin water fraction (mass below 40 ms),0.031,0.14404679985237015,
+snr,brain_gm,normal,0,32,10.0,70.0,rician,0,26.14546719849425,myelin water fraction (mass below 40 ms),0.031,0.10242685811838582,
+snr,brain_gm,normal,0,32,10.0,100.0,rician,0,18.213367311470158,myelin water fraction (mass below 40 ms),0.031,0.0715436844086401,
+snr,brain_gm,normal,0,32,10.0,150.0,rician,0,12.112471022008977,myelin water fraction (mass below 40 ms),0.031,0.04764314700870613,
+snr,brain_gm,normal,0,32,10.0,200.0,rician,0,9.076711700274581,myelin water fraction (mass below 40 ms),0.031,0.03571880392073445,
+snr,brain_gm,normal,0,32,10.0,300.0,rician,0,6.047536635115716,myelin water fraction (mass below 40 ms),0.031,0.02380613242340533,
+snr,brain_gm,normal,0,32,10.0,500.0,rician,0,3.62742113772448,myelin water fraction (mass below 40 ms),0.031,0.014281722056024406,
+snr,brain_gm,normal,0,32,10.0,700.0,rician,0,2.5907990005792843,myelin water fraction (mass below 40 ms),0.031,0.010200845655721985,
+snr,brain_gm,normal,0,32,10.0,1000.0,rician,0,1.8134790051200653,myelin water fraction (mass below 40 ms),0.031,0.007140449116179582,
+snr,brain_gm,normal,0,32,10.0,1500.0,rician,0,1.208957443082654,myelin water fraction (mass below 40 ms),0.031,0.004760248599410013,
+snr,brain_gm,normal,0,32,10.0,2000.0,rician,0,0.9067105867712335,myelin water fraction (mass below 40 ms),0.031,0.0035701731139693377,
+snr,brain_gm,normal,0,32,10.0,3000.0,rician,0,0.6044701555416521,myelin water fraction (mass below 40 ms),0.031,0.0023801090595458145,
+snr,brain_gm,normal,1,32,10.0,20.0,rician,0,14.60181768205593,myelin water fraction (mass below 40 ms),0.031,0.2017422556619101,
+snr,brain_gm,normal,1,32,10.0,30.0,rician,0,9.567419563030386,myelin water fraction (mass below 40 ms),0.031,0.13179718057538817,
+snr,brain_gm,normal,1,32,10.0,50.0,rician,0,5.686437026120063,myelin water fraction (mass below 40 ms),0.031,0.07823602640325426,
+snr,brain_gm,normal,1,32,10.0,70.0,rician,0,4.052589062087523,myelin water fraction (mass below 40 ms),0.031,0.055743361038883416,
+snr,brain_gm,normal,1,32,10.0,100.0,rician,0,2.833747071496022,myelin water fraction (mass below 40 ms),0.031,0.0389739453985056,
+snr,brain_gm,normal,1,32,10.0,150.0,rician,0,1.8881230125610189,myelin water fraction (mass below 40 ms),0.031,0.02596691116473338,
+snr,brain_gm,normal,1,32,10.0,200.0,rician,0,1.4158238716603961,myelin water fraction (mass below 40 ms),0.031,0.019471139596467242,
+snr,brain_gm,normal,1,32,10.0,300.0,rician,0,0.9437557787098404,myelin water fraction (mass below 40 ms),0.031,0.01297885048201254,
+snr,brain_gm,normal,1,32,10.0,500.0,rician,0,0.5662147020668067,myelin water fraction (mass below 40 ms),0.031,0.0077867268505080476,
+snr,brain_gm,normal,1,32,10.0,700.0,rician,0,0.40443145997882596,myelin water fraction (mass below 40 ms),0.031,0.005561833191911164,
+snr,brain_gm,normal,1,32,10.0,1000.0,rician,0,0.2830991928573843,myelin water fraction (mass below 40 ms),0.031,0.0038932406644713127,
+snr,brain_gm,normal,1,32,10.0,1500.0,rician,0,0.18873178886878172,myelin water fraction (mass below 40 ms),0.031,0.002595478633958039,
+snr,brain_gm,normal,1,32,10.0,2000.0,rician,0,0.1415485775244927,myelin water fraction (mass below 40 ms),0.031,0.0019466050013345606,
+snr,brain_gm,normal,1,32,10.0,3000.0,rician,0,0.09436559258435147,myelin water fraction (mass below 40 ms),0.031,0.0012977347752670342,
+snr,csf,normal,0,32,10.0,20.0,rician,0,0.20712984575803875,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,30.0,rician,0,0.1380298816364922,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,50.0,rician,0,0.08280055460620292,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,70.0,rician,0,0.059139837382240205,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,100.0,rician,0,0.04139661627541132,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,150.0,rician,0,0.02759729237292838,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,200.0,rician,0,0.020697850688690615,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,300.0,rician,0,0.013798510655853602,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,500.0,rician,0,0.008279089046327294,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,700.0,rician,0,0.005913631619318663,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,1000.0,rician,0,0.004139540864030531,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,1500.0,rician,0,0.0027596934576104796,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,2000.0,rician,0,0.002069769974625416,T2 (mono-exponential),,,
+snr,csf,normal,0,32,10.0,3000.0,rician,0,0.0013798465932824645,T2 (mono-exponential),,,
+snr,spinal_cord_wm,normal,0,32,10.0,20.0,rician,0,179.02578539339487,myelin water fraction (mass below 40 ms),0.296,0.6111403345419156,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,30.0,rician,0,113.7335346771394,myelin water fraction (mass below 40 ms),0.296,0.39688958581911543,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,50.0,rician,0,66.70330798805024,myelin water fraction (mass below 40 ms),0.296,0.23522629860733338,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,70.0,rician,0,47.393170185311924,myelin water fraction (mass below 40 ms),0.296,0.16752990443335286,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,100.0,rician,0,33.0870166082357,myelin water fraction (mass below 40 ms),0.296,0.11709827184329351,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,150.0,rician,0,22.027465383119132,myelin water fraction (mass below 40 ms),0.296,0.07800547475676381,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,200.0,rician,0,16.512676189952924,myelin water fraction (mass below 40 ms),0.296,0.05848850506013045,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,300.0,rician,0,11.004697479604793,myelin water fraction (mass below 40 ms),0.296,0.038984940240320565,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,500.0,rician,0,6.6016691811547625,myelin water fraction (mass below 40 ms),0.296,0.023388698166631534,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,700.0,rician,0,4.715252123193453,myelin water fraction (mass below 40 ms),0.296,0.01670576756985938,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,1000.0,rician,0,3.3005925318338547,myelin water fraction (mass below 40 ms),0.296,0.011693871728316645,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,1500.0,rician,0,2.200365153550964,myelin water fraction (mass below 40 ms),0.296,0.007795855579807388,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,2000.0,rician,0,1.6502660258807964,myelin water fraction (mass below 40 ms),0.296,0.005846876223877149,-0.0305
+snr,spinal_cord_wm,normal,0,32,10.0,3000.0,rician,0,1.1001736177084263,myelin water fraction (mass below 40 ms),0.296,0.003897910120287528,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,20.0,rician,0,1.312094986676897,myelin water fraction (mass below 40 ms),0.296,0.23500795152473988,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,30.0,rician,0,0.8620100371222502,myelin water fraction (mass below 40 ms),0.296,0.15252444384985842,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,50.0,rician,0,0.5136440550514936,myelin water fraction (mass below 40 ms),0.296,0.09036505179669749,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,70.0,rician,0,0.3662882005783025,myelin water fraction (mass below 40 ms),0.296,0.06435487831674287,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,100.0,rician,0,0.2561893774263856,myelin water fraction (mass below 40 ms),0.296,0.04498089461472445,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,150.0,rician,0,0.17071901989620306,myelin water fraction (mass below 40 ms),0.296,0.029963807429115766,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,200.0,rician,0,0.12802005658608806,myelin water fraction (mass below 40 ms),0.296,0.02246676346822667,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,300.0,rician,0,0.08533759638653637,myelin water fraction (mass below 40 ms),0.296,0.014974954595020188,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,500.0,rician,0,0.05119976725340727,myelin water fraction (mass below 40 ms),0.296,0.008984088182744055,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,700.0,rician,0,0.03657071378126779,myelin water fraction (mass below 40 ms),0.296,0.006417031980238347,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,1000.0,rician,0,0.02559929573404366,myelin water fraction (mass below 40 ms),0.296,0.004491857756433624,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,1500.0,rician,0,0.017066124608904304,myelin water fraction (mass below 40 ms),0.296,0.002994548844334006,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,2000.0,rician,0,0.012799574414840736,myelin water fraction (mass below 40 ms),0.296,0.002245905598122256,-0.0305
+snr,spinal_cord_wm,normal,1,32,10.0,3000.0,rician,0,0.008533040542728982,myelin water fraction (mass below 40 ms),0.296,0.0014972675250064901,-0.0305
+snr,skeletal_muscle,normal,0,32,10.0,20.0,rician,0,14.543142333541589,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,3.338791209393665,0.062
+snr,skeletal_muscle,normal,0,32,10.0,30.0,rician,0,8.282736051269426,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,1.808942075227319,0.062
+snr,skeletal_muscle,normal,0,32,10.0,50.0,rician,0,4.467909679307652,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.8812724819036096,0.062
+snr,skeletal_muscle,normal,0,32,10.0,70.0,rician,0,3.0433552975131835,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.5686903628324399,0.062
+snr,skeletal_muscle,normal,0,32,10.0,100.0,rician,0,2.0584757819716177,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.368764974038557,0.062
+snr,skeletal_muscle,normal,0,32,10.0,150.0,rician,0,1.3417674369379355,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.23349618212561737,0.062
+snr,skeletal_muscle,normal,0,32,10.0,200.0,rician,0,0.9982113670401862,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.17188769040146323,0.062
+snr,skeletal_muscle,normal,0,32,10.0,300.0,rician,0,0.6620648696822943,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.11324707613837333,0.062
+snr,skeletal_muscle,normal,0,32,10.0,500.0,rician,0,0.39633183176573383,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.06759257293232913,0.062
+snr,skeletal_muscle,normal,0,32,10.0,700.0,rician,0,0.28292488504831326,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.0482141835693211,0.062
+snr,skeletal_muscle,normal,0,32,10.0,1000.0,rician,0,0.1979854076306271,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.033725686662904604,0.062
+snr,skeletal_muscle,normal,0,32,10.0,1500.0,rician,0,0.1319683743555685,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.02247523438369989,0.062
+snr,skeletal_muscle,normal,0,32,10.0,2000.0,rician,0,0.09897055309717777,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.01685418804373859,0.062
+snr,skeletal_muscle,normal,0,32,10.0,3000.0,rician,0,0.06597764554871716,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.011235061529318744,0.062
+snr,articular_cartilage,normal,0,32,10.0,20.0,rician,0,2.13691097569287,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.2235324897039684,
+snr,articular_cartilage,normal,0,32,10.0,30.0,rician,0,1.3816708599783984,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.14163757258464474,
+snr,articular_cartilage,normal,0,32,10.0,50.0,rician,0,0.8130472798107893,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.08229702158163753,
+snr,articular_cartilage,normal,0,32,10.0,70.0,rician,0,0.577669222391921,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.0582694512884316,
+snr,articular_cartilage,normal,0,32,10.0,100.0,rician,0,0.40333859902881275,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.04061621912195939,
+snr,articular_cartilage,normal,0,32,10.0,150.0,rician,0,0.26855216621102335,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.027020361248976433,
+snr,articular_cartilage,normal,0,32,10.0,200.0,rician,0,0.20132735239508603,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.02025068826128116,
+snr,articular_cartilage,normal,0,32,10.0,300.0,rician,0,0.1341773835133644,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.013493590822966485,
+snr,articular_cartilage,normal,0,32,10.0,500.0,rician,0,0.08049396707743561,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.008094058705969567,
+snr,articular_cartilage,normal,0,32,10.0,700.0,rician,0,0.057493245307103466,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.005781059235079222,
+snr,articular_cartilage,normal,0,32,10.0,1000.0,rician,0,0.0402443631819068,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.004046588665933382,
+snr,articular_cartilage,normal,0,32,10.0,1500.0,rician,0,0.026829252321469477,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.002697671431316619,
+snr,articular_cartilage,normal,0,32,10.0,2000.0,rician,0,0.020121854438934765,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.0020232393109704933,
+snr,articular_cartilage,normal,0,32,10.0,3000.0,rician,0,0.0134145292482651,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.0013488194163377859,
+snr,bone_marrow_vertebral,normal,0,32,10.0,20.0,rician,0,0.9446589210584855,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.5877684345117923,
+snr,bone_marrow_vertebral,normal,0,32,10.0,30.0,rician,0,0.5676114503007945,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.35916287583441364,
+snr,bone_marrow_vertebral,normal,0,32,10.0,50.0,rician,0,0.3168388825472962,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.20292876763831766,
+snr,bone_marrow_vertebral,normal,0,32,10.0,70.0,rician,0,0.2217117790247474,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.1424962016801951,
+snr,bone_marrow_vertebral,normal,0,32,10.0,100.0,rician,0,0.15371325101810474,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.09895481995260821,
+snr,bone_marrow_vertebral,normal,0,32,10.0,150.0,rician,0,0.10200301032125539,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.06571780281928918,
+snr,bone_marrow_vertebral,normal,0,32,10.0,200.0,rician,0,0.07638359432044238,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.04922504972007579,
+snr,bone_marrow_vertebral,normal,0,32,10.0,300.0,rician,0,0.05086685566425582,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.03278707089914987,
+snr,bone_marrow_vertebral,normal,0,32,10.0,500.0,rician,0,0.03050322816669268,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.019663234769241752,
+snr,bone_marrow_vertebral,normal,0,32,10.0,700.0,rician,0,0.02178471182433179,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.014043402804215491,
+snr,bone_marrow_vertebral,normal,0,32,10.0,1000.0,rician,0,0.015248069778968722,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.009829726590105729,
+snr,bone_marrow_vertebral,normal,0,32,10.0,1500.0,rician,0,0.010164943030971527,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.006552918026393477,
+snr,bone_marrow_vertebral,normal,0,32,10.0,2000.0,rician,0,0.00762359264870858,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.004914627370381857,
+snr,bone_marrow_vertebral,normal,0,32,10.0,3000.0,rician,0,0.005082340524734407,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.003276389132786195,
+snr,myocardium,normal,0,32,10.0,20.0,rician,0,0.06245874443631983,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,30.0,rician,0,0.04065162727794912,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,50.0,rician,0,0.02396184312885023,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,70.0,rician,0,0.01699877833711116,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,100.0,rician,0,0.0118441330571208,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,150.0,rician,0,0.007871156405403897,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,200.0,rician,0,0.0058952447315129665,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,300.0,rician,0,0.00392549732055358,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,500.0,rician,0,0.0023535080193920507,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,700.0,rician,0,0.001680656373771884,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,1000.0,rician,0,0.0011762899747134767,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,1500.0,rician,0,0.0007841321157138043,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,2000.0,rician,0,0.0005880835380649908,T2 (mono-exponential),,,
+snr,myocardium,normal,0,32,10.0,3000.0,rician,0,0.00039204848708002956,T2 (mono-exponential),,,
+snr,blood_arterial,normal,0,32,10.0,20.0,rician,0,0.04554271356052339,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,30.0,rician,0,0.030305805480070634,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,50.0,rician,0,0.01816651566563536,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,70.0,rician,0,0.01297276285943863,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,100.0,rician,0,0.009079701808259708,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,150.0,rician,0,0.006052696508729651,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,200.0,rician,0,0.004539407452881935,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,300.0,rician,0,0.0030262169187821332,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,500.0,rician,0,0.0018157133445861307,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,700.0,rician,0,0.0012969347960265496,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,1000.0,rician,0,0.000907853127358442,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,1500.0,rician,0,0.0006052349806024776,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,2000.0,rician,0,0.0004539261205728208,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,blood_arterial,normal,0,32,10.0,3000.0,rician,0,0.00030261735901103757,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+snr,liver,normal,0,32,10.0,20.0,rician,0,1.075787712505147,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.35729370380804876,
+snr,liver,normal,0,32,10.0,30.0,rician,0,0.6367815221414911,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.21613352168781633,
+snr,liver,normal,0,32,10.0,50.0,rician,0,0.35070022335117035,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.12101758274382754,
+snr,liver,normal,0,32,10.0,70.0,rician,0,0.24422968541756654,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.08469564293729583,
+snr,liver,normal,0,32,10.0,100.0,rician,0,0.16893376085029438,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.05872090048321485,
+snr,liver,normal,0,32,10.0,150.0,rician,0,0.11198877238905887,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.03897018321903736,
+snr,liver,normal,0,32,10.0,200.0,rician,0,0.08383384123727837,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.02918354902772243,
+snr,liver,normal,0,32,10.0,300.0,rician,0,0.05581562185417575,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.019435122815422163,
+snr,liver,normal,0,32,10.0,500.0,rician,0,0.03346703504339761,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.011654828338474527,
+snr,liver,normal,0,32,10.0,700.0,rician,0,0.02390065155158289,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.008323654570011677,
+snr,liver,normal,0,32,10.0,1000.0,rician,0,0.01672883242720816,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.005826104219963907,
+snr,liver,normal,0,32,10.0,1500.0,rician,0,0.011151977693106776,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.003883908075624375,
+snr,liver,normal,0,32,10.0,2000.0,rician,0,0.008363831802777012,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.0029128887055827144,
+snr,liver,normal,0,32,10.0,3000.0,rician,0,0.005575815754721886,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.0019419056402143115,
+snr,spleen,normal,0,32,10.0,20.0,rician,0,2.46373709561401,blood/long-T2 fraction (1 - mass below 95 ms),0.35,2.508806850286928,
+snr,spleen,normal,0,32,10.0,30.0,rician,0,1.5110663553930264,blood/long-T2 fraction (1 - mass below 95 ms),0.35,1.553581355250728,
+snr,spleen,normal,0,32,10.0,50.0,rician,0,0.8591278084395806,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.8889601458386838,
+snr,spleen,normal,0,32,10.0,70.0,rician,0,0.6050540562447253,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.627119635588332,
+snr,spleen,normal,0,32,10.0,100.0,rician,0,0.4207769386061655,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.436464102928571,
+snr,spleen,normal,0,32,10.0,150.0,rician,0,0.27961768672861254,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.2901544255475495,
+snr,spleen,normal,0,32,10.0,200.0,rician,0,0.20948473386778263,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.21740723163347142,
+snr,spleen,normal,0,32,10.0,300.0,rician,0,0.13954913684689618,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.14484016611320957,
+snr,spleen,normal,0,32,10.0,500.0,rician,0,0.0836967766172165,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.08687424608440908,
+snr,spleen,normal,0,32,10.0,700.0,rician,0,0.059776998360299705,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.06204717858403068,
+snr,spleen,normal,0,32,10.0,1000.0,rician,0,0.04184151659448725,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.04343085044349123,
+snr,spleen,normal,0,32,10.0,1500.0,rician,0,0.02789349720094219,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.028953126959377195,
+snr,spleen,normal,0,32,10.0,2000.0,rician,0,0.02091990057642044,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.021714642277435022,
+snr,spleen,normal,0,32,10.0,3000.0,rician,0,0.013946494529040898,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.014476331558090394,
+snr,kidney_cortex,normal,0,32,10.0,20.0,rician,0,2.1384366631938616,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.9352043428776948,
+snr,kidney_cortex,normal,0,32,10.0,30.0,rician,0,1.3637467507978267,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.5999942049654394,
+snr,kidney_cortex,normal,0,32,10.0,50.0,rician,0,0.8014251810519945,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.3535803723786237,
+snr,kidney_cortex,normal,0,32,10.0,70.0,rician,0,0.5696900316435975,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.25150160807474264,
+snr,kidney_cortex,normal,0,32,10.0,100.0,rician,0,0.39781564010480486,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.1756801260816019,
+snr,kidney_cortex,normal,0,32,10.0,150.0,rician,0,0.2648751144738076,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.1169914064324025,
+snr,kidney_cortex,normal,0,32,10.0,200.0,rician,0,0.19856933574376423,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.0877101583006492,
+snr,kidney_cortex,normal,0,32,10.0,300.0,rician,0,0.13233833710376885,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.058457613774440545,
+snr,kidney_cortex,normal,0,32,10.0,500.0,rician,0,0.0793903792373125,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.035069721673778,
+snr,kidney_cortex,normal,0,32,10.0,700.0,rician,0,0.05670493297156445,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.02504884867467694,
+snr,kidney_cortex,normal,0,32,10.0,1000.0,rician,0,0.03969253095498041,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.017533840007285667,
+snr,kidney_cortex,normal,0,32,10.0,1500.0,rician,0,0.026461359246470247,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.011689100707967224,
+snr,kidney_cortex,normal,0,32,10.0,2000.0,rician,0,0.019845933329524307,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.008766792469131356,
+snr,kidney_cortex,normal,0,32,10.0,3000.0,rician,0,0.01323058121914683,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.00584451256976562,
+snr,kidney_medulla,normal,0,32,10.0,20.0,rician,0,1.937902187780428,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.9666905958128598,
+snr,kidney_medulla,normal,0,32,10.0,30.0,rician,0,1.2611810171194155,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.6310054973936768,
+snr,kidney_medulla,normal,0,32,10.0,50.0,rician,0,0.7489172111401768,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.3751743191144823,
+snr,kidney_medulla,normal,0,32,10.0,70.0,rician,0,0.5335599711549907,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.2673721261836047,
+snr,kidney_medulla,normal,0,32,10.0,100.0,rician,0,0.37299233561974365,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.18693975998615098,
+snr,kidney_medulla,normal,0,32,10.0,150.0,rician,0,0.24848617054728042,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.12454899287962207,
+snr,kidney_medulla,normal,0,32,10.0,200.0,rician,0,0.18631887506621359,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.09339151975809036,
+snr,kidney_medulla,normal,0,32,10.0,300.0,rician,0,0.12419085578978112,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.06225140772502885,
+snr,kidney_medulla,normal,0,32,10.0,500.0,rician,0,0.07450785017939658,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.03734789872972468,
+snr,kidney_medulla,normal,0,32,10.0,700.0,rician,0,0.053218582662098966,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.02667649120137993,
+snr,kidney_medulla,normal,0,32,10.0,1000.0,rician,0,0.037252520705738014,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.018673328457207008,
+snr,kidney_medulla,normal,0,32,10.0,1500.0,rician,0,0.02483484047304168,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.012448809004246575,
+snr,kidney_medulla,normal,0,32,10.0,2000.0,rician,0,0.01862608485818949,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.009336586637958548,
+snr,kidney_medulla,normal,0,32,10.0,3000.0,rician,0,0.012417368241042457,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.00622438151356443,
+snr,pancreas,normal,0,32,10.0,20.0,rician,0,1.1363439475457144,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.37495520952370603,
+snr,pancreas,normal,0,32,10.0,30.0,rician,0,0.6808827383409269,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.22902100818764426,
+snr,pancreas,normal,0,32,10.0,50.0,rician,0,0.3802329986349561,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.12963684898533012,
+snr,pancreas,normal,0,32,10.0,70.0,rician,0,0.26632820434031745,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.09113971545325936,
+snr,pancreas,normal,0,32,10.0,100.0,rician,0,0.18475064812833758,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.06333166358625936,
+snr,pancreas,normal,0,32,10.0,150.0,rician,0,0.12262832541526361,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.042071396489966086,
+snr,pancreas,normal,0,32,10.0,200.0,rician,0,0.09183533724062119,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.03151576368646381,
+snr,pancreas,normal,0,32,10.0,300.0,rician,0,0.061159860614613704,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.02099279634695617,
+snr,pancreas,normal,0,32,10.0,500.0,rician,0,0.036676536542737156,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.012590287932734664,
+snr,pancreas,normal,0,32,10.0,700.0,rician,0,0.0261937278671799,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.008992006383431186,
+snr,pancreas,normal,0,32,10.0,1000.0,rician,0,0.0183341989338848,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.0062940121288135266,
+snr,pancreas,normal,0,32,10.0,1500.0,rician,0,0.012222297699940826,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.004195868571230865,
+snr,pancreas,normal,0,32,10.0,2000.0,rician,0,0.009166591651770025,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.0031468648178717192,
+snr,pancreas,normal,0,32,10.0,3000.0,rician,0,0.006110998432777704,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.0020978924475314057,
+snr,prostate_pz,normal,0,32,10.0,20.0,rician,0,3.2614556320931527,luminal water fraction (1 - mass below 200 ms),0.24,0.5279894594283828,-0.14
+snr,prostate_pz,normal,0,32,10.0,30.0,rician,0,2.160886621374306,luminal water fraction (1 - mass below 200 ms),0.24,0.35001893118293553,-0.14
+snr,prostate_pz,normal,0,32,10.0,50.0,rician,0,1.2926455964346324,luminal water fraction (1 - mass below 200 ms),0.24,0.20943791425882502,-0.14
+snr,prostate_pz,normal,0,32,10.0,70.0,rician,0,0.9225700245380597,luminal water fraction (1 - mass below 200 ms),0.24,0.14948798667624888,-0.14
+snr,prostate_pz,normal,0,32,10.0,100.0,rician,0,0.645522671130262,luminal water fraction (1 - mass below 200 ms),0.24,0.10460075881491299,-0.14
+snr,prostate_pz,normal,0,32,10.0,150.0,rician,0,0.4302504657667278,luminal water fraction (1 - mass below 200 ms),0.24,0.06971935931205825,-0.14
+snr,prostate_pz,normal,0,32,10.0,200.0,rician,0,0.3226621724933596,luminal water fraction (1 - mass below 200 ms),0.24,0.0522857246127036,-0.14
+snr,prostate_pz,normal,0,32,10.0,300.0,rician,0,0.21509589706406018,luminal water fraction (1 - mass below 200 ms),0.24,0.0348553439455348,-0.14
+snr,prostate_pz,normal,0,32,10.0,500.0,rician,0,0.12905378665364503,luminal water fraction (1 - mass below 200 ms),0.24,0.020912651874996604,-0.14
+snr,prostate_pz,normal,0,32,10.0,700.0,rician,0,0.09218053804496458,luminal water fraction (1 - mass below 200 ms),0.24,0.014937499382959468,-0.14
+snr,prostate_pz,normal,0,32,10.0,1000.0,rician,0,0.06452610215558649,luminal water fraction (1 - mass below 200 ms),0.24,0.010456208999422425,-0.14
+snr,prostate_pz,normal,0,32,10.0,1500.0,rician,0,0.04301730376933278,luminal water fraction (1 - mass below 200 ms),0.24,0.006970791563903987,-0.14
+snr,prostate_pz,normal,0,32,10.0,2000.0,rician,0,0.03226295218968635,luminal water fraction (1 - mass below 200 ms),0.24,0.005228089883620034,-0.14
+snr,prostate_pz,normal,0,32,10.0,3000.0,rician,0,0.021508622584953563,luminal water fraction (1 - mass below 200 ms),0.24,0.0034853914513243356,-0.14
+snr,breast_fibroglandular,normal,0,32,10.0,20.0,rician,0,2.157151605047558,fat fraction (1 - mass below 80 ms),0.4,2.6960968069960436,
+snr,breast_fibroglandular,normal,0,32,10.0,30.0,rician,0,1.288838189070777,fat fraction (1 - mass below 80 ms),0.4,1.631014879133176,
+snr,breast_fibroglandular,normal,0,32,10.0,50.0,rician,0,0.7101023903410555,fat fraction (1 - mass below 80 ms),0.4,0.9077565390148252,
+snr,breast_fibroglandular,normal,0,32,10.0,70.0,rician,0,0.4931839885915304,fat fraction (1 - mass below 80 ms),0.4,0.6325902824146856,
+snr,breast_fibroglandular,normal,0,32,10.0,100.0,rician,0,0.34044696016228515,fat fraction (1 - mass below 80 ms),0.4,0.43741820328633385,
+snr,breast_fibroglandular,normal,0,32,10.0,150.0,rician,0,0.22549524360646878,fat fraction (1 - mass below 80 ms),0.4,0.28995514519290355,
+snr,breast_fibroglandular,normal,0,32,10.0,200.0,rician,0,0.1687638714806856,fat fraction (1 - mass below 80 ms),0.4,0.2170633564836627,
+snr,breast_fibroglandular,normal,0,32,10.0,300.0,rician,0,0.11234358304798064,fat fraction (1 - mass below 80 ms),0.4,0.14452221324297043,
+snr,breast_fibroglandular,normal,0,32,10.0,500.0,rician,0,0.06735606568789579,fat fraction (1 - mass below 80 ms),0.4,0.08665689118953136,
+snr,breast_fibroglandular,normal,0,32,10.0,700.0,rician,0,0.04810168483663801,fat fraction (1 - mass below 80 ms),0.4,0.061886747246114635,
+snr,breast_fibroglandular,normal,0,32,10.0,1000.0,rician,0,0.033667546396420715,fat fraction (1 - mass below 80 ms),0.4,0.04331662943276877,
+snr,breast_fibroglandular,normal,0,32,10.0,1500.0,rician,0,0.022443739634076146,fat fraction (1 - mass below 80 ms),0.4,0.02887629793324695,
+snr,breast_fibroglandular,normal,0,32,10.0,2000.0,rician,0,0.01683246594323001,fat fraction (1 - mass below 80 ms),0.4,0.02165684171386653,
+snr,breast_fibroglandular,normal,0,32,10.0,3000.0,rician,0,0.01122148267574384,fat fraction (1 - mass below 80 ms),0.4,0.014437712740373598,
+snr,adipose_tissue,normal,0,32,10.0,20.0,rician,0,3.3281566285023607,water fraction (mass below 75 ms),0.1,0.30803579293028044,
+snr,adipose_tissue,normal,0,32,10.0,30.0,rician,0,2.198450120538804,water fraction (mass below 75 ms),0.1,0.20239583264611438,
+snr,adipose_tissue,normal,0,32,10.0,50.0,rician,0,1.3137108679045773,water fraction (mass below 75 ms),0.1,0.1206597867385103,
+snr,adipose_tissue,normal,0,32,10.0,70.0,rician,0,0.9373741574824154,water fraction (mass below 75 ms),0.1,0.08604200908452961,
+snr,adipose_tissue,normal,0,32,10.0,100.0,rician,0,0.6557997439033769,water fraction (mass below 75 ms),0.1,0.060176958718834286,
+snr,adipose_tissue,normal,0,32,10.0,150.0,rician,0,0.43707207336642223,water fraction (mass below 75 ms),0.1,0.04009947659541283,
+snr,adipose_tissue,normal,0,32,10.0,200.0,rician,0,0.3277706535135413,water fraction (mass below 75 ms),0.1,0.030069772385999234,
+snr,adipose_tissue,normal,0,32,10.0,300.0,rician,0,0.21849789161106425,water fraction (mass below 75 ms),0.1,0.02004421671677318,
+snr,adipose_tissue,normal,0,32,10.0,500.0,rician,0,0.1310938628339245,water fraction (mass below 75 ms),0.1,0.012025824829568297,
+snr,adipose_tissue,normal,0,32,10.0,700.0,rician,0,0.0936375151091835,water fraction (mass below 75 ms),0.1,0.008589736168287865,
+snr,adipose_tissue,normal,0,32,10.0,1000.0,rician,0,0.06554590424899394,water fraction (mass below 75 ms),0.1,0.0060127637434870965,
+snr,adipose_tissue,normal,0,32,10.0,1500.0,rician,0,0.0436971427121082,water fraction (mass below 75 ms),0.1,0.004008490811385157,
+snr,adipose_tissue,normal,0,32,10.0,2000.0,rician,0,0.03277282375363052,water fraction (mass below 75 ms),0.1,0.003006363291599897,
+snr,adipose_tissue,normal,0,32,10.0,3000.0,rician,0,0.02184853332152397,water fraction (mass below 75 ms),0.1,0.0020042399006596863,
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,20.0,rician,0,10.578523200520486,fat fraction (1 - mass below 55 ms),0.09999999999999998,2.9329038942187857,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,30.0,rician,0,5.870531584764017,fat fraction (1 - mass below 55 ms),0.09999999999999998,1.6593199568635542,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,50.0,rician,0,2.870275598777866,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.8303029286659459,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,70.0,rician,0,1.8209917523277552,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.5342331623928722,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,100.0,rician,0,1.1406357447286724,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.3391868650051433,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,150.0,rician,0,0.6828750226394887,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.20577805647137695,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,200.0,rician,0,0.48045831276785195,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.145932808338796,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,300.0,rician,0,0.29800293405787626,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.09132517503428109,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,500.0,rician,0,0.168170738673369,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.05192491118824955,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,700.0,rician,0,0.1173055163654327,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.03632375802941329,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,1000.0,rician,0,0.08098381504575272,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.025118751676900388,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,1500.0,rician,0,0.05361060170061599,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.01664271623571128,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,2000.0,rician,0,0.04011739786656261,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.012457414219461112,0.081
+snr,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,3000.0,rician,0,0.02670361798015832,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.008293718467628525,0.081
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,20.0,rician,0,3.27823588545884,fat fraction (1 - mass below 55 ms),0.25,2.3293668339610343,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,30.0,rician,0,1.8487766827570515,fat fraction (1 - mass below 55 ms),0.25,1.3387313867079034,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,50.0,rician,0,0.9287343320663423,fat fraction (1 - mass below 55 ms),0.25,0.6869272669457754,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,70.0,rician,0,0.6025426927315723,fat fraction (1 - mass below 55 ms),0.25,0.4509461553161669,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,100.0,rician,0,0.3879873535580208,fat fraction (1 - mass below 55 ms),0.25,0.29337242987652046,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,150.0,rician,0,0.24072265491001726,fat fraction (1 - mass below 55 ms),0.25,0.18362853505833812,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,200.0,rician,0,0.17405999979867556,fat fraction (1 - mass below 55 ms),0.25,0.13336640951017448,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,300.0,rician,0,0.11224763492278009,fat fraction (1 - mass below 55 ms),0.25,0.08634878439257006,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,500.0,rician,0,0.06607988419821181,fat fraction (1 - mass below 55 ms),0.25,0.05094917596211893,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,700.0,rician,0,0.0469722003156936,fat fraction (1 - mass below 55 ms),0.25,0.036238015155844155,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,1000.0,rician,0,0.03280217280020254,fat fraction (1 - mass below 55 ms),0.25,0.025313604878019615,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,1500.0,rician,0,0.021841218579295243,fat fraction (1 - mass below 55 ms),0.25,0.0168575577917583,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,2000.0,rician,0,0.01637395493139472,fat fraction (1 - mass below 55 ms),0.25,0.01263846627042075,0.231
+snr,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,3000.0,rician,0,0.0109126761729904,fat fraction (1 - mass below 55 ms),0.25,0.008423418897596867,0.231
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,20.0,rician,0,6.395616711216325,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.40001826461706297,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,30.0,rician,0,4.135676233003029,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.259745347081841,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,50.0,rician,0,2.448789200874508,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.15406712604032693,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,70.0,rician,0,1.743503911940454,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.10973880502569706,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,100.0,rician,0,1.218429055126297,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.07670589205654871,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,150.0,rician,0,0.811577834828846,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.051098290639149835,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,200.0,rician,0,0.6084988752199725,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.03831356168498978,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,300.0,rician,0,0.4055783495556789,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.025537553351361396,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,500.0,rician,0,0.24332016471764642,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.015321053885753895,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,700.0,rician,0,0.17379483944856958,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.010943319280468876,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,1000.0,rician,0,0.12165442535797046,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.0076602154456204465,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,1500.0,rician,0,0.08110225208684012,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.005106771853393233,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,2000.0,rician,0,0.06082650581376358,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.0038300687992844887,-0.14
+snr,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,3000.0,rician,0,0.04055091661610017,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.0025533743945461425,-0.14
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,20.0,rician,0,0.9819362063587116,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.1450603008792693,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,30.0,rician,0,0.5718919310546483,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.08707852412010914,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,50.0,rician,0,0.3111509452540471,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.04852296495970679,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,70.0,rician,0,0.2158596032002226,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.03390839640174882,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,100.0,rician,0,0.14904087495864085,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.023492061911673218,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,150.0,rician,0,0.09872018481575759,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.015585339296742821,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,200.0,rician,0,0.07388123137211074,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.011670108499652193,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,300.0,rician,0,0.0491800826050977,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.007771258338782713,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,500.0,rician,0,0.029485584125061307,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.0046600806300807545,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,700.0,rician,0,0.021056734245040037,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.0033281054560270694,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,1000.0,rician,0,0.014738081617410196,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.00232947944953183,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,1500.0,rician,0,0.009824807421161931,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.0015529171964072026,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,2000.0,rician,0,0.007368453297676636,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.001164669765370774,0.062
+snr,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,3000.0,rician,0,0.0049122297039064415,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.0007764378776152319,0.062
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,20.0,rician,0,229.10941188994397,myelin water fraction (mass below 40 ms),0.0525,0.2937000644743925,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,30.0,rician,0,145.5444438246474,myelin water fraction (mass below 40 ms),0.0525,0.19180581548309594,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,50.0,rician,0,85.30163457939437,myelin water fraction (mass below 40 ms),0.0525,0.11395592689082111,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,70.0,rician,0,60.59996052637008,myelin water fraction (mass below 40 ms),0.0525,0.08120897713568778,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,100.0,rician,0,42.30556581859986,myelin water fraction (mass below 40 ms),0.0525,0.05678039281590058,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,150.0,rician,0,28.16421961572766,myelin water fraction (mass below 40 ms),0.0525,0.03783075402915561,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,200.0,rician,0,21.112935143609757,myelin water fraction (mass below 40 ms),0.0525,0.028367137810143925,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,300.0,rician,0,14.070446671934729,myelin water fraction (mass below 40 ms),0.0525,0.018908616338491474,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,500.0,rician,0,8.44078539214853,myelin water fraction (mass below 40 ms),0.0525,0.011344309555703161,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,700.0,rician,0,6.028841100387629,myelin water fraction (mass below 40 ms),0.0525,0.008102909185146225,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,1000.0,rician,0,4.220080489935827,myelin water fraction (mass below 40 ms),0.0525,0.005671973584992556,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,1500.0,rician,0,2.813348472081188,myelin water fraction (mass below 40 ms),0.0525,0.0037812933650736387,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,2000.0,rician,0,2.1100012434790525,myelin water fraction (mass below 40 ms),0.0525,0.0028359641553681115,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,3000.0,rician,0,1.4066626814754855,myelin water fraction (mass below 40 ms),0.0525,0.0018906399760045714,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,20.0,rician,0,7.638645192789152,myelin water fraction (mass below 40 ms),0.0525,0.17364636357511304,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,30.0,rician,0,5.037781148803656,myelin water fraction (mass below 40 ms),0.0525,0.1148861508956914,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,50.0,rician,0,3.007010188529884,myelin water fraction (mass below 40 ms),0.0525,0.06868855605677815,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,70.0,rician,0,2.14524111190026,myelin water fraction (mass below 40 ms),0.0525,0.049023007850943656,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,100.0,rician,0,1.500746867171805,myelin water fraction (mass below 40 ms),0.0525,0.034301997560834276,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,150.0,rician,0,1.0001778837797128,myelin water fraction (mass below 40 ms),0.0525,0.022863108071619755,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,200.0,rician,0,0.7500503100262483,myelin water fraction (mass below 40 ms),0.0525,0.017146062042496815,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,300.0,rician,0,0.49999415140578746,myelin water fraction (mass below 40 ms),0.0525,0.011430106733208937,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,500.0,rician,0,0.2999844257142632,myelin water fraction (mass below 40 ms),0.0525,0.006857879892648496,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,700.0,rician,0,0.2142722184148639,myelin water fraction (mass below 40 ms),0.0525,0.0048984494467781145,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,1000.0,rician,0,0.1499896713947049,myelin water fraction (mass below 40 ms),0.0525,0.0034289011601697957,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,1500.0,rician,0,0.09999280065476569,myelin water fraction (mass below 40 ms),0.0525,0.002285929320847936,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,2000.0,rician,0,0.07499451817730134,myelin water fraction (mass below 40 ms),0.0525,0.0017144457344660954,-0.0605
+snr,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,3000.0,rician,0,0.049996306256281146,myelin water fraction (mass below 40 ms),0.0525,0.001142963224830441,-0.0605
+window,brain_wm,normal,0,8,10.0,100.0,rician,0,inf,myelin water fraction (mass below 40 ms),0.113,inf,-0.0605
+window,brain_wm,normal,0,12,10.0,100.0,rician,0,2384.634184902832,myelin water fraction (mass below 40 ms),0.113,1.112427391704071,-0.0605
+window,brain_wm,normal,0,16,10.0,100.0,rician,0,533.5312461204734,myelin water fraction (mass below 40 ms),0.113,0.40439799084898415,-0.0605
+window,brain_wm,normal,0,24,10.0,100.0,rician,0,80.44410894639473,myelin water fraction (mass below 40 ms),0.113,0.1313295520373508,-0.0605
+window,brain_wm,normal,0,32,10.0,100.0,rician,0,24.519553083149347,myelin water fraction (mass below 40 ms),0.113,0.07365052595371915,-0.0605
+window,brain_wm,normal,0,48,10.0,100.0,rician,0,5.827921548929249,myelin water fraction (mass below 40 ms),0.113,0.044955722791994134,-0.0605
+window,brain_wm,normal,0,64,10.0,100.0,rician,0,2.50668473938771,myelin water fraction (mass below 40 ms),0.113,0.03785762653096616,-0.0605
+window,brain_wm,normal,0,96,10.0,100.0,rician,0,0.9701782760847817,myelin water fraction (mass below 40 ms),0.113,0.033883650061693645,-0.0605
+window,brain_wm,normal,0,128,10.0,100.0,rician,0,0.6640377391727317,myelin water fraction (mass below 40 ms),0.113,0.03269291510312112,-0.0605
+window,brain_wm,normal,0,160,10.0,100.0,rician,0,0.6534199854388529,myelin water fraction (mass below 40 ms),0.113,0.03215850983317296,-0.0605
+window,brain_wm,normal,0,192,10.0,100.0,rician,0,0.6473941858810774,myelin water fraction (mass below 40 ms),0.113,0.0318666347478651,-0.0605
+window,brain_wm,normal,0,256,10.0,100.0,rician,0,0.6412089031709165,myelin water fraction (mass below 40 ms),0.113,0.03157575975147349,-0.0605
+window,brain_wm,normal,1,8,10.0,100.0,rician,0,5.784932577609498,myelin water fraction (mass below 40 ms),0.113,0.8102357964429638,-0.0605
+window,brain_wm,normal,1,12,10.0,100.0,rician,0,2.1896531771160075,myelin water fraction (mass below 40 ms),0.113,0.20959121733009342,-0.0605
+window,brain_wm,normal,1,16,10.0,100.0,rician,0,1.375381228241991,myelin water fraction (mass below 40 ms),0.113,0.09891519220076558,-0.0605
+window,brain_wm,normal,1,24,10.0,100.0,rician,0,0.9078375815949012,myelin water fraction (mass below 40 ms),0.113,0.04881001425660972,-0.0605
+window,brain_wm,normal,1,32,10.0,100.0,rician,0,0.7654552305614787,myelin water fraction (mass below 40 ms),0.113,0.037983605895897714,-0.0605
+window,brain_wm,normal,1,48,10.0,100.0,rician,0,0.6741881192888892,myelin water fraction (mass below 40 ms),0.113,0.03291325497186598,-0.0605
+window,brain_wm,normal,1,64,10.0,100.0,rician,0,0.6468518606156668,myelin water fraction (mass below 40 ms),0.113,0.0317146822233568,-0.0605
+window,brain_wm,normal,1,96,10.0,100.0,rician,0,0.6301939681965377,myelin water fraction (mass below 40 ms),0.113,0.031040229250509584,-0.0605
+window,brain_wm,normal,1,128,10.0,100.0,rician,0,0.625027799991569,myelin water fraction (mass below 40 ms),0.113,0.030834993734054794,-0.0605
+window,brain_wm,normal,1,160,10.0,100.0,rician,0,0.6227673901209998,myelin water fraction (mass below 40 ms),0.113,0.030745352754386168,-0.0605
+window,brain_wm,normal,1,192,10.0,100.0,rician,0,0.6216239677474429,myelin water fraction (mass below 40 ms),0.113,0.030700033269867137,-0.0605
+window,brain_wm,normal,1,256,10.0,100.0,rician,0,0.6206674990108443,myelin water fraction (mass below 40 ms),0.113,0.030662136347319638,-0.0605
+window,brain_gm,normal,0,8,10.0,100.0,rician,0,inf,myelin water fraction (mass below 40 ms),0.031,inf,
+window,brain_gm,normal,0,12,10.0,100.0,rician,0,1791.6604211833044,myelin water fraction (mass below 40 ms),0.031,1.1130904008860634,
+window,brain_gm,normal,0,16,10.0,100.0,rician,0,400.4876248772341,myelin water fraction (mass below 40 ms),0.031,0.40065031663315925,
+window,brain_gm,normal,0,24,10.0,100.0,rician,0,60.172472191616066,myelin water fraction (mass below 40 ms),0.031,0.12792411318064711,
+window,brain_gm,normal,0,32,10.0,100.0,rician,0,18.213367311470158,myelin water fraction (mass below 40 ms),0.031,0.0715436844086401,
+window,brain_gm,normal,0,48,10.0,100.0,rician,0,4.2183374139149326,myelin water fraction (mass below 40 ms),0.031,0.0447899981108843,
+window,brain_gm,normal,0,64,10.0,100.0,rician,0,2.754056394137361,myelin water fraction (mass below 40 ms),0.031,0.03870798259451388,
+window,brain_gm,normal,0,96,10.0,100.0,rician,0,2.5167839286124876,myelin water fraction (mass below 40 ms),0.031,0.035548825617901965,
+window,brain_gm,normal,0,128,10.0,100.0,rician,0,2.433200679892734,myelin water fraction (mass below 40 ms),0.031,0.03465877226438679,
+window,brain_gm,normal,0,160,10.0,100.0,rician,0,2.393028397315667,myelin water fraction (mass below 40 ms),0.031,0.03427041276177026,
+window,brain_gm,normal,0,192,10.0,100.0,rician,0,2.3701915935270486,myelin water fraction (mass below 40 ms),0.031,0.03406078762842694,
+window,brain_gm,normal,0,256,10.0,100.0,rician,0,2.3465077509097303,myelin water fraction (mass below 40 ms),0.031,0.03385191310810849,
+window,brain_gm,normal,1,8,10.0,100.0,rician,0,21.55137053834329,myelin water fraction (mass below 40 ms),0.031,0.8060703501472343,
+window,brain_gm,normal,1,12,10.0,100.0,rician,0,8.151859922655738,myelin water fraction (mass below 40 ms),0.031,0.20504971178377843,
+window,brain_gm,normal,1,16,10.0,100.0,rician,0,5.115808290106514,myelin water fraction (mass below 40 ms),0.031,0.09587393435230315,
+window,brain_gm,normal,1,24,10.0,100.0,rician,0,3.369312289279905,myelin water fraction (mass below 40 ms),0.031,0.04837062411313851,
+window,brain_gm,normal,1,32,10.0,100.0,rician,0,2.833747071496022,myelin water fraction (mass below 40 ms),0.031,0.0389739453985056,
+window,brain_gm,normal,1,48,10.0,100.0,rician,0,2.4839546319188512,myelin water fraction (mass below 40 ms),0.031,0.034915003960064216,
+window,brain_gm,normal,1,64,10.0,100.0,rician,0,2.3772461809979593,myelin water fraction (mass below 40 ms),0.031,0.03401881473261903,
+window,brain_gm,normal,1,96,10.0,100.0,rician,0,2.312687852144081,myelin water fraction (mass below 40 ms),0.031,0.033537597124108705,
+window,brain_gm,normal,1,128,10.0,100.0,rician,0,2.2928728216025833,myelin water fraction (mass below 40 ms),0.031,0.03339476001014158,
+window,brain_gm,normal,1,160,10.0,100.0,rician,0,2.2841131623157325,myelin water fraction (mass below 40 ms),0.031,0.03333188478389176,
+window,brain_gm,normal,1,192,10.0,100.0,rician,0,2.279569557597677,myelin water fraction (mass below 40 ms),0.031,0.03329932111261277,
+window,brain_gm,normal,1,256,10.0,100.0,rician,0,2.2755856966925103,myelin water fraction (mass below 40 ms),0.031,0.03327079631586329,
+window,csf,normal,0,8,10.0,100.0,rician,0,0.314072798173366,T2 (mono-exponential),,,
+window,csf,normal,0,12,10.0,100.0,rician,0,0.17192720122051044,T2 (mono-exponential),,,
+window,csf,normal,0,16,10.0,100.0,rician,0,0.11262545852583519,T2 (mono-exponential),,,
+window,csf,normal,0,24,10.0,100.0,rician,0,0.06248434151456255,T2 (mono-exponential),,,
+window,csf,normal,0,32,10.0,100.0,rician,0,0.04139661627541132,T2 (mono-exponential),,,
+window,csf,normal,0,48,10.0,100.0,rician,0,0.02345908823495754,T2 (mono-exponential),,,
+window,csf,normal,0,64,10.0,100.0,rician,0,0.015869004437559023,T2 (mono-exponential),,,
+window,csf,normal,0,96,10.0,100.0,rician,0,0.009375632508755925,T2 (mono-exponential),,,
+window,csf,normal,0,128,10.0,100.0,rician,0,0.006614211254550754,T2 (mono-exponential),,,
+window,csf,normal,0,160,10.0,100.0,rician,0,0.005143002371427366,T2 (mono-exponential),,,
+window,csf,normal,0,192,10.0,100.0,rician,0,0.004252885651076731,T2 (mono-exponential),,,
+window,csf,normal,0,256,10.0,100.0,rician,0,0.0032643003790501345,T2 (mono-exponential),,,
+window,spinal_cord_wm,normal,0,8,10.0,100.0,rician,0,inf,myelin water fraction (mass below 40 ms),0.296,inf,-0.0305
+window,spinal_cord_wm,normal,0,12,10.0,100.0,rician,0,4279.508915865301,myelin water fraction (mass below 40 ms),0.296,2.559770479355317,-0.0305
+window,spinal_cord_wm,normal,0,16,10.0,100.0,rician,0,900.3892828164402,myelin water fraction (mass below 40 ms),0.296,0.8445648127698803,-0.0305
+window,spinal_cord_wm,normal,0,24,10.0,100.0,rician,0,120.41218956082398,myelin water fraction (mass below 40 ms),0.296,0.236721948265374,-0.0305
+window,spinal_cord_wm,normal,0,32,10.0,100.0,rician,0,33.0870166082357,myelin water fraction (mass below 40 ms),0.296,0.11709827184329351,-0.0305
+window,spinal_cord_wm,normal,0,48,10.0,100.0,rician,0,6.609579478556376,myelin water fraction (mass below 40 ms),0.296,0.057004209106459355,-0.0305
+window,spinal_cord_wm,normal,0,64,10.0,100.0,rician,0,2.482057804141811,myelin water fraction (mass below 40 ms),0.296,0.04085409595864302,-0.0305
+window,spinal_cord_wm,normal,0,96,10.0,100.0,rician,0,0.8022109438225233,myelin water fraction (mass below 40 ms),0.296,0.031050177922459208,-0.0305
+window,spinal_cord_wm,normal,0,128,10.0,100.0,rician,0,0.4290378324466765,myelin water fraction (mass below 40 ms),0.296,0.02801202327986861,-0.0305
+window,spinal_cord_wm,normal,0,160,10.0,100.0,rician,0,0.2888494242530959,myelin water fraction (mass below 40 ms),0.296,0.026664248476822437,-0.0305
+window,spinal_cord_wm,normal,0,192,10.0,100.0,rician,0,0.22062637118167003,myelin water fraction (mass below 40 ms),0.296,0.025936777008702654,-0.0305
+window,spinal_cord_wm,normal,0,256,10.0,100.0,rician,0,0.1853863209572251,myelin water fraction (mass below 40 ms),0.296,0.025212601915845526,-0.0305
+window,spinal_cord_wm,normal,1,8,10.0,100.0,rician,0,7.933821796898808,myelin water fraction (mass below 40 ms),0.296,1.7510503963120962,-0.0305
+window,spinal_cord_wm,normal,1,12,10.0,100.0,rician,0,1.4966123438499577,myelin water fraction (mass below 40 ms),0.296,0.41492028196925895,-0.0305
+window,spinal_cord_wm,normal,1,16,10.0,100.0,rician,0,0.5950903129268765,myelin water fraction (mass below 40 ms),0.296,0.17910285481880897,-0.0305
+window,spinal_cord_wm,normal,1,24,10.0,100.0,rician,0,0.3320595072282443,myelin water fraction (mass below 40 ms),0.296,0.07108542166603643,-0.0305
+window,spinal_cord_wm,normal,1,32,10.0,100.0,rician,0,0.2561893774263856,myelin water fraction (mass below 40 ms),0.296,0.04498089461472445,-0.0305
+window,spinal_cord_wm,normal,1,48,10.0,100.0,rician,0,0.2073634903430485,myelin water fraction (mass below 40 ms),0.296,0.030588455483902762,-0.0305
+window,spinal_cord_wm,normal,1,64,10.0,100.0,rician,0,0.19207921126203215,myelin water fraction (mass below 40 ms),0.296,0.02667380879509846,-0.0305
+window,spinal_cord_wm,normal,1,96,10.0,100.0,rician,0,0.18275403558996448,myelin water fraction (mass below 40 ms),0.296,0.024443724732441437,-0.0305
+window,spinal_cord_wm,normal,1,128,10.0,100.0,rician,0,0.1800719819227073,myelin water fraction (mass below 40 ms),0.296,0.023814592010370644,-0.0305
+window,spinal_cord_wm,normal,1,160,10.0,100.0,rician,0,0.178958620142483,myelin water fraction (mass below 40 ms),0.296,0.02355251461667915,-0.0305
+window,spinal_cord_wm,normal,1,192,10.0,100.0,rician,0,0.17839964992848634,myelin water fraction (mass below 40 ms),0.296,0.023420500405388525,-0.0305
+window,spinal_cord_wm,normal,1,256,10.0,100.0,rician,0,0.17791707388545552,myelin water fraction (mass below 40 ms),0.296,0.023306264808673004,-0.0305
+window,skeletal_muscle,normal,0,8,10.0,100.0,rician,0,421.6366244872658,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,105.05421468126058,0.062
+window,skeletal_muscle,normal,0,12,10.0,100.0,rician,0,43.77144724853427,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,11.826300196440698,0.062
+window,skeletal_muscle,normal,0,16,10.0,100.0,rician,0,11.097445854074062,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,3.217811636715881,0.062
+window,skeletal_muscle,normal,0,24,10.0,100.0,rician,0,3.1423119780484123,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.73392275777403,0.062
+window,skeletal_muscle,normal,0,32,10.0,100.0,rician,0,2.0584757819716177,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.368764974038557,0.062
+window,skeletal_muscle,normal,0,48,10.0,100.0,rician,0,1.7635551660421787,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.2699879758890826,0.062
+window,skeletal_muscle,normal,0,64,10.0,100.0,rician,0,1.7530944924690477,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.26707666521463624,0.062
+window,skeletal_muscle,normal,0,96,10.0,100.0,rician,0,1.7529611288957982,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.26704210076826057,0.062
+window,skeletal_muscle,normal,0,128,10.0,100.0,rician,0,1.7529611220274561,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.26704209908062504,0.062
+window,skeletal_muscle,normal,0,160,10.0,100.0,rician,0,1.7529611220204653,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.2670420990796912,0.062
+window,skeletal_muscle,normal,0,192,10.0,100.0,rician,0,1.7529611220204653,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.2670420990796912,0.062
+window,skeletal_muscle,normal,0,256,10.0,100.0,rician,0,1.7529611220204653,extracellular fraction (1 - mass below 60 ms),0.13318284424379234,0.2670420990796912,0.062
+window,articular_cartilage,normal,0,8,10.0,100.0,rician,0,2.2871752310696616,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.46880799622526576,
+window,articular_cartilage,normal,0,12,10.0,100.0,rician,0,1.0091738898035783,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.16096416755068696,
+window,articular_cartilage,normal,0,16,10.0,100.0,rician,0,0.6650859633294546,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.08808822229530208,
+window,articular_cartilage,normal,0,24,10.0,100.0,rician,0,0.4594834109395602,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.04974682396715338,
+window,articular_cartilage,normal,0,32,10.0,100.0,rician,0,0.40333859902881275,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.04061621912195939,
+window,articular_cartilage,normal,0,48,10.0,100.0,rician,0,0.3826576399584305,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.037545842657870185,
+window,articular_cartilage,normal,0,64,10.0,100.0,rician,0,0.3822429662204354,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.03748894424540195,
+window,articular_cartilage,normal,0,96,10.0,100.0,rician,0,0.38224149155251874,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.03748874952517262,
+window,articular_cartilage,normal,0,128,10.0,100.0,rician,0,0.3822414915455974,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.037488749524291425,
+window,articular_cartilage,normal,0,160,10.0,100.0,rician,0,0.3822414915455974,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.037488749524291425,
+window,articular_cartilage,normal,0,192,10.0,100.0,rician,0,0.3822414915455974,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.037488749524291425,
+window,articular_cartilage,normal,0,256,10.0,100.0,rician,0,0.3822414915455974,short/intermediate fraction (mass below 45 ms),0.15458422174840084,0.037488749524291425,
+window,bone_marrow_vertebral,normal,0,8,10.0,100.0,rician,0,5.675724529993544,fat fraction (1 - mass below 75 ms),0.32999999999999996,2.6019096755264006,
+window,bone_marrow_vertebral,normal,0,12,10.0,100.0,rician,0,1.5580672670765385,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.7798543985608413,
+window,bone_marrow_vertebral,normal,0,16,10.0,100.0,rician,0,0.6850408515304897,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.36894356376459037,
+window,bone_marrow_vertebral,normal,0,24,10.0,100.0,rician,0,0.2572046039983318,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.15460368430763138,
+window,bone_marrow_vertebral,normal,0,32,10.0,100.0,rician,0,0.15371325101810474,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.09895481995260821,
+window,bone_marrow_vertebral,normal,0,48,10.0,100.0,rician,0,0.10679519580043477,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.07226126957891862,
+window,bone_marrow_vertebral,normal,0,64,10.0,100.0,rician,0,0.10317519049868347,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.07008378362777389,
+window,bone_marrow_vertebral,normal,0,96,10.0,100.0,rician,0,0.10308007340111659,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.07002480107812534,
+window,bone_marrow_vertebral,normal,0,128,10.0,100.0,rician,0,0.10308005671642383,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.07002479048691428,
+window,bone_marrow_vertebral,normal,0,160,10.0,100.0,rician,0,0.10308005671459824,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.07002479048574513,
+window,bone_marrow_vertebral,normal,0,192,10.0,100.0,rician,0,0.10308005671459824,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.07002479048574513,
+window,bone_marrow_vertebral,normal,0,256,10.0,100.0,rician,0,0.10308005671459824,fat fraction (1 - mass below 75 ms),0.32999999999999996,0.07002479048574513,
+window,myocardium,normal,0,8,10.0,100.0,rician,0,0.01589863816001774,T2 (mono-exponential),,,
+window,myocardium,normal,0,12,10.0,100.0,rician,0,0.012983945412959276,T2 (mono-exponential),,,
+window,myocardium,normal,0,16,10.0,100.0,rician,0,0.012137333571142508,T2 (mono-exponential),,,
+window,myocardium,normal,0,24,10.0,100.0,rician,0,0.01184933744060424,T2 (mono-exponential),,,
+window,myocardium,normal,0,32,10.0,100.0,rician,0,0.0118441330571208,T2 (mono-exponential),,,
+window,myocardium,normal,0,48,10.0,100.0,rician,0,0.011844117321110605,T2 (mono-exponential),,,
+window,myocardium,normal,0,64,10.0,100.0,rician,0,0.011844117321051133,T2 (mono-exponential),,,
+window,myocardium,normal,0,96,10.0,100.0,rician,0,0.011844117321051133,T2 (mono-exponential),,,
+window,myocardium,normal,0,128,10.0,100.0,rician,0,0.011844117321051133,T2 (mono-exponential),,,
+window,myocardium,normal,0,160,10.0,100.0,rician,0,0.011844117321051133,T2 (mono-exponential),,,
+window,myocardium,normal,0,192,10.0,100.0,rician,0,0.011844117321051133,T2 (mono-exponential),,,
+window,myocardium,normal,0,256,10.0,100.0,rician,0,0.011844117321051133,T2 (mono-exponential),,,
+window,blood_arterial,normal,0,8,10.0,100.0,rician,0,0.04446173074037488,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,blood_arterial,normal,0,12,10.0,100.0,rician,0,0.026155346058057936,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,blood_arterial,normal,0,16,10.0,100.0,rician,0,0.018424057115664604,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,blood_arterial,normal,0,24,10.0,100.0,rician,0,0.011833865599096853,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,blood_arterial,normal,0,32,10.0,100.0,rician,0,0.009079701808259708,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,blood_arterial,normal,0,48,10.0,100.0,rician,0,0.006859089324086285,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,blood_arterial,normal,0,64,10.0,100.0,rician,0,0.006069793178286232,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,blood_arterial,normal,0,96,10.0,100.0,rician,0,0.005640233444912088,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,blood_arterial,normal,0,128,10.0,100.0,rician,0,0.005592720130910308,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,blood_arterial,normal,0,160,10.0,100.0,rician,0,0.0055912686238574335,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,blood_arterial,normal,0,192,10.0,100.0,rician,0,0.005591252005866403,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,blood_arterial,normal,0,256,10.0,100.0,rician,0,0.0055912518572343774,T2 (mono-exponential; oxygenation via Luz-Meiboom),,,
+window,liver,normal,0,8,10.0,100.0,rician,0,6.604994204307,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,1.5492759582878899,
+window,liver,normal,0,12,10.0,100.0,rician,0,1.7895554511265763,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.46427272104193573,
+window,liver,normal,0,16,10.0,100.0,rician,0,0.7784588168279359,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.2196507593047076,
+window,liver,normal,0,24,10.0,100.0,rician,0,0.2873472498386042,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.09204379422488684,
+window,liver,normal,0,32,10.0,100.0,rician,0,0.16893376085029438,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.05872090048321485,
+window,liver,normal,0,48,10.0,100.0,rician,0,0.11272394351233106,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.04187802965571055,
+window,liver,normal,0,64,10.0,100.0,rician,0,0.10671439121541738,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.039962003669534125,
+window,liver,normal,0,96,10.0,100.0,rician,0,0.1064162384315118,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.0398634067244769,
+window,liver,normal,0,128,10.0,100.0,rician,0,0.10641604618008114,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.03986334122338204,
+window,liver,normal,0,160,10.0,100.0,rician,0,0.10641604610283523,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.039863341196745145,
+window,liver,normal,0,192,10.0,100.0,rician,0,0.10641604610280268,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.039863341196733536,
+window,liver,normal,0,256,10.0,100.0,rician,0,0.10641604610280268,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.039863341196733536,
+window,spleen,normal,0,8,10.0,100.0,rician,0,19.588946171134204,blood/long-T2 fraction (1 - mass below 95 ms),0.35,15.991173542577327,
+window,spleen,normal,0,12,10.0,100.0,rician,0,5.2582826532303315,blood/long-T2 fraction (1 - mass below 95 ms),0.35,4.535536505867751,
+window,spleen,normal,0,16,10.0,100.0,rician,0,2.2420365934274398,blood/long-T2 fraction (1 - mass below 95 ms),0.35,2.0299404696796977,
+window,spleen,normal,0,24,10.0,100.0,rician,0,0.7755995380843286,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.7600270701647498,
+window,spleen,normal,0,32,10.0,100.0,rician,0,0.4207769386061655,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.436464102928571,
+window,spleen,normal,0,48,10.0,100.0,rician,0,0.2503478928064619,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.27366140998924265,
+window,spleen,normal,0,64,10.0,100.0,rician,0,0.23386215959472276,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.2571008507672708,
+window,spleen,normal,0,96,10.0,100.0,rician,0,0.23329287503105214,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.256511593878921,
+window,spleen,normal,0,128,10.0,100.0,rician,0,0.2332927401544899,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.2565114511393339,
+window,spleen,normal,0,160,10.0,100.0,rician,0,0.23329274013777462,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.2565114511215141,
+window,spleen,normal,0,192,10.0,100.0,rician,0,0.23329274013777462,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.2565114511215141,
+window,spleen,normal,0,256,10.0,100.0,rician,0,0.23329274013777462,blood/long-T2 fraction (1 - mass below 95 ms),0.35,0.2565114511215141,
+window,kidney_cortex,normal,0,8,10.0,100.0,rician,0,25.79551559415402,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,8.359465057146673,
+window,kidney_cortex,normal,0,12,10.0,100.0,rician,0,6.560353580116658,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,2.274261158796796,
+window,kidney_cortex,normal,0,16,10.0,100.0,rician,0,2.6497000748587833,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.975560437278055,
+window,kidney_cortex,normal,0,24,10.0,100.0,rician,0,0.8214355405247434,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.3348251052656647,
+window,kidney_cortex,normal,0,32,10.0,100.0,rician,0,0.39781564010480486,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.1756801260816019,
+window,kidney_cortex,normal,0,48,10.0,100.0,rician,0,0.18103911382402132,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.08875137236021566,
+window,kidney_cortex,normal,0,64,10.0,100.0,rician,0,0.1332112517006197,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.06819876721043816,
+window,kidney_cortex,normal,0,96,10.0,100.0,rician,0,0.1224883867497495,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.06335647989510662,
+window,kidney_cortex,normal,0,128,10.0,100.0,rician,0,0.1223831366491095,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.06330668809810805,
+window,kidney_cortex,normal,0,160,10.0,100.0,rician,0,0.12238271633588772,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.06330648558523275,
+window,kidney_cortex,normal,0,192,10.0,100.0,rician,0,0.12238271506797005,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.06330648496883616,
+window,kidney_cortex,normal,0,256,10.0,100.0,rician,0,0.12238271506463284,tubular/vascular long-T2 fraction (1 - mass below 120 ms),0.25,0.0633064849672053,
+window,kidney_medulla,normal,0,8,10.0,100.0,rician,0,26.14471104431995,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,9.680826310716464,
+window,kidney_medulla,normal,0,12,10.0,100.0,rician,0,6.575968681878191,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,2.5982744591242803,
+window,kidney_medulla,normal,0,16,10.0,100.0,rician,0,2.624710321398231,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,1.0993408907209699,
+window,kidney_medulla,normal,0,24,10.0,100.0,rician,0,0.7927927419154838,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.366810522119772,
+window,kidney_medulla,normal,0,32,10.0,100.0,rician,0,0.37299233561974365,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.18693975998615098,
+window,kidney_medulla,normal,0,48,10.0,100.0,rician,0,0.15889733281500007,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.08892716934068237,
+window,kidney_medulla,normal,0,64,10.0,100.0,rician,0,0.10779012998892883,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.06380940512220225,
+window,kidney_medulla,normal,0,96,10.0,100.0,rician,0,0.09121807173393416,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.055225911661286105,
+window,kidney_medulla,normal,0,128,10.0,100.0,rician,0,0.09083552925332655,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.055017239820232974,
+window,kidney_medulla,normal,0,160,10.0,100.0,rician,0,0.09083254424213609,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.0550155739011215,
+window,kidney_medulla,normal,0,192,10.0,100.0,rician,0,0.09083252781145382,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.05501556462882226,
+window,kidney_medulla,normal,0,256,10.0,100.0,rician,0,0.09083252773314282,luminal/vascular long-T2 fraction (1 - mass below 120 ms),0.30000000000000004,0.05501556458434102,
+window,pancreas,normal,0,8,10.0,100.0,rician,0,8.024528054665087,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,1.8606110027669704,
+window,pancreas,normal,0,12,10.0,100.0,rician,0,2.1435452384253715,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.5477421470298008,
+window,pancreas,normal,0,16,10.0,100.0,rician,0,0.9174644306045534,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.25446488398690637,
+window,pancreas,normal,0,24,10.0,100.0,rician,0,0.3265017811216614,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.10277657887079689,
+window,pancreas,normal,0,32,10.0,100.0,rician,0,0.18475064812833758,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.06333166358625936,
+window,pancreas,normal,0,48,10.0,100.0,rician,0,0.1149442366471957,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.042599868903129334,
+window,pancreas,normal,0,64,10.0,100.0,rician,0,0.10558405642201023,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.039635700621289204,
+window,pancreas,normal,0,96,10.0,100.0,rician,0,0.10491652685463512,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.03941576345252548,
+window,pancreas,normal,0,128,10.0,100.0,rician,0,0.10491574117011156,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.03941549584975839,
+window,pancreas,normal,0,160,10.0,100.0,rician,0,0.10491574062466272,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.03941549566149674,
+window,pancreas,normal,0,192,10.0,100.0,rician,0,0.10491574062435279,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.039415495661389084,
+window,pancreas,normal,0,256,10.0,100.0,rician,0,0.10491574062435279,vascular/long-T2 fraction (1 - mass below 90 ms),0.21999999999999997,0.039415495661389084,
+window,prostate_pz,normal,0,8,10.0,100.0,rician,0,65.22869107936528,luminal water fraction (1 - mass below 200 ms),0.24,7.474699769330932,-0.14
+window,prostate_pz,normal,0,12,10.0,100.0,rician,0,15.48795743009554,luminal water fraction (1 - mass below 200 ms),0.24,1.9054842725763323,-0.14
+window,prostate_pz,normal,0,16,10.0,100.0,rician,0,5.827824894846077,luminal water fraction (1 - mass below 200 ms),0.24,0.7650455460754514,-0.14
+window,prostate_pz,normal,0,24,10.0,100.0,rician,0,1.5581637345352266,luminal water fraction (1 - mass below 200 ms),0.24,0.22923295422614176,-0.14
+window,prostate_pz,normal,0,32,10.0,100.0,rician,0,0.645522671130262,luminal water fraction (1 - mass below 200 ms),0.24,0.10460075881491299,-0.14
+window,prostate_pz,normal,0,48,10.0,100.0,rician,0,0.21036724039128177,luminal water fraction (1 - mass below 200 ms),0.24,0.039776062603196265,-0.14
+window,prostate_pz,normal,0,64,10.0,100.0,rician,0,0.10767120424612997,luminal water fraction (1 - mass below 200 ms),0.24,0.02286831777841369,-0.14
+window,prostate_pz,normal,0,96,10.0,100.0,rician,0,0.053104807477376136,luminal water fraction (1 - mass below 200 ms),0.24,0.013145584887070497,-0.14
+window,prostate_pz,normal,0,128,10.0,100.0,rician,0,0.03877064211613124,luminal water fraction (1 - mass below 200 ms),0.24,0.010403010391982638,-0.14
+window,prostate_pz,normal,0,160,10.0,100.0,rician,0,0.0338994234793296,luminal water fraction (1 - mass below 200 ms),0.24,0.00942763957607568,-0.14
+window,prostate_pz,normal,0,192,10.0,100.0,rician,0,0.03241377630799843,luminal water fraction (1 - mass below 200 ms),0.24,0.009119060984174292,-0.14
+window,prostate_pz,normal,0,256,10.0,100.0,rician,0,0.03201515486209299,luminal water fraction (1 - mass below 200 ms),0.24,0.009033465587893223,-0.14
+window,breast_fibroglandular,normal,0,8,10.0,100.0,rician,0,12.669770963103629,fat fraction (1 - mass below 80 ms),0.4,12.874418716780431,
+window,breast_fibroglandular,normal,0,12,10.0,100.0,rician,0,3.512898521838084,fat fraction (1 - mass below 80 ms),0.4,3.781626400314198,
+window,breast_fibroglandular,normal,0,16,10.0,100.0,rician,0,1.5499767318278237,fat fraction (1 - mass below 80 ms),0.4,1.7535160607890101,
+window,breast_fibroglandular,normal,0,24,10.0,100.0,rician,0,0.5775311544413233,fat fraction (1 - mass below 80 ms),0.4,0.7059273949291488,
+window,breast_fibroglandular,normal,0,32,10.0,100.0,rician,0,0.34044696016228515,fat fraction (1 - mass below 80 ms),0.4,0.43741820328633385,
+window,breast_fibroglandular,normal,0,48,10.0,100.0,rician,0,0.24368455539266914,fat fraction (1 - mass below 80 ms),0.4,0.3230795926753983,
+window,breast_fibroglandular,normal,0,64,10.0,100.0,rician,0,0.23967902614377556,fat fraction (1 - mass below 80 ms),0.4,0.3181249572027471,
+window,breast_fibroglandular,normal,0,96,10.0,100.0,rician,0,0.23963369030816814,fat fraction (1 - mass below 80 ms),0.4,0.3180675888543393,
+window,breast_fibroglandular,normal,0,128,10.0,100.0,rician,0,0.23963368871660098,fat fraction (1 - mass below 80 ms),0.4,0.31806758680762437,
+window,breast_fibroglandular,normal,0,160,10.0,100.0,rician,0,0.23963368871659158,fat fraction (1 - mass below 80 ms),0.4,0.3180675868076135,
+window,breast_fibroglandular,normal,0,192,10.0,100.0,rician,0,0.23963368871659158,fat fraction (1 - mass below 80 ms),0.4,0.3180675868076135,
+window,breast_fibroglandular,normal,0,256,10.0,100.0,rician,0,0.23963368871659158,fat fraction (1 - mass below 80 ms),0.4,0.3180675868076135,
+window,adipose_tissue,normal,0,8,10.0,100.0,rician,0,8.53711290433684,water fraction (mass below 75 ms),0.1,1.5671632212319362,
+window,adipose_tissue,normal,0,12,10.0,100.0,rician,0,3.037416927125295,water fraction (mass below 75 ms),0.1,0.4705970949584315,
+window,adipose_tissue,normal,0,16,10.0,100.0,rician,0,1.6706867136048935,water fraction (mass below 75 ms),0.1,0.22264190619539795,
+window,adipose_tissue,normal,0,24,10.0,100.0,rician,0,0.8842925137308729,water fraction (mass below 75 ms),0.1,0.0935160794064608,
+window,adipose_tissue,normal,0,32,10.0,100.0,rician,0,0.6557997439033769,water fraction (mass below 75 ms),0.1,0.060176958718834286,
+window,adipose_tissue,normal,0,48,10.0,100.0,rician,0,0.524048346431593,water fraction (mass below 75 ms),0.1,0.04279320233698924,
+window,adipose_tissue,normal,0,64,10.0,100.0,rician,0,0.4991621450280558,water fraction (mass below 75 ms),0.1,0.03979973621848449,
+window,adipose_tissue,normal,0,96,10.0,100.0,rician,0,0.4969482411345097,water fraction (mass below 75 ms),0.1,0.039547122487068126,
+window,adipose_tissue,normal,0,128,10.0,100.0,rician,0,0.49694708747084987,water fraction (mass below 75 ms),0.1,0.03954699729461187,
+window,adipose_tissue,normal,0,160,10.0,100.0,rician,0,0.4969470872116516,water fraction (mass below 75 ms),0.1,0.03954699726705765,
+window,adipose_tissue,normal,0,192,10.0,100.0,rician,0,0.4969470872114199,water fraction (mass below 75 ms),0.1,0.0395469972670324,
+window,adipose_tissue,normal,0,256,10.0,100.0,rician,0,0.4969470872114199,water fraction (mass below 75 ms),0.1,0.0395469972670324,
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,8,10.0,100.0,rician,0,13.469301472600163,fat fraction (1 - mass below 55 ms),0.09999999999999998,3.2822354039232278,0.081
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,12,10.0,100.0,rician,0,4.207482014668774,fat fraction (1 - mass below 55 ms),0.09999999999999998,1.1094994402594194,0.081
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,16,10.0,100.0,rician,0,2.132452946690869,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.5971353796924352,0.081
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,24,10.0,100.0,rician,0,1.2198801982221112,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.36085180307583975,0.081
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,100.0,rician,0,1.1406357447286724,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.3391868650051433,0.081
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,48,10.0,100.0,rician,0,1.136821149862092,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.3381125012989172,0.081
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,64,10.0,100.0,rician,0,1.1368180763699904,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.3381116174732489,0.081
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,96,10.0,100.0,rician,0,1.136818074918812,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.3381116170525152,0.081
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,128,10.0,100.0,rician,0,1.136818074918812,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.3381116170525152,0.081
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,160,10.0,100.0,rician,0,1.136818074918812,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.3381116170525152,0.081
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,192,10.0,100.0,rician,0,1.136818074918812,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.3381116170525152,0.081
+window,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,256,10.0,100.0,rician,0,1.136818074918812,fat fraction (1 - mass below 55 ms),0.09999999999999998,0.3381116170525152,0.081
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,8,10.0,100.0,rician,0,5.509092868301698,fat fraction (1 - mass below 55 ms),0.25,3.352181134952287,0.231
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,12,10.0,100.0,rician,0,1.7193988014531643,fat fraction (1 - mass below 55 ms),0.25,1.1309467594621392,0.231
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,16,10.0,100.0,rician,0,0.8661438353061487,fat fraction (1 - mass below 55 ms),0.25,0.6047286399832952,0.231
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,24,10.0,100.0,rician,0,0.4470075102806081,fat fraction (1 - mass below 55 ms),0.25,0.3336173853578627,0.231
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,100.0,rician,0,0.3879873535580208,fat fraction (1 - mass below 55 ms),0.25,0.29337242987652046,0.231
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,48,10.0,100.0,rician,0,0.383768804211927,fat fraction (1 - mass below 55 ms),0.25,0.2903942471998331,0.231
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,64,10.0,100.0,rician,0,0.38376476369754287,fat fraction (1 - mass below 55 ms),0.25,0.29039131620443603,0.231
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,96,10.0,100.0,rician,0,0.38376476179122465,fat fraction (1 - mass below 55 ms),0.25,0.29039131480844754,0.231
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,128,10.0,100.0,rician,0,0.38376476179122465,fat fraction (1 - mass below 55 ms),0.25,0.29039131480844754,0.231
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,160,10.0,100.0,rician,0,0.38376476179122465,fat fraction (1 - mass below 55 ms),0.25,0.29039131480844754,0.231
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,192,10.0,100.0,rician,0,0.38376476179122465,fat fraction (1 - mass below 55 ms),0.25,0.29039131480844754,0.231
+window,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,256,10.0,100.0,rician,0,0.38376476179122465,fat fraction (1 - mass below 55 ms),0.25,0.29039131480844754,0.231
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,8,10.0,100.0,rician,0,119.6346014141001,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,5.126561246864718,-0.14
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,12,10.0,100.0,rician,0,28.473764937988832,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,1.3204939688494859,-0.14
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,16,10.0,100.0,rician,0,10.750577169107782,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.5357771026576835,-0.14
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,24,10.0,100.0,rician,0,2.902452985445328,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.16413384036405418,-0.14
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,100.0,rician,0,1.218429055126297,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.07670589205654871,-0.14
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,48,10.0,100.0,rician,0,0.4102861906518459,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.03065209530239114,-0.14
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,64,10.0,100.0,rician,0,0.2172623887077341,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.01842813061682228,-0.14
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,96,10.0,100.0,rician,0,0.11391391240835243,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.011309141808109283,-0.14
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,128,10.0,100.0,rician,0,0.08865357752273366,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.009422145581539799,-0.14
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,160,10.0,100.0,rician,0,0.08193896882632273,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.008891133823933906,-0.14
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,192,10.0,100.0,rician,0,0.08046158291255388,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.008769164320315482,-0.14
+window,prostate_pz_cancer,"prostate cancer, peripheral zone",0,256,10.0,100.0,rician,0,0.08016250248439179,luminal water fraction (1 - mass below 200 ms),0.09999999999999998,0.008743646425946976,-0.14
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,8,10.0,100.0,rician,0,5.231316050705114,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.5045136960755724,0.062
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,12,10.0,100.0,rician,0,1.4306133183592145,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.15701176548425508,0.062
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,16,10.0,100.0,rician,0,0.6337832844159056,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.07726429958887628,0.062
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,24,10.0,100.0,rician,0,0.2449331570748613,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.03489527262504295,0.062
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,100.0,rician,0,0.14904087495864085,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.023492061911673218,0.062
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,48,10.0,100.0,rician,0,0.09960698213547232,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.01721792293908135,0.062
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,64,10.0,100.0,rician,0,0.09196631721075643,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.016181204074359894,0.062
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,96,10.0,100.0,rician,0,0.0912041347965256,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.016072865470064555,0.062
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,128,10.0,100.0,rician,0,0.0912020482321707,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.01607255585609876,0.062
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,160,10.0,100.0,rician,0,0.091202044714755,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.01607255532436637,0.062
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,192,10.0,100.0,rician,0,0.09120204470979595,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.01607255532360901,0.062
+window,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,256,10.0,100.0,rician,0,0.09120204470978979,extracellular / vascular fraction (1 - mass below 60 ms),0.14200000000000002,0.016072555323608073,0.062
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,8,10.0,100.0,rician,0,inf,myelin water fraction (mass below 40 ms),0.0525,inf,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,12,10.0,100.0,rician,0,4326.557725236561,myelin water fraction (mass below 40 ms),0.0525,0.9534669514078657,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,16,10.0,100.0,rician,0,963.2685984256589,myelin water fraction (mass below 40 ms),0.0525,0.3351222573301003,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,24,10.0,100.0,rician,0,142.77259973958377,myelin water fraction (mass below 40 ms),0.0525,0.10252665356211059,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,100.0,rician,0,42.30556581859986,myelin water fraction (mass below 40 ms),0.0525,0.05678039281590058,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,48,10.0,100.0,rician,0,9.294048104526142,myelin water fraction (mass below 40 ms),0.0525,0.03754117402297742,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,64,10.0,100.0,rician,0,3.726470684366399,myelin water fraction (mass below 40 ms),0.0525,0.03402423449963527,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,96,10.0,100.0,rician,0,1.302381041107836,myelin water fraction (mass below 40 ms),0.0525,0.03251401512415924,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,128,10.0,100.0,rician,0,1.253648715274424,myelin water fraction (mass below 40 ms),0.0525,0.032161109660312666,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,160,10.0,100.0,rician,0,1.2307288970258696,myelin water fraction (mass below 40 ms),0.0525,0.032023417889862626,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,192,10.0,100.0,rician,0,1.2180197581426389,myelin water fraction (mass below 40 ms),0.0525,0.031954210511839054,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,256,10.0,100.0,rician,0,1.205244138600565,myelin water fraction (mass below 40 ms),0.0525,0.03188955960344121,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,8,10.0,100.0,rician,0,11.718915060864074,myelin water fraction (mass below 40 ms),0.0525,0.6804499447645733,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,12,10.0,100.0,rician,0,4.419240719540792,myelin water fraction (mass below 40 ms),0.0525,0.16662350344301435,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,16,10.0,100.0,rician,0,2.762294615086715,myelin water fraction (mass below 40 ms),0.0525,0.07613631708561158,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,24,10.0,100.0,rician,0,1.802040858920433,myelin water fraction (mass below 40 ms),0.0525,0.04008781164050675,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,32,10.0,100.0,rician,0,1.500746867171805,myelin water fraction (mass below 40 ms),0.0525,0.034301997560834276,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,48,10.0,100.0,rician,0,1.2949805142721231,myelin water fraction (mass below 40 ms),0.0525,0.03229986173717716,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,64,10.0,100.0,rician,0,1.2287769097578982,myelin water fraction (mass below 40 ms),0.0525,0.03195121824663667,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,96,10.0,100.0,rician,0,1.1874642225215344,myelin water fraction (mass below 40 ms),0.0525,0.031789483847331504,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,128,10.0,100.0,rician,0,1.1751433036715633,myelin water fraction (mass below 40 ms),0.0525,0.031746554089423396,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,160,10.0,100.0,rician,0,1.1700193018217961,myelin water fraction (mass below 40 ms),0.0525,0.03172898747399062,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,192,10.0,100.0,rician,0,1.1675081074272824,myelin water fraction (mass below 40 ms),0.0525,0.03172040934413695,-0.0605
+window,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",1,256,10.0,100.0,rician,0,1.1654573924760883,myelin water fraction (mass below 40 ms),0.0525,0.03171341651024749,-0.0605
+arm,brain_wm,normal,0,32,10.0,100.0,gaussian_real,0,,myelin water fraction (mass below 40 ms),,0.07339601150757868,-0.0605
+arm,brain_wm,normal,0,32,10.0,100.0,rician,0,,myelin water fraction (mass below 40 ms),,0.07365052595371915,-0.0605
+arm,brain_wm,normal,0,32,10.0,100.0,rician,1,,myelin water fraction (mass below 40 ms),,0.07365079118883047,-0.0605
+arm,brain_gm,normal,0,32,10.0,100.0,gaussian_real,0,,myelin water fraction (mass below 40 ms),,0.07140311939889209,
+arm,brain_gm,normal,0,32,10.0,100.0,rician,0,,myelin water fraction (mass below 40 ms),,0.0715436844086401,
+arm,brain_gm,normal,0,32,10.0,100.0,rician,1,,myelin water fraction (mass below 40 ms),,0.0715437258850066,
+arm,spinal_cord_wm,normal,0,32,10.0,100.0,gaussian_real,0,,myelin water fraction (mass below 40 ms),,0.11693712692084877,-0.0305
+arm,spinal_cord_wm,normal,0,32,10.0,100.0,rician,0,,myelin water fraction (mass below 40 ms),,0.11709827184329351,-0.0305
+arm,spinal_cord_wm,normal,0,32,10.0,100.0,rician,1,,myelin water fraction (mass below 40 ms),,0.11709828240329737,-0.0305
+arm,skeletal_muscle,normal,0,32,10.0,100.0,gaussian_real,0,,extracellular fraction (1 - mass below 60 ms),,0.3370263453398182,0.062
+arm,skeletal_muscle,normal,0,32,10.0,100.0,rician,0,,extracellular fraction (1 - mass below 60 ms),,0.368764974038557,0.062
+arm,skeletal_muscle,normal,0,32,10.0,100.0,rician,1,,extracellular fraction (1 - mass below 60 ms),,0.374834403277345,0.062
+arm,articular_cartilage,normal,0,32,10.0,100.0,gaussian_real,0,,short/intermediate fraction (mass below 45 ms),,0.04046441951923554,
+arm,articular_cartilage,normal,0,32,10.0,100.0,rician,0,,short/intermediate fraction (mass below 45 ms),,0.04061621912195939,
+arm,articular_cartilage,normal,0,32,10.0,100.0,rician,1,,short/intermediate fraction (mass below 45 ms),,0.04066565342633685,
+arm,bone_marrow_vertebral,normal,0,32,10.0,100.0,gaussian_real,0,,fat fraction (1 - mass below 75 ms),,0.0982909753277889,
+arm,bone_marrow_vertebral,normal,0,32,10.0,100.0,rician,0,,fat fraction (1 - mass below 75 ms),,0.09895481995260821,
+arm,bone_marrow_vertebral,normal,0,32,10.0,100.0,rician,1,,fat fraction (1 - mass below 75 ms),,0.09906029582265193,
+arm,liver,normal,0,32,10.0,100.0,gaussian_real,0,,vascular/long-T2 fraction (1 - mass below 90 ms),,0.058256685348838544,
+arm,liver,normal,0,32,10.0,100.0,rician,0,,vascular/long-T2 fraction (1 - mass below 90 ms),,0.05872090048321485,
+arm,liver,normal,0,32,10.0,100.0,rician,1,,vascular/long-T2 fraction (1 - mass below 90 ms),,0.05878703296917718,
+arm,spleen,normal,0,32,10.0,100.0,gaussian_real,0,,blood/long-T2 fraction (1 - mass below 95 ms),,0.4342876279226594,
+arm,spleen,normal,0,32,10.0,100.0,rician,0,,blood/long-T2 fraction (1 - mass below 95 ms),,0.436464102928571,
+arm,spleen,normal,0,32,10.0,100.0,rician,1,,blood/long-T2 fraction (1 - mass below 95 ms),,0.4367071397078203,
+arm,kidney_cortex,normal,0,32,10.0,100.0,gaussian_real,0,,tubular/vascular long-T2 fraction (1 - mass below 120 ms),,0.17533499927499152,
+arm,kidney_cortex,normal,0,32,10.0,100.0,rician,0,,tubular/vascular long-T2 fraction (1 - mass below 120 ms),,0.1756801260816019,
+arm,kidney_cortex,normal,0,32,10.0,100.0,rician,1,,tubular/vascular long-T2 fraction (1 - mass below 120 ms),,0.175696224157548,
+arm,kidney_medulla,normal,0,32,10.0,100.0,gaussian_real,0,,luminal/vascular long-T2 fraction (1 - mass below 120 ms),,0.18673121552935268,
+arm,kidney_medulla,normal,0,32,10.0,100.0,rician,0,,luminal/vascular long-T2 fraction (1 - mass below 120 ms),,0.18693975998615098,
+arm,kidney_medulla,normal,0,32,10.0,100.0,rician,1,,luminal/vascular long-T2 fraction (1 - mass below 120 ms),,0.18694628769226182,
+arm,pancreas,normal,0,32,10.0,100.0,gaussian_real,0,,vascular/long-T2 fraction (1 - mass below 90 ms),,0.06293635512659437,
+arm,pancreas,normal,0,32,10.0,100.0,rician,0,,vascular/long-T2 fraction (1 - mass below 90 ms),,0.06333166358625936,
+arm,pancreas,normal,0,32,10.0,100.0,rician,1,,vascular/long-T2 fraction (1 - mass below 90 ms),,0.06337816699460523,
+arm,prostate_pz,normal,0,32,10.0,100.0,gaussian_real,0,,luminal water fraction (1 - mass below 200 ms),,0.10456170023393155,-0.14
+arm,prostate_pz,normal,0,32,10.0,100.0,rician,0,,luminal water fraction (1 - mass below 200 ms),,0.10460075881491299,-0.14
+arm,prostate_pz,normal,0,32,10.0,100.0,rician,1,,luminal water fraction (1 - mass below 200 ms),,0.10460083201606934,-0.14
+arm,breast_fibroglandular,normal,0,32,10.0,100.0,gaussian_real,0,,fat fraction (1 - mass below 80 ms),,0.4331270213483867,
+arm,breast_fibroglandular,normal,0,32,10.0,100.0,rician,0,,fat fraction (1 - mass below 80 ms),,0.43741820328633385,
+arm,breast_fibroglandular,normal,0,32,10.0,100.0,rician,1,,fat fraction (1 - mass below 80 ms),,0.43814552450831,
+arm,adipose_tissue,normal,0,32,10.0,100.0,gaussian_real,0,,water fraction (mass below 75 ms),,0.06012714197118732,
+arm,adipose_tissue,normal,0,32,10.0,100.0,rician,0,,water fraction (mass below 75 ms),,0.060176958718834286,
+arm,adipose_tissue,normal,0,32,10.0,100.0,rician,1,,water fraction (mass below 75 ms),,0.06018363326092276,
+arm,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,100.0,gaussian_real,0,,fat fraction (1 - mass below 55 ms),,0.24854921495593868,0.081
+arm,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,100.0,rician,0,,fat fraction (1 - mass below 55 ms),,0.3391868650051433,0.081
+arm,liver_steatosis_pdff10,"hepatic steatosis, grade 1",0,32,10.0,100.0,rician,1,,fat fraction (1 - mass below 55 ms),,0.3723528550677524,0.081
+arm,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,100.0,gaussian_real,0,,fat fraction (1 - mass below 55 ms),,0.25264940121829954,0.231
+arm,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,100.0,rician,0,,fat fraction (1 - mass below 55 ms),,0.29337242987652046,0.231
+arm,liver_steatosis_pdff25,"hepatic steatosis, grade 3",0,32,10.0,100.0,rician,1,,fat fraction (1 - mass below 55 ms),,0.311088119044315,0.231
+arm,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,100.0,gaussian_real,0,,luminal water fraction (1 - mass below 200 ms),,0.07660111651972873,-0.14
+arm,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,100.0,rician,0,,luminal water fraction (1 - mass below 200 ms),,0.07670589205654871,-0.14
+arm,prostate_pz_cancer,"prostate cancer, peripheral zone",0,32,10.0,100.0,rician,1,,luminal water fraction (1 - mass below 200 ms),,0.0767067576214418,-0.14
+arm,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,100.0,gaussian_real,0,,extracellular / vascular fraction (1 - mass below 60 ms),,0.02329292917448178,0.062
+arm,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,100.0,rician,0,,extracellular / vascular fraction (1 - mass below 60 ms),,0.023492061911673218,0.062
+arm,skeletal_muscle_venous_filling,venous filling (vascular compartment expanded),0,32,10.0,100.0,rician,1,,extracellular / vascular fraction (1 - mass below 60 ms),,0.023516258370018868,0.062
+arm,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,100.0,gaussian_real,0,,myelin water fraction (mass below 40 ms),,0.056719132223354334,-0.0605
+arm,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,100.0,rician,0,,myelin water fraction (mass below 40 ms),,0.05678039281590058,-0.0605
+arm,brain_wm_ms_lesion,"multiple sclerosis lesion (chronic, demyelinated)",0,32,10.0,100.0,rician,1,,myelin water fraction (mass below 40 ms),,0.056780433691673265,-0.0605
